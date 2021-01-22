@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "stashes", schema = "paczkamatDB", catalog = "")
-public class StashesEntity {
+@Table(name = "stashes", schema = "paczkamatDB")
+public class Stash {
     private String id;
-    private Object dimension;
+    private String dimension;
 
     @Id
     @Column(name = "id")
@@ -21,11 +21,11 @@ public class StashesEntity {
 
     @Basic
     @Column(name = "dimension")
-    public Object getDimension() {
+    public String getDimension() {
         return dimension;
     }
 
-    public void setDimension(Object dimension) {
+    public void setDimension(String dimension) {
         this.dimension = dimension;
     }
 
@@ -33,7 +33,7 @@ public class StashesEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StashesEntity that = (StashesEntity) o;
+        Stash that = (Stash) o;
         return Objects.equals(id, that.id) && Objects.equals(dimension, that.dimension);
     }
 

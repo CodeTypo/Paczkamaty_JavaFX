@@ -4,6 +4,8 @@
 
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import mapy.Paczkamat;
 
 public class PaczkamatController {
 
@@ -32,25 +35,33 @@ public class PaczkamatController {
     @FXML
     private TextArea textArea;
 
+    private PaczkamatService service;
+    private List<Paczkamat> paczkamats = new ArrayList<>();
+
     @FXML
     void onLoginClicked(ActionEvent event) {
         String login = loginField.getText();
         String password = passwordField.getText();
+
+        service = new PaczkamatService(login, password);
+        paczkamats = service.getAllPaczkamats();
+        textArea.setText(paczkamats.get(0).getAddress());
+
         //create connection for a server installed in localhost, with a user "root" with no password
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com", login, password)) {
-            System.out.println("success");
-            try (Statement stmt = conn.createStatement()) {
-                //execute query
-                try (ResultSet rs = stmt.executeQuery("SELECT * from paczkamatDB.paczkamats;")) {
-                    //position result to first
-                    rs.next();
-                    String test = (rs.getString(1) + "|\t" + rs.getString(2)); //result is "Hello World!"
-                    textArea.setText(test);
-                }
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+//        try (Connection conn = DriverManager.getConnection("jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com", login, password)) {
+//            System.out.println("success");
+//            try (Statement stmt = conn.createStatement()) {
+//                //execute query
+//                try (ResultSet rs = stmt.executeQuery("SELECT * from paczkamatDB.paczkamats;")) {
+//                    //position result to first
+//                    rs.next();
+//                    String test = (rs.getString(1) + "|\t" + rs.getString(2)); //result is "Hello World!"
+//                    textArea.setText(test);
+//                }
+//            }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
 
     }
 
