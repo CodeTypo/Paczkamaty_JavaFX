@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "orders", schema = "paczkamatDB", catalog = "")
-public class OrdersEntity {
+@Table(name = "orders", schema = "paczkamatDB")
+public class Order {
     private String id;
     private BigDecimal price;
-    private Object orderStatus;
+    private String orderStatus;
     private Timestamp sendDatetime;
     private Timestamp receiveDatetime;
 
@@ -36,11 +36,11 @@ public class OrdersEntity {
 
     @Basic
     @Column(name = "order_status")
-    public Object getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Object orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -68,7 +68,7 @@ public class OrdersEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrdersEntity that = (OrdersEntity) o;
+        Order that = (Order) o;
         return Objects.equals(id, that.id) && Objects.equals(price, that.price) && Objects.equals(orderStatus, that.orderStatus) && Objects.equals(sendDatetime, that.sendDatetime) && Objects.equals(receiveDatetime, that.receiveDatetime);
     }
 

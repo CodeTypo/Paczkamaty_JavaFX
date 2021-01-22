@@ -4,12 +4,12 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com:3306</property>
+    <property name="connection.url">jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com:3306/paczkamatDB</property>
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <mapping class="mapy.CustomersEntity"/>
-    <mapping class="mapy.OrdersEntity"/>
-    <mapping class="mapy.PaczkamatsEntity"/>
-    <mapping class="mapy.StashesEntity"/>
+    <mapping class="mapy.Customer"/>
+    <mapping class="mapy.Order"/>
+    <mapping class="mapy.Paczkamat"/>
+    <mapping class="mapy.Stash"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
