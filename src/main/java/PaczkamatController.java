@@ -7,13 +7,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Stack;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import mapy.Customer;
+import mapy.Order;
 import mapy.Paczkamat;
+import mapy.Stash;
 
 public class PaczkamatController {
 
@@ -36,16 +41,44 @@ public class PaczkamatController {
     private TextArea textArea;
 
     private PaczkamatService service;
-    private List<Paczkamat> paczkamats = new ArrayList<>();
 
+    private List<Paczkamat> paczkamats = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
+    private List<Stash> stashes = new ArrayList<>();
+    private List<Customer> customers = new ArrayList<>();
+
+    private Customer loggedUser = null;
+
+
+
+    /*
+        This method should be called only once
+        independent of user flow. It is needed to make
+        real connection with remote server.
+        Given login and password must be secret and cannot be stored in table.
+        Beside this, there is separate login for normal user and we check
+        his identity based on list of users returned in this method at the beginning.
+     */
     @FXML
     void onLoginClicked(ActionEvent event) {
         String login = loginField.getText();
         String password = passwordField.getText();
 
         service = new PaczkamatService(login, password);
+        loginButton.setDisable(true);
+        loginField.setText("");
+        passwordField.setText("");
+
         paczkamats = service.getAllPaczkamats();
+        orders = service.getAllOrders();
+        stashes = service.getAllStashes();
+        customers = service.getAllCustomers();
+
         textArea.setText(paczkamats.get(0).getAddress());
+//        System.out.println(orders.get(0).getOrderStatus());
+//        System.out.println(stashes.get(0).getDimension());
+//        System.out.println(customers.get(0).getEmail());
+
 
         //create connection for a server installed in localhost, with a user "root" with no password
 //        try (Connection conn = DriverManager.getConnection("jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com", login, password)) {
@@ -64,6 +97,22 @@ public class PaczkamatController {
 //        }
 
     }
+
+    @FXML
+    void onUserLoginClicked(ActionEvent event) {
+        String login = loginField.getText();
+        String password = passwordField.getText();
+
+        loggedUser = service.getLoggedInUser(login, password);
+        if (loggedUser == null) {
+            System.out.println("Invalid login or password!");
+        } else {
+            System.out.println(loggedUser.getName() + " " + loggedUser.getLastName() + " logged in!");
+        }
+
+    }
+
+
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
