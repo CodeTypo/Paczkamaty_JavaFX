@@ -1,4 +1,7 @@
+import mapy.Customer;
+import mapy.Order;
 import mapy.Paczkamat;
+import mapy.Stash;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,6 +46,82 @@ public class PaczkamatService {
         }
 
         return paczkamats;
+    }
+
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
+
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            orders = (List<Order>) session.createQuery("FROM Order").list();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return orders;
+    }
+
+    public List<Customer> getAllCustomers() {
+        List<Customer> customers = new ArrayList<>();
+
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            customers = (List<Customer>) session.createQuery("FROM Customer").list();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return customers;
+    }
+
+    public List<Stash> getAllStashes() {
+        List<Stash> stashes = new ArrayList<>();
+
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            stashes = (List<Stash>) session.createQuery("FROM Stash ").list();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return stashes;
+    }
+
+    public Customer getLoggedInUser(String login, String password) {
+        Customer customer = null;
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            customer = (Customer) session.createQuery("FROM Customer customer where " +
+                    "customer.login like :login and customer.password like :password").
+                    setParameter("login", login).setParameter("password", password).getSingleResult();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return customer;
     }
 
 

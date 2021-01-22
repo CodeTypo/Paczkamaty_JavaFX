@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaczkamatController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaczkamatController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,7 +30,12 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
             </PasswordField>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginClicked" text="Login">
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginClicked" text="DB Login">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="loginButton1" layoutX="250.0" layoutY="18.0" mnemonicParsing="false" onAction="#onUserLoginClicked" text="Customer Login" >
                <HBox.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </HBox.margin>
