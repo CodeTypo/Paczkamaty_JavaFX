@@ -47,8 +47,8 @@ public class PaczkamatController {
     @FXML // fx:id="loginTextArea"
     private TextArea loginTextArea;
 
-    @FXML // fx:id="loginConsoleLog"
-    private TextArea loginConsoleLog;
+    @FXML // fx:id="sharedConsoleLog"
+    private TextArea sharedConsoleLog;
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //LOGIN TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -187,7 +187,7 @@ public class PaczkamatController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert loginConsoleLog              != null : "fx:id=\"consoleLog\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert sharedConsoleLog             != null : "fx:id=\"consoleLog\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginLoginField              != null : "fx:id=\"loginLoginField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginPasswordField           != null : "fx:id=\"loginPasswordField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginButtonDBLogin           != null : "fx:id=\"loginButtonDBLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
@@ -201,8 +201,8 @@ public class PaczkamatController {
         assert StatusCheckTextArea          != null : "fx:id=\"StatusCheckTextArea\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
 
         //Console config
-        this.console = new Console(loginConsoleLog);
-        PrintStream ps = new PrintStream(new Console(loginConsoleLog));
+        this.console = new Console(sharedConsoleLog);
+        PrintStream ps = new PrintStream(new Console(sharedConsoleLog));
         System.setOut(ps);
         System.setErr(ps);
         statusTab.setDisable(true);
