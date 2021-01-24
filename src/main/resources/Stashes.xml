@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+        version="3.0">
+
+    <entity class="entities.Stash">
+        <table name="stashes" schema="paczkamatDB" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="paczkamatId">
+                <column name="paczkamat_id"/>
+            </basic>
+            <basic name="dimension">
+                <column name="dimension"/>
+            </basic>
+            <many-to-one name="paczkamat" optional="true" target-entity="entities.Paczkamat">
+                <join-column name="paczkamat_id" nullable="false" referenced-column-name="name"/>
+            </many-to-one>
+            <one-to-many name="ordersToSend" mapped-by="senderStash" target-entity="entities.Order"/>
+            <one-to-many name="ordersToReceive" mapped-by="receiverStash" target-entity="entities.Order"/>
+        </attributes>
+    </entity>
+</entity-mappings>

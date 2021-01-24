@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+        version="3.0">
+
+    <entity class="entities.Order">
+        <table name="orders" schema="paczkamatDB" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="price">
+                <column name="price"/>
+            </basic>
+            <basic name="orderStatus">
+                <column name="order_status"/>
+            </basic>
+            <basic name="senderId">
+                <column name="sender_id"/>
+            </basic>
+            <basic name="senderStashId">
+                <column name="sender_stash_id"/>
+            </basic>
+            <basic name="sendDatetime">
+                <column name="send_datetime"/>
+            </basic>
+            <basic name="receiverId">
+                <column name="receiver_id"/>
+            </basic>
+            <basic name="receiverStashId">
+                <column name="receiver_stash_id"/>
+            </basic>
+            <basic name="receiveDatetime">
+                <column name="receive_datetime"/>
+            </basic>
+            <many-to-one name="sender" optional="true" target-entity="entities.Customer">
+                <join-column name="sender_id" nullable="false" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="senderStash" optional="true" target-entity="entities.Stash">
+                <join-column name="sender_stash_id" nullable="false" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="receiver" optional="true" target-entity="entities.Customer">
+                <join-column name="receiver_id" nullable="false" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="receiverStash" optional="true" target-entity="entities.Stash">
+                <join-column name="receiver_stash_id" nullable="false" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

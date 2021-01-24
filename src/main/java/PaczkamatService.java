@@ -1,7 +1,7 @@
-import mapy.Customer;
-import mapy.Order;
-import mapy.Paczkamat;
-import mapy.Stash;
+import entities.Customer;
+import entities.Order;
+import entities.Paczkamat;
+import entities.Stash;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +9,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 public class PaczkamatService {
     private static SessionFactory factory;
@@ -49,12 +51,12 @@ public class PaczkamatService {
     }
 
     public List<Order> getAllOrders() {
-        List<Order> orders = new ArrayList<>();
+        List<Order> order = new ArrayList<>();
 
         try {
             session = factory.openSession();
             tx = session.beginTransaction();
-            orders = (List<Order>) session.createQuery("FROM Order").list();
+            order = (List<Order>) session.createQuery("FROM Order").list();
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -64,7 +66,7 @@ public class PaczkamatService {
             session.close();
         }
 
-        return orders;
+        return order;
     }
 
     public List<Customer> getAllCustomers() {
@@ -122,6 +124,48 @@ public class PaczkamatService {
             session.close();
         }
         return customer;
+    }
+
+    public void insertPaczkamat(String name, String buildingNumber, String city, String postCode,String province,String street,String latitude,String longitude,String openingHours ) {
+        System.out.println("Insert paczkamat into table");
+
+        Paczkamat paczkamat = new Paczkamat();
+        paczkamat.setCity(city);
+        paczkamat.setBuildingNumber(buildingNumber);
+        paczkamat.setLatitude(latitude);
+        paczkamat.setLongitude(longitude);
+        paczkamat.setName(name);
+        paczkamat.setOpeningHours(openingHours);
+        paczkamat.setProvince(province);
+        paczkamat.setPostCode(postCode);
+
+        Collection<Stash> stashes = new ArrayList<>();
+        for (int i = 0; i < 14; i++) {
+            Stash stash = new Stash();
+            if (i%3 == 0){
+                stash.setDimension("SMALL");
+            } else if (i%3 == 1) {
+                stash.setDimension("MEDIUM");
+            } else {
+                stash.setDimension("LARGE");
+            }
+
+            stashes.add(stash);
+        }
+        paczkamat.setStashes(stashes);
+
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.save(paczkamat);
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
 

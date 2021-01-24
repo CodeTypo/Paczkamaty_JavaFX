@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+        version="3.0">
+
+    <entity class="entities.Customer">
+        <table name="customers" schema="paczkamatDB" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="email">
+                <column name="email"/>
+            </basic>
+            <basic name="name">
+                <column name="name"/>
+            </basic>
+            <basic name="lastName">
+                <column name="last_name"/>
+            </basic>
+            <basic name="phoneNumber">
+                <column name="phone_number"/>
+            </basic>
+            <basic name="login">
+                <column name="login"/>
+            </basic>
+            <basic name="password">
+                <column name="password"/>
+            </basic>
+            <one-to-many name="ordersAsSender" mapped-by="sender" target-entity="entities.Order"/>
+            <one-to-many name="ordersAsReceiver" mapped-by="receiver" target-entity="entities.Order"/>
+        </attributes>
+    </entity>
+</entity-mappings>

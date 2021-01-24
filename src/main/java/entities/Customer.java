@@ -1,26 +1,29 @@
-package mapy;
+package entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customers", schema = "paczkamatDB")
+@Table(name="customers")
 public class Customer {
-    private String id;
+    private Integer id;
     private String email;
     private String name;
     private String lastName;
     private String phoneNumber;
     private String login;
     private String password;
+    private Collection<Order> ordersAsSender;
+    private Collection<Order> ordersAsReceiver;
 
     @Id
     @Column(name = "id")
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -88,12 +91,30 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Customer that = (Customer) o;
-        return Objects.equals(id, that.id) && Objects.equals(email, that.email) && Objects.equals(name, that.name) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(login, that.login) && Objects.equals(password, that.password);
+        Customer customer = (Customer) o;
+        return Objects.equals(id, customer.id) && Objects.equals(email, customer.email) && Objects.equals(name, customer.name) && Objects.equals(lastName, customer.lastName) && Objects.equals(phoneNumber, customer.phoneNumber) && Objects.equals(login, customer.login) && Objects.equals(password, customer.password);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, email, name, lastName, phoneNumber, login, password);
+    }
+
+    @OneToMany(mappedBy = "sender")
+    public Collection<Order> getOrdersAsSender() {
+        return ordersAsSender;
+    }
+
+    public void setOrdersAsSender(Collection<Order> ordersAsSender) {
+        this.ordersAsSender = ordersAsSender;
+    }
+
+    @OneToMany(mappedBy = "receiver")
+    public Collection<Order> getOrdersAsReceiver() {
+        return ordersAsReceiver;
+    }
+
+    public void setOrdersAsReceiver(Collection<Order> ordersAsReceiver) {
+        this.ordersAsReceiver = ordersAsReceiver;
     }
 }

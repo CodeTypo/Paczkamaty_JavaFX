@@ -73,6 +73,15 @@
                               </BorderPane>
                            </content>
                         </Tab>
+                        <Tab id="adminTab" fx:id="adminTab" closable="false" text="Admin">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <WebView fx:id="addPaczkamatWebView" layoutX="149.0" layoutY="14.0" prefHeight="256.0" prefWidth="444.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                         <Tab id="sendTab" fx:id="sendTab" closable="false" text="Send">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -94,11 +103,6 @@
                                     <TextArea fx:id="StatusCheckTextArea" editable="false" layoutX="15.0" layoutY="47.0" prefHeight="339.0" prefWidth="570.0" />
                                  </children>
                               </AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab id="adminTab" fx:id="adminTab" closable="false" text="Admin">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                            </content>
                         </Tab>
                      </tabs>

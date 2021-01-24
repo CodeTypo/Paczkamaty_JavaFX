@@ -21,7 +21,9 @@
                 }
             });
             var map = easyPack.mapWidget('easypack-map', function(point) {
-                window.newOrder.doSth(point.name); // doesnt work after remapping
+                window.service.insertPaczkamat(point.name, point.address_details.buildingNumber,
+                    point.address_details.city, point.address_details.postCode,point.address_details.province,
+                    point.address_details.street,point.location.latitude,point.location.longitude,point.opening_hours);
             });
         };
     </script>
