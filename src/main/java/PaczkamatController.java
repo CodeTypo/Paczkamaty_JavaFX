@@ -187,18 +187,18 @@ public class PaczkamatController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert loginConsoleLog != null : "fx:id=\"consoleLog\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginLoginField != null : "fx:id=\"loginLoginField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginPasswordField != null : "fx:id=\"loginPasswordField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginButtonDBLogin != null : "fx:id=\"loginButtonDBLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginButtonCustomerLogin != null : "fx:id=\"loginButtonCustomerLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert sendTab != null : "fx:id=\"sendTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert statusTab != null : "fx:id=\"statusTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert adminTab != null : "fx:id=\"adminTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginTab != null : "fx:id=\"loginTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert StatusCheckPckgNumberInput != null : "fx:id=\"StatusCheckPckgNumberInput\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert StatusCheckCheckButton != null : "fx:id=\"StatusCheckCheckButton\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert StatusCheckTextArea != null : "fx:id=\"StatusCheckTextArea\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert loginConsoleLog              != null : "fx:id=\"consoleLog\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert loginLoginField              != null : "fx:id=\"loginLoginField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert loginPasswordField           != null : "fx:id=\"loginPasswordField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert loginButtonDBLogin           != null : "fx:id=\"loginButtonDBLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert loginButtonCustomerLogin     != null : "fx:id=\"loginButtonCustomerLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert sendTab                      != null : "fx:id=\"sendTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert statusTab                    != null : "fx:id=\"statusTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert adminTab                     != null : "fx:id=\"adminTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert loginTab                     != null : "fx:id=\"loginTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert StatusCheckPckgNumberInput   != null : "fx:id=\"StatusCheckPckgNumberInput\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert StatusCheckCheckButton       != null : "fx:id=\"StatusCheckCheckButton\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert StatusCheckTextArea          != null : "fx:id=\"StatusCheckTextArea\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
 
         //Console config
         this.console = new Console(loginConsoleLog);
