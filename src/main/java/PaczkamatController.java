@@ -1,8 +1,3 @@
-/**
- * Sample Skeleton for 'paczkamatFX.fxml' Controller Class
- */
-
-import java.awt.event.MouseEvent;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URL;
@@ -17,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Box;
 import javafx.stage.Stage;
 import mapy.Customer;
 import mapy.Order;
@@ -127,7 +121,7 @@ public class PaczkamatController {
         his identity based on list of users returned in this method at the beginning.
      */
     @FXML
-    void onLoginClicked(ActionEvent event) {
+    void onLoginClicked() {
         String login = loginLoginField.getText();
         String password = loginPasswordField.getText();
 
@@ -177,7 +171,7 @@ public class PaczkamatController {
     }
 
     @FXML
-    void onUserLoginClicked(ActionEvent event) {
+    void onUserLoginClicked() {
         String login = loginLoginField.getText();
         String password = loginPasswordField.getText();
 

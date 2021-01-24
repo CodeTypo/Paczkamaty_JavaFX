@@ -8,7 +8,7 @@
 
 .title-bar {
     -fx-padding: 10px;
-    -fx-background-color: darkgreen;
+    -fx-background-color: #7a0538;
 }
 
 .title-bar Label {
@@ -30,7 +30,7 @@
 }
 
 .close-button:hover {
-    -fx-border-color: white;
+    -fx-border-color: #000000;
     -fx-border-size: 1px;
     -fx-border-style: solid;
 }
