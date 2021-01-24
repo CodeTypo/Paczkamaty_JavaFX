@@ -14,11 +14,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
 
-
-
-
-<VBox  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaczkamatController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaczkamatController">
    <children>
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0" styleClass="title-bar" stylesheets="@paczkamatCSS.css">
          <children>
@@ -82,6 +80,7 @@
                                     <TextField fx:id="sendSenderDetails" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="128.0" promptText="Sender details" />
                                     <TextField fx:id="sendRecipientDetails" layoutX="14.0" layoutY="48.0" prefHeight="25.0" prefWidth="127.0" promptText="Recipient details" />
                                     <ChoiceBox fx:id="sendPackageSize" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="129.0" />
+                                    <WebView fx:id="sendWebView" layoutX="149.0" layoutY="14.0" prefHeight="256.0" prefWidth="444.0" />
                                  </children>
                               </AnchorPane>
                            </content>

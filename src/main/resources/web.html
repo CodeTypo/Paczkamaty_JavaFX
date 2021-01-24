@@ -1,0 +1,34 @@
+<!-- DOKUMENTACJA https://docs.inpost24.com/pages/viewpage.action?pageId=7798862 -->
+<!DOCTYPE html>
+<html lang="pl" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="IE=11"/>
+    <title>Geowidget v4 - Example - Basic Params</title>
+    <script src="https://geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
+    <script type="text/javascript">
+        window.easyPackAsyncInit = function () {
+            easyPack.init({
+                defaultLocale: 'pl',
+                mapType: 'osm',
+                searchType: 'osm',
+                points: {
+                    types: ['parcel_locker']
+                },
+                map: {
+                    initialTypes: ['parcel_locker']
+                }
+            });
+            var map = easyPack.mapWidget('easypack-map', function(point) {
+                alert(point.name);
+            });
+        };
+    </script>
+    <link rel="stylesheet" href="https://geowidget.easypack24.net/css/easypack.css"/>
+</head>
+
+<body>
+<div id="easypack-map"></div>
+</body>
+</html>

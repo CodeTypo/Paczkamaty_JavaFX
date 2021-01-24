@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import mapy.Customer;
 import mapy.Order;
@@ -53,6 +54,9 @@ public class PaczkamatController {
 
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SEND TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    @FXML
+    private WebView sendWebView;
 
     @FXML // fx:id="sendTab"
     private Tab sendTab; // Value injected by FXMLLoader
@@ -217,6 +221,7 @@ public class PaczkamatController {
         assert loginButtonDBLogin           != null : "fx:id=\"loginButtonDBLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginButtonCustomerLogin     != null : "fx:id=\"loginButtonCustomerLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
 
+        assert sendWebView                  != null : "fx:id=\"sendWebView\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert sendTab                      != null : "fx:id=\"sendTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert sendSenderDetails            != null : "fx:id=\"sendSenderDetails\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert sendRecipientDetails         != null : "fx:id=\"sendRecipientDetails\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
@@ -242,7 +247,7 @@ public class PaczkamatController {
         disable(adminTab); disable(statusTab); disable(sendTab);
 
         sendPackageSize.setItems(stashSizes);
-
+        sendWebView.getEngine().load( getClass().getResource("/web.html").toString() );
 
     }
 
