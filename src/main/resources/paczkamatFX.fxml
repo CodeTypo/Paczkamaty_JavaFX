@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -12,80 +13,105 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.7859531772575251" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaczkamatController">
-  <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+
+
+
+<VBox  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaczkamatController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0" styleClass="title-bar" stylesheets="@paczkamatCSS.css">
          <children>
-            <TabPane>
-               <tabs>
-                  <Tab id="loginTab" fx:id="loginTab" closable="false" text="Login">
-                     <content>
-                        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="600.0">
-                           <top>
-                              <HBox prefHeight="9.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="31.0" prefWidth="589.0" stylesheets="@paczkamatCSS.css">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="126.0" styleClass="title" stylesheets="@paczkamatCSS.css" text="Paczkamatyy" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#close" prefHeight="31.0" prefWidth="43.0">
+               <children>
+                  <Label prefHeight="31.0" prefWidth="20.0" styleClass="close-button" stylesheets="@paczkamatCSS.css" text="X" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <SplitPane dividerPositions="0.7859531772575251" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TabPane>
+                     <tabs>
+                        <Tab id="loginTab" fx:id="loginTab" closable="false" text="Login">
+                           <content>
+                              <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="600.0">
+                                 <top>
+                                    <HBox prefHeight="9.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <TextField fx:id="loginLoginField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <PasswordField fx:id="loginPasswordField" prefHeight="26.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </PasswordField>
+                                          <Button fx:id="loginButtonDBLogin" mnemonicParsing="false" onAction="#onLoginClicked" text="DB Login">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button fx:id="loginButtonCustomerLogin" layoutX="250.0" layoutY="18.0" mnemonicParsing="false" onAction="#onUserLoginClicked" text="Customer Login">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </top>
+                                 <center>
+                                    <TextArea fx:id="loginTextArea" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="733.0" BorderPane.alignment="CENTER" />
+                                 </center>
+                              </BorderPane>
+                           </content>
+                        </Tab>
+                        <Tab id="sendTab" fx:id="sendTab" closable="false" text="Send">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField fx:id="loginLoginField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="100.0">
-                                       <HBox.margin>
-                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <PasswordField fx:id="loginPasswordField" prefHeight="26.0" prefWidth="100.0">
-                                       <HBox.margin>
-                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                       </HBox.margin>
-                                    </PasswordField>
-                                    <Button fx:id="loginButtonDBLogin" mnemonicParsing="false" onAction="#onLoginClicked" text="DB Login">
-                                       <HBox.margin>
-                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                    <Button fx:id="loginButtonCustomerLogin" layoutX="250.0" layoutY="18.0" mnemonicParsing="false" onAction="#onUserLoginClicked" text="Customer Login">
-                                       <HBox.margin>
-                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                       </HBox.margin>
-                                    </Button>
+                                    <TextField fx:id="sendSenderDetails" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="128.0" promptText="Sender details" />
+                                    <TextField fx:id="sendRecipientDetails" layoutX="14.0" layoutY="48.0" prefHeight="25.0" prefWidth="127.0" promptText="Recipient details" />
+                                    <ChoiceBox fx:id="sendPackageSize" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="129.0" />
                                  </children>
-                              </HBox>
-                           </top>
-                           <center>
-                              <TextArea fx:id="loginTextArea" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="733.0" BorderPane.alignment="CENTER" />
-                           </center>
-                        </BorderPane>
-                     </content>
-                  </Tab>
-                  <Tab id="sendTab" fx:id="sendTab" closable="false" text="Send">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TextField fx:id="sendSenderDetails" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="128.0" promptText="Sender details" />
-                              <TextField fx:id="sendRecipientDetails" layoutX="14.0" layoutY="48.0" prefHeight="25.0" prefWidth="127.0" promptText="Recipient details" />
-                              <ChoiceBox fx:id="sendPackageSize" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="129.0" />
-                           </children></AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab id="statusTab" fx:id="statusTab" closable="false" text="Status Check">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TextField fx:id="StatusCheckPckgNumberInput" layoutX="9.0" layoutY="14.0" prefHeight="25.0" prefWidth="489.0" promptText="Please input your package's tracking number" />
-                              <Button fx:id="StatusCheckCheckButton" layoutX="506.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Check" />
-                              <TextArea fx:id="StatusCheckTextArea" editable="false" layoutX="15.0" layoutY="47.0" prefHeight="339.0" prefWidth="570.0" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab id="adminTab" fx:id="adminTab" closable="false" text="Admin">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
-         </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-         <children>
-            <TextArea fx:id="sharedConsoleLog" editable="false" focusTraversable="false" prefHeight="92.0" prefWidth="578.0" />
-         </children></AnchorPane>
-  </items>
-</SplitPane>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab id="statusTab" fx:id="statusTab" closable="false" text="Status Check">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="StatusCheckPckgNumberInput" layoutX="9.0" layoutY="14.0" prefHeight="25.0" prefWidth="489.0" promptText="Please input your package's tracking number" />
+                                    <Button fx:id="StatusCheckCheckButton" layoutX="506.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Check" />
+                                    <TextArea fx:id="StatusCheckTextArea" editable="false" layoutX="15.0" layoutY="47.0" prefHeight="339.0" prefWidth="570.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab id="adminTab" fx:id="adminTab" closable="false" text="Admin">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TextArea fx:id="sharedConsoleLog" editable="false" focusTraversable="false" prefHeight="92.0" prefWidth="578.0" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</VBox>

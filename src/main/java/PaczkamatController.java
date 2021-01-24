@@ -2,6 +2,7 @@
  * Sample Skeleton for 'paczkamatFX.fxml' Controller Class
  */
 
+import java.awt.event.MouseEvent;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URL;
@@ -15,6 +16,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Box;
+import javafx.stage.Stage;
 import mapy.Customer;
 import mapy.Order;
 import mapy.Paczkamat;
@@ -187,7 +191,9 @@ public class PaczkamatController {
     }
 
 
-
+    public void close(javafx.scene.input.MouseEvent mouseEvent) {
+        ((Stage)(((HBox)mouseEvent.getSource()).getScene().getWindow())).close();
+    }
 
 
     //Klasa która pozwala na wykorzystanie textFieldu jako console output, dzięki czemu można wyświetlać w nim logi

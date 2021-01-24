@@ -5,3 +5,32 @@
 .tab-enabled{
     visibility: visible;
 }
+
+.title-bar {
+    -fx-padding: 10px;
+    -fx-background-color: darkgreen;
+}
+
+.title-bar Label {
+    -fx-text-fill: white;
+}
+
+.title, .close-button {
+    -fx-font-family: Arial;
+    -fx-font-weight: 700;
+}
+
+.title {
+    -fx-font-size: 18px;
+}
+
+.close-button {
+    -fx-font-size: 12px;
+    -fx-padding: 1px;
+}
+
+.close-button:hover {
+    -fx-border-color: white;
+    -fx-border-size: 1px;
+    -fx-border-style: solid;
+}
