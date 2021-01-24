@@ -5,19 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import entities.Customer;
+import entities.Order;
+import entities.Paczkamat;
+import entities.Stash;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import mapy.Customer;
-import mapy.Order;
-import mapy.Paczkamat;
-import mapy.Stash;
+
+import netscape.javascript.JSObject;
 
 public class PaczkamatController {
 
@@ -57,6 +60,9 @@ public class PaczkamatController {
 
     @FXML
     private WebView sendWebView;
+
+    @FXML
+    public WebView addPaczkamatWebView;
 
     @FXML // fx:id="sendTab"
     private Tab sendTab; // Value injected by FXMLLoader
@@ -105,15 +111,20 @@ public class PaczkamatController {
     private PaczkamatService service;
 
     private List<Paczkamat> paczkamats = new ArrayList<>();
-    private List<Order>     orders     = new ArrayList<>();
-    private List<Stash>     stashes    = new ArrayList<>();
-    private List<Customer>  customers  = new ArrayList<>();
+    private List<Order> order     = new ArrayList<>();
+    private List<Stash> stashes    = new ArrayList<>();
+    private List<Customer> customers  = new ArrayList<>();
 
     ObservableList<String> stashSizes = FXCollections.observableArrayList
-            ("Small","Medium", "Large", "X-tra Large");
+            ("Small","Medium", "Large");
 
     private Customer loggedUser = null;
     private Console  console;
+
+    // These two objects are exposed to javascript in window
+    // It is the simplest way to get access to java object within javascript
+    private Order newOrder = new Order();
+    private Paczkamat newPaczkamat = new Paczkamat();
 
 
     /*
@@ -135,37 +146,11 @@ public class PaczkamatController {
         loginPasswordField.setText("");
 
         paczkamats  = service.getAllPaczkamats();
-        orders      = service.getAllOrders();
+        order      = service.getAllOrders();
         stashes     = service.getAllStashes();
         customers   = service.getAllCustomers();
 
-        loginTextArea.setText(paczkamats.get(0).getAddress());
-
-
-        enable(statusTab);
-        enable(sendTab);
-
-
-//        System.out.println(orders.get(0).getOrderStatus());
-//        System.out.println(stashes.get(0).getDimension());
-//        System.out.println(customers.get(0).getEmail());
-
-
-        //create connection for a server installed in localhost, with a user "root" with no password
-//        try (Connection conn = DriverManager.getConnection("jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com", login, password)) {
-//            System.out.println("success");
-//            try (Statement stmt = conn.createStatement()) {
-//                //execute query
-//                try (ResultSet rs = stmt.executeQuery("SELECT * from paczkamatDB.paczkamats;")) {
-//                    //position result to first
-//                    rs.next();
-//                    String test = (rs.getString(1) + "|\t" + rs.getString(2)); //result is "Hello World!"
-//                    loginTextArea.setText(test);
-//                }
-//            }
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
+        loginTextArea.setText(customers.get(0).getName());
 
     }
 
@@ -178,14 +163,22 @@ public class PaczkamatController {
     void onUserLoginClicked() {
         String login = loginLoginField.getText();
         String password = loginPasswordField.getText();
+        System.out.println(login);
+        System.out.println(password);
 
-        loggedUser = service.getLoggedInUser(login, password);
-        if (loggedUser == null) {
-            System.out.println("Invalid login or password!");
+        if (login.equals("admin") && password.equals("admin")){
+            enable(adminTab);
         } else {
-            System.out.println(loggedUser.getName() + " " + loggedUser.getLastName() + " logged in!");
-        }
+            loggedUser = service.getLoggedInUser(login, password);
+            if (loggedUser == null) {
+                System.out.println("Invalid login or password!");
+            } else {
+                System.out.println(loggedUser.getName() + " " + loggedUser.getLastName() + " logged in!");
+                enable(statusTab);
+                enable(sendTab);
+            }
 
+        }
     }
 
 
@@ -213,42 +206,42 @@ public class PaczkamatController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert sharedConsoleLog             != null : "fx:id=\"consoleLog\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-
-        assert loginTab                     != null : "fx:id=\"loginTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginLoginField              != null : "fx:id=\"loginLoginField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginPasswordField           != null : "fx:id=\"loginPasswordField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginButtonDBLogin           != null : "fx:id=\"loginButtonDBLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginButtonCustomerLogin     != null : "fx:id=\"loginButtonCustomerLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-
-        assert sendWebView                  != null : "fx:id=\"sendWebView\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert sendTab                      != null : "fx:id=\"sendTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert sendSenderDetails            != null : "fx:id=\"sendSenderDetails\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert sendRecipientDetails         != null : "fx:id=\"sendRecipientDetails\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert sendPackageSize              != null : "fx:id=\"sendPackageSize\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-
-        assert statusTab                    != null : "fx:id=\"statusTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert StatusCheckPckgNumberInput   != null : "fx:id=\"StatusCheckPckgNumberInput\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert StatusCheckCheckButton       != null : "fx:id=\"StatusCheckCheckButton\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert StatusCheckTextArea          != null : "fx:id=\"StatusCheckTextArea\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-
-        assert adminTab                     != null : "fx:id=\"adminTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-
         //Console config
+
+        /* Uncomment in final version, for now I need verbose debugging in IntelliJ Window
         this.console = new Console(sharedConsoleLog);
         PrintStream ps = new PrintStream(new Console(sharedConsoleLog));
         System.setOut(ps);
         System.setErr(ps);
+        */
         statusTab.setDisable(true);
         sendTab.setDisable(true);
         adminTab.setDisable(true);
+
         //End of console config
 
         disable(adminTab); disable(statusTab); disable(sendTab);
 
         sendPackageSize.setItems(stashSizes);
-        sendWebView.getEngine().load( getClass().getResource("/web.html").toString() );
 
+        sendWebView.getEngine().load( getClass().getResource("/web.html").toString() );
+        addPaczkamatWebView.getEngine().load(getClass().getResource("/web.html").toString());
+
+        sendWebView.getEngine().getLoadWorker().stateProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != Worker.State.SUCCEEDED) { return; }
+
+                    JSObject window = (JSObject) sendWebView.getEngine().executeScript("window");
+                    window.setMember("newOrder", newOrder);
+        });
+
+        addPaczkamatWebView.getEngine().getLoadWorker().stateProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != Worker.State.SUCCEEDED) { return; }
+
+                    JSObject window = (JSObject) sendWebView.getEngine().executeScript("window");
+                    window.setMember("service", service);
+                });
     }
 
     private void disable(Tab tab) {

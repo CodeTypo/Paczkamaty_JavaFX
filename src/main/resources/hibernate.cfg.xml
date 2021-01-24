@@ -6,10 +6,10 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com:3306/paczkamatDB</property>
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <mapping class="mapy.Customer"/>
-    <mapping class="mapy.Order"/>
-    <mapping class="mapy.Paczkamat"/>
-    <mapping class="mapy.Stash"/>
+    <mapping class="entities.Customer"/>
+    <mapping class="entities.Order"/>
+    <mapping class="entities.Paczkamat"/>
+    <mapping class="entities.Stash"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
