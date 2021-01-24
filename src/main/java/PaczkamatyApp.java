@@ -7,11 +7,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class  PaczkamatyApp extends Application {
+
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws Exception {
-        scene = new Scene(loadFXML("paczkamatFX"), 800, 600);
+
+        scene = new Scene(loadFXML("paczkamatFX"), 600, 400);
+        scene.getStylesheets().add("paczkamatCSS.css");
+
         stage.setScene(scene);
         stage.setTitle("Paczkamaty");
         stage.show();
@@ -21,7 +25,7 @@ public class  PaczkamatyApp extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException, IOException {
+    private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PaczkamatyApp.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

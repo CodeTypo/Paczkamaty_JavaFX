@@ -5,13 +5,13 @@
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URL;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,6 +27,7 @@ public class PaczkamatController {
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
+
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LOGIN TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @FXML // fx:id="loginTab"
@@ -52,10 +53,20 @@ public class PaczkamatController {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //LOGIN TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SEND TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @FXML // fx:id="sendTab"
     private Tab sendTab; // Value injected by FXMLLoader
+
+    @FXML // fx:id="sendSenderDetails"
+    private TextField sendSenderDetails; // Value injected by FXMLLoader
+
+    @FXML // fx:id="sendRecipientDetails"
+    private TextField sendRecipientDetails; // Value injected by FXMLLoader
+
+    @FXML // fx:id="sendPackageSize"
+    private ChoiceBox<String> sendPackageSize; // Value injected by FXMLLoader
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //SEND TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -78,6 +89,7 @@ public class PaczkamatController {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //STATUS TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ADMIN TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @FXML // fx:id="adminTab"
@@ -87,16 +99,19 @@ public class PaczkamatController {
 
 
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONTROLLER CLASS VARIABLES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private PaczkamatService service;
 
     private List<Paczkamat> paczkamats = new ArrayList<>();
-    private List<Order> orders = new ArrayList<>();
-    private List<Stash> stashes = new ArrayList<>();
-    private List<Customer> customers = new ArrayList<>();
+    private List<Order>     orders     = new ArrayList<>();
+    private List<Stash>     stashes    = new ArrayList<>();
+    private List<Customer>  customers  = new ArrayList<>();
+
+    ObservableList<String> stashSizes = FXCollections.observableArrayList
+            ("Small","Medium", "Large", "X-tra Large");
 
     private Customer loggedUser = null;
-    private Console console;
+    private Console  console;
 
 
     /*
@@ -117,15 +132,17 @@ public class PaczkamatController {
         loginLoginField.setText("");
         loginPasswordField.setText("");
 
-        paczkamats = service.getAllPaczkamats();
-        orders = service.getAllOrders();
-        stashes = service.getAllStashes();
-        customers = service.getAllCustomers();
+        paczkamats  = service.getAllPaczkamats();
+        orders      = service.getAllOrders();
+        stashes     = service.getAllStashes();
+        customers   = service.getAllCustomers();
 
         loginTextArea.setText(paczkamats.get(0).getAddress());
 
-        statusTab.setDisable(false);
-        sendTab.setDisable(false);
+
+        enable(statusTab);
+        enable(sendTab);
+
 
 //        System.out.println(orders.get(0).getOrderStatus());
 //        System.out.println(stashes.get(0).getDimension());
@@ -148,6 +165,11 @@ public class PaczkamatController {
 //            throwables.printStackTrace();
 //        }
 
+    }
+
+    private void enable(Tab tab) {
+        tab.setDisable(false);
+        tab.getStyleClass().add("tab-enabled");
     }
 
     @FXML
@@ -188,17 +210,24 @@ public class PaczkamatController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert sharedConsoleLog             != null : "fx:id=\"consoleLog\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+
+        assert loginTab                     != null : "fx:id=\"loginTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginLoginField              != null : "fx:id=\"loginLoginField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginPasswordField           != null : "fx:id=\"loginPasswordField\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginButtonDBLogin           != null : "fx:id=\"loginButtonDBLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert loginButtonCustomerLogin     != null : "fx:id=\"loginButtonCustomerLogin\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+
         assert sendTab                      != null : "fx:id=\"sendTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert sendSenderDetails            != null : "fx:id=\"sendSenderDetails\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert sendRecipientDetails         != null : "fx:id=\"sendRecipientDetails\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+        assert sendPackageSize              != null : "fx:id=\"sendPackageSize\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+
         assert statusTab                    != null : "fx:id=\"statusTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert adminTab                     != null : "fx:id=\"adminTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
-        assert loginTab                     != null : "fx:id=\"loginTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert StatusCheckPckgNumberInput   != null : "fx:id=\"StatusCheckPckgNumberInput\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert StatusCheckCheckButton       != null : "fx:id=\"StatusCheckCheckButton\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
         assert StatusCheckTextArea          != null : "fx:id=\"StatusCheckTextArea\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
+
+        assert adminTab                     != null : "fx:id=\"adminTab\" was not injected: check your FXML file 'paczkamatFX.fxml'.";
 
         //Console config
         this.console = new Console(sharedConsoleLog);
@@ -210,6 +239,14 @@ public class PaczkamatController {
         adminTab.setDisable(true);
         //End of console config
 
+        disable(adminTab); disable(statusTab); disable(sendTab);
 
+        sendPackageSize.setItems(stashSizes);
+
+
+    }
+
+    private void disable(Tab tab) {
+        tab.getStyleClass().add("tab-disabled");
     }
 }

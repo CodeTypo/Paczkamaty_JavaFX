@@ -1,0 +1,7 @@
+.tab-disabled{
+    visibility: hidden;
+}
+
+.tab-enabled{
+    visibility: visible;
+}
