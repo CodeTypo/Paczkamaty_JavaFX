@@ -11,6 +11,8 @@ import entities.Order;
 import entities.Paczkamat;
 import entities.Stash;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
@@ -22,6 +24,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import netscape.javascript.JSObject;
+
 
 public class PaczkamatController {
 
@@ -259,6 +262,10 @@ public class PaczkamatController {
 
         sendPackageSize.setItems(stashSizes);
 
+        addPaczkamatWebView.getEngine().load(getClass().getResource("/admin_map.html").toString());
+        sendWebView.getEngine().load( getClass().getResource("/web.html").toString() );
+
+
         sendWebView.getEngine().setJavaScriptEnabled(true);
         sendWebView.getEngine().getLoadWorker().stateProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -271,16 +278,15 @@ public class PaczkamatController {
         addPaczkamatWebView.getEngine().setJavaScriptEnabled(true);
         addPaczkamatWebView.getEngine().getLoadWorker().stateProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if(newValue == Worker.State.SUCCEEDED){
-                        JSObject window = (JSObject) sendWebView.getEngine().executeScript("window");
-                        window.setMember("java", webViewConnector);
-                        System.out.println("Member set on window as connector");
-                    }
+                    if (newValue != Worker.State.SUCCEEDED) { return; }
+
+                    JSObject window = (JSObject) addPaczkamatWebView.getEngine().executeScript("window");
+                    window.setMember("java", webViewConnector);
+                    System.out.println("Member set on window as connector");
 
                 });
 
-        addPaczkamatWebView.getEngine().load(getClass().getResource("/admin_map.html").toString());
-        sendWebView.getEngine().load( getClass().getResource("/web.html").toString() );
+
 
     }
 
