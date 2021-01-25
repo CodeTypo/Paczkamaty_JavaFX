@@ -9,9 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 public class PaczkamatService {
     private static SessionFactory factory;
@@ -30,6 +28,7 @@ public class PaczkamatService {
             throw new ExceptionInInitializerError(ex);
         }
     }
+
 
     public List<Paczkamat> getAllPaczkamats() {
         List<Paczkamat> paczkamats = new ArrayList<>();
@@ -126,38 +125,13 @@ public class PaczkamatService {
         return customer;
     }
 
-    public void insertPaczkamat(String name, String buildingNumber, String city, String postCode,String province,String street,String latitude,String longitude,String openingHours ) {
-        System.out.println("Insert paczkamat into table");
 
-        Paczkamat paczkamat = new Paczkamat();
-        paczkamat.setCity(city);
-        paczkamat.setBuildingNumber(buildingNumber);
-        paczkamat.setLatitude(latitude);
-        paczkamat.setLongitude(longitude);
-        paczkamat.setName(name);
-        paczkamat.setOpeningHours(openingHours);
-        paczkamat.setProvince(province);
-        paczkamat.setPostCode(postCode);
-
-        Collection<Stash> stashes = new ArrayList<>();
-        for (int i = 0; i < 14; i++) {
-            Stash stash = new Stash();
-            if (i%3 == 0){
-                stash.setDimension("SMALL");
-            } else if (i%3 == 1) {
-                stash.setDimension("MEDIUM");
-            } else {
-                stash.setDimension("LARGE");
-            }
-
-            stashes.add(stash);
-        }
-        paczkamat.setStashes(stashes);
-
+    public <T> void insertEntity(T entity) {
         try {
             session = factory.openSession();
             tx = session.beginTransaction();
-            session.save(paczkamat);
+            session.save(entity);
+            tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
