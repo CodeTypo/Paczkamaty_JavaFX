@@ -4,8 +4,10 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com:3306/paczkamatDB</property>
+<!--    <property name="connection.url">jdbc:mysql://dbpaczkamat.clabexdogems.us-east-1.rds.amazonaws.com:3306/paczkamatDB</property>-->
+    <property name="connection.url">jdbc:mysql://localhost:3306/paczkamatDB?serverTimezone=UTC</property>
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
     <mapping class="entities.Customer"/>
     <mapping class="entities.Order"/>
     <mapping class="entities.Paczkamat"/>

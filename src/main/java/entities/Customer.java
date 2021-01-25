@@ -18,6 +18,7 @@ public class Customer {
     private Collection<Order> ordersAsReceiver;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public Integer getId() {
         return id;
