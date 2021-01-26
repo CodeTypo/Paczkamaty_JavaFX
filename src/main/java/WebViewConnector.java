@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class WebViewConnector {
-//    private PaczkamatService service;
-//
-//    public WebViewConnector(PaczkamatService service) {
-//        this.service = service;
-//    }
+    private PaczkamatService service;
+
+    public WebViewConnector(PaczkamatService service) {
+        this.service = service;
+    }
 
     public void log(String text)
     {
@@ -74,6 +74,8 @@ public class WebViewConnector {
 
         System.out.println("Street address: " + paczkamat.getStreet());
 
+        service.insertEntity(paczkamat);
+
         Collection<Stash> stashes = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
             Stash stash = new Stash();
@@ -85,7 +87,7 @@ public class WebViewConnector {
                 stash.setDimension("LARGE");
             }
             stash.setPaczkamat(paczkamat);
-//            service.insertEntity(stash);
+            service.insertEntity(stash);
 
             stashes.add(stash);
         }
@@ -94,6 +96,6 @@ public class WebViewConnector {
         System.out.println(paczkamat.getPostCode());
         System.out.println(paczkamat.getStashes().size());
 
-//        service.insertEntity(paczkamat);
+
     }
 }

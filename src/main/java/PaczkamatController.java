@@ -128,7 +128,7 @@ public class PaczkamatController {
     // It is the simplest way to get access to java object within javascript
     private Order newOrder = new Order();
     private Paczkamat newPaczkamat = new Paczkamat();
-    private final WebViewConnector webViewConnector = new WebViewConnector();
+    private WebViewConnector webViewConnector;// = new WebViewConnector();
 
     private WebEngine adminWebEngine;
 
@@ -161,6 +161,7 @@ public class PaczkamatController {
 
         loginTextArea.setText(customers.get(0).getName());
 
+        webViewConnector = new WebViewConnector(service);
 
         adminWebEngine.getLoadWorker().stateProperty()
                 .addListener((observable, oldValue, newValue) -> {
