@@ -1,5 +1,4 @@
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +19,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-
 import netscape.javascript.JSObject;
 
 
@@ -129,7 +128,13 @@ public class PaczkamatController {
     // It is the simplest way to get access to java object within javascript
     private Order newOrder = new Order();
     private Paczkamat newPaczkamat = new Paczkamat();
-    public WebViewConnector webViewConnector = new WebViewConnector();
+    private final WebViewConnector webViewConnector = new WebViewConnector();
+
+    private WebEngine adminWebEngine;
+
+    // Maintain a strong reference to prevent garbage collection:
+// https://bugs.openjdk.java.net/browse/JDK-8154127
+//    private final JavaBridge bridge = new JavaBridge();
 
     /*
         This method should be called only once
@@ -156,6 +161,17 @@ public class PaczkamatController {
 
         loginTextArea.setText(customers.get(0).getName());
 
+
+        adminWebEngine.getLoadWorker().stateProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    JSObject window = (JSObject) adminWebEngine.executeScript("window");
+                    window.setMember("app", webViewConnector);
+                    System.out.println("Member set on window as connector");
+
+                });
+
+        adminWebEngine.load(getClass().getResource("/admin_map.html").toString());
+
     }
 
     private void enable(Tab tab) {
@@ -167,8 +183,6 @@ public class PaczkamatController {
     void onUserLoginClicked() {
         String login = loginLoginField.getText();
         String password = loginPasswordField.getText();
-        System.out.println(login);
-        System.out.println(password);
 
         if (login.equals("admin") && password.equals("admin")){
             enable(adminTab);
@@ -183,6 +197,29 @@ public class PaczkamatController {
             }
 
         }
+
+//        sendWebView.getEngine().setJavaScriptEnabled(true);
+//        sendWebView.getEngine().getLoadWorker().stateProperty()
+//                .addListener((observable, oldValue, newValue) -> {
+//                    if (newValue != Worker.State.SUCCEEDED) { return; }
+//
+//                    JSObject window = (JSObject) sendWebView.getEngine().executeScript("window");
+//                    window.setMember("java", newOrder);
+//                });
+//
+//        addPaczkamatWebView.getEngine().setJavaScriptEnabled(true);
+//        addPaczkamatWebView.getEngine().getLoadWorker().stateProperty()
+//                .addListener((observable, oldValue, newValue) -> {
+//                    if (newValue != Worker.State.SUCCEEDED) { return; }
+//
+//                    JSObject window = (JSObject) addPaczkamatWebView.getEngine().executeScript("window");
+//                    window.setMember("java", webViewConnector);
+//                    System.out.println("Member set on window as connector");
+//
+//                });
+//
+//        addPaczkamatWebView.getEngine().load(getClass().getResource("/admin_map.html").toString());
+//        sendWebView.getEngine().load( getClass().getResource("/web.html").toString() );
     }
 
 
@@ -262,30 +299,20 @@ public class PaczkamatController {
 
         sendPackageSize.setItems(stashSizes);
 
-        addPaczkamatWebView.getEngine().load(getClass().getResource("/admin_map.html").toString());
-        sendWebView.getEngine().load( getClass().getResource("/web.html").toString() );
+        adminWebEngine = addPaczkamatWebView.getEngine();
 
 
-        sendWebView.getEngine().setJavaScriptEnabled(true);
-        sendWebView.getEngine().getLoadWorker().stateProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != Worker.State.SUCCEEDED) { return; }
 
-                    JSObject window = (JSObject) sendWebView.getEngine().executeScript("window");
-                    window.setMember("java", newOrder);
-        });
-
-        addPaczkamatWebView.getEngine().setJavaScriptEnabled(true);
-        addPaczkamatWebView.getEngine().getLoadWorker().stateProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != Worker.State.SUCCEEDED) { return; }
-
-                    JSObject window = (JSObject) addPaczkamatWebView.getEngine().executeScript("window");
-                    window.setMember("java", webViewConnector);
-                    System.out.println("Member set on window as connector");
-
-                });
-
+//        adminWebEngine.getLoadWorker().stateProperty().addListener(
+//                new ChangeListener<Worker.State>() {
+//                    public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
+//                        if (newState == Worker.State.SUCCEEDED) {
+//                            JSObject window = (JSObject) adminWebEngine.executeScript("window");
+//                            window.setMember("app", webViewConnector);
+//                        }
+//                    }
+//                });
+//        adminWebEngine.load(getClass().getResource("admin_map.html").toString());
 
 
     }
@@ -293,4 +320,6 @@ public class PaczkamatController {
     private void disable(Tab tab) {
         tab.getStyleClass().add("tab-disabled");
     }
+
+
 }
