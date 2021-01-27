@@ -3,6 +3,7 @@ package entities;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="stashes")
@@ -10,8 +11,8 @@ public class Stash {
     private Integer id;
 //    private String paczkamatId;
     private String dimension;
-    private Collection<Order> ordersToSend;
-    private Collection<Order> ordersToReceive;
+    private Set<Order> ordersToSend;
+    private Set<Order> ordersToReceive;
     private Paczkamat paczkamat;
 
     @Id
@@ -58,25 +59,25 @@ public class Stash {
 //        return Objects.hash(id, paczkamatId, dimension);
 //    }
 
-    @OneToMany(mappedBy = "senderStash")
-    public Collection<Order> getOrdersToSend() {
+    @OneToMany(mappedBy = "senderStash", fetch = FetchType.EAGER)
+    public Set<Order> getOrdersToSend() {
         return ordersToSend;
     }
 
-    public void setOrdersToSend(Collection<Order> ordersToSend) {
+    public void setOrdersToSend(Set<Order> ordersToSend) {
         this.ordersToSend = ordersToSend;
     }
 
-    @OneToMany(mappedBy = "receiverStash")
-    public Collection<Order> getOrdersToReceive() {
+    @OneToMany(mappedBy = "receiverStash", fetch = FetchType.EAGER)
+    public Set<Order> getOrdersToReceive() {
         return ordersToReceive;
     }
 
-    public void setOrdersToReceive(Collection<Order> ordersToReceive) {
+    public void setOrdersToReceive(Set<Order> ordersToReceive) {
         this.ordersToReceive = ordersToReceive;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "paczkamat_id", referencedColumnName = "name")
     public Paczkamat getPaczkamat() {
         return paczkamat;

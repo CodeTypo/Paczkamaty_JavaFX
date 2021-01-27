@@ -159,6 +159,8 @@ public class PaczkamatController {
         stashes     = service.getAllStashes();
         customers   = service.getAllCustomers();
 
+//        System.out.println(paczkamats.get(0).getStashes().size());
+
         loginTextArea.setText(customers.get(0).getName());
 
         webViewConnector = new WebViewConnector(service);

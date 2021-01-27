@@ -32,7 +32,7 @@
             <basic name="openingHours">
                 <column name="opening_hours"/>
             </basic>
-            <one-to-many name="stash" mapped-by="paczkamat" target-entity="entities.Stash"/>
+            <one-to-many name="stash" fetch="EAGER" mapped-by="paczkamat" target-entity="entities.Stash"/>
         </attributes>
     </entity>
 </entity-mappings>

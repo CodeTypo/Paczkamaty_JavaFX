@@ -14,11 +14,11 @@
             <basic name="dimension">
                 <column name="dimension"/>
             </basic>
-            <many-to-one name="paczkamat" optional="true" target-entity="entities.Paczkamat">
+            <many-to-one name="paczkamat" fetch="EAGER" optional="true" target-entity="entities.Paczkamat">
                 <join-column name="paczkamat_id" nullable="false" referenced-column-name="name"/>
             </many-to-one>
-            <one-to-many name="ordersToSend" mapped-by="senderStash" target-entity="entities.Order"/>
-            <one-to-many name="ordersToReceive" mapped-by="receiverStash" target-entity="entities.Order"/>
+            <one-to-many name="ordersToSend" fetch="EAGER" mapped-by="senderStash" target-entity="entities.Order"/>
+            <one-to-many name="ordersToReceive" fetch="EAGER" mapped-by="receiverStash" target-entity="entities.Order"/>
         </attributes>
     </entity>
 </entity-mappings>

@@ -32,16 +32,16 @@
             <basic name="receiveDatetime">
                 <column name="receive_datetime"/>
             </basic>
-            <many-to-one name="sender" optional="true" target-entity="entities.Customer">
+            <many-to-one name="sender" fetch="EAGER" optional="true" target-entity="entities.Customer">
                 <join-column name="sender_id" nullable="false" referenced-column-name="id"/>
             </many-to-one>
-            <many-to-one name="senderStash" optional="true" target-entity="entities.Stash">
+            <many-to-one name="senderStash" fetch="EAGER" optional="true" target-entity="entities.Stash">
                 <join-column name="sender_stash_id" nullable="false" referenced-column-name="id"/>
             </many-to-one>
-            <many-to-one name="receiver" optional="true" target-entity="entities.Customer">
+            <many-to-one name="receiver" fetch="EAGER" optional="true" target-entity="entities.Customer">
                 <join-column name="receiver_id" nullable="false" referenced-column-name="id"/>
             </many-to-one>
-            <many-to-one name="receiverStash" optional="true" target-entity="entities.Stash">
+            <many-to-one name="receiverStash" fetch="EAGER" optional="true" target-entity="entities.Stash">
                 <join-column name="receiver_stash_id" nullable="false" referenced-column-name="id"/>
             </many-to-one>
         </attributes>
