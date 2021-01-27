@@ -115,7 +115,17 @@ public class PaczkamatController {
         order = service.getAllOrders();
         stashes = service.getAllStashes();
         customers = service.getAllCustomers();
+    }
 
+    void setupWebView(WebView webView, String htmlFile) {
+        WebEngine webEngine = webView.getEngine();
+        webEngine.getLoadWorker().stateProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    JSObject window = (JSObject) webEngine.executeScript("window");
+                    window.setMember("app", webViewConnector);
+                });
+
+        webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
     }
 
     @FXML
@@ -125,15 +135,7 @@ public class PaczkamatController {
 
         if (login.equals("admin") && password.equals("admin")) {
             enable(adminTab);
-
-            adminWebEngine.getLoadWorker().stateProperty()
-                    .addListener((observable, oldValue, newValue) -> {
-                        JSObject window = (JSObject) adminWebEngine.executeScript("window");
-                        window.setMember("app", webViewConnector);
-                    });
-
-            adminWebEngine.load(getClass().getResource("/webview/admin_map.html").toString());
-
+            setupWebView(addPaczkamatWebView, "admin_map.html");
         } else {
             loggedUser = service.getLoggedInUser(login, password);
             if (loggedUser == null) {
@@ -146,18 +148,7 @@ public class PaczkamatController {
                 enable(sendTab);
 
                 sendPackageSize.setItems(stashSizes);
-
-                customerWebEngine.getLoadWorker().stateProperty()
-                        .addListener((observable, oldValue, newValue) -> {
-                            if (newValue != Worker.State.SUCCEEDED) {
-                                return;
-                            }
-                            JSObject window = (JSObject) customerWebEngine.executeScript("window");
-                            window.setMember("app", webViewConnector);
-
-                        });
-
-                customerWebEngine.load(getClass().getResource("/webview/customer_map.html").toString());
+                setupWebView(sendWebView, "customer_map.html");
             }
 
         }
@@ -167,29 +158,31 @@ public class PaczkamatController {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        //Console config
+        statusTab.setDisable(true);
+        sendTab.setDisable(true);
+        adminTab.setDisable(true);
+
+        adminWebEngine = addPaczkamatWebView.getEngine();
+        customerWebEngine = sendWebView.getEngine();
+
+
 
         /* Uncomment in final version, for now I need verbose debugging in IntelliJ Window
+
+        //Console config
         this.console = new Console(sharedConsoleLog);
         PrintStream ps = new PrintStream(new Console(sharedConsoleLog));
         System.setOut(ps);
         System.setErr(ps);
-        */
-
         //End of console config
 
-        statusTab.setDisable(true);
-        sendTab.setDisable(true);
-        adminTab.setDisable(true);
+        */
 
         // These lines are problematic
         // Because it looks like there is no tabs between when you log in as admin
 //        disable(adminTab);
 //        disable(statusTab);
 //        disable(sendTab);
-
-        adminWebEngine = addPaczkamatWebView.getEngine();
-        customerWebEngine = sendWebView.getEngine();
     }
 
     private void disable(Tab tab) {
