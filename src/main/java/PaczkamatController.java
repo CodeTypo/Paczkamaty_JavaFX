@@ -64,6 +64,10 @@ public class PaczkamatController {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ STATUS TAB ELEMENTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @FXML // fx:id="sendPackageSize"
     private ChoiceBox<String> sendPackageSize; // Value injected by FXMLLoader
+    @FXML
+    private ChoiceBox<?> recipientChooser;
+    @FXML
+    private ChoiceBox<?> paczkamatChooser;
     @FXML // fx:id="statusTab"
     private Tab statusTab; // Value injected by FXMLLoader
     @FXML // fx:id="StatusCheckPckgNumberInput"
@@ -95,9 +99,6 @@ public class PaczkamatController {
 
     private WebViewConnector webViewConnector;// = new WebViewConnector();
 
-    private WebEngine adminWebEngine;
-    private WebEngine customerWebEngine;
-
 
     @FXML
     void onDBLoginClicked() {
@@ -117,17 +118,6 @@ public class PaczkamatController {
         customers = service.getAllCustomers();
     }
 
-    void setupWebView(WebView webView, String htmlFile) {
-        WebEngine webEngine = webView.getEngine();
-        webEngine.getLoadWorker().stateProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    JSObject window = (JSObject) webEngine.executeScript("window");
-                    window.setMember("app", webViewConnector);
-                });
-
-        webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
-    }
-
     @FXML
     void onUserLoginClicked() {
         String login = loginLoginField.getText();
@@ -141,8 +131,7 @@ public class PaczkamatController {
             if (loggedUser == null) {
                 loginTextArea.setText("Invalid login or password!");
             } else {
-                System.out.println(loggedUser.getName() + " " + loggedUser.getLastName() + " logged in!");
-                loginTextArea.setText("Witamy na pokładzie " + customers.get(0).getName());
+                loginTextArea.setText("Witamy na pokładzie " + customers.get(0).getName() + " " + loggedUser.getLastName());
 
                 enable(statusTab);
                 enable(sendTab);
@@ -150,9 +139,18 @@ public class PaczkamatController {
                 sendPackageSize.setItems(stashSizes);
                 setupWebView(sendWebView, "customer_map.html");
             }
-
         }
+    }
 
+    void setupWebView(WebView webView, String htmlFile) {
+        WebEngine webEngine = webView.getEngine();
+        webEngine.getLoadWorker().stateProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    JSObject window = (JSObject) webEngine.executeScript("window");
+                    window.setMember("app", webViewConnector);
+                });
+
+        webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
     }
 
     @FXML
@@ -161,11 +159,6 @@ public class PaczkamatController {
         statusTab.setDisable(true);
         sendTab.setDisable(true);
         adminTab.setDisable(true);
-
-        adminWebEngine = addPaczkamatWebView.getEngine();
-        customerWebEngine = sendWebView.getEngine();
-
-
 
         /* Uncomment in final version, for now I need verbose debugging in IntelliJ Window
 

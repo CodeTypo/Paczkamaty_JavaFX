@@ -86,9 +86,15 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField fx:id="sendSenderDetails" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="128.0" promptText="Sender details" />
-                                    <TextField fx:id="sendRecipientDetails" layoutX="14.0" layoutY="48.0" prefHeight="25.0" prefWidth="127.0" promptText="Recipient details" />
-                                    <ChoiceBox fx:id="sendPackageSize" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="129.0" />
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <TextField fx:id="sendSenderDetails" prefHeight="25.0" prefWidth="128.0" promptText="Sender details" />
+                                          <TextField fx:id="sendRecipientDetails" prefHeight="25.0" prefWidth="127.0" promptText="Recipient details" />
+                                          <ChoiceBox fx:id="recipientChooser" prefWidth="150.0" />
+                                          <ChoiceBox fx:id="paczkamatChooser" prefWidth="150.0" />
+                                          <ChoiceBox fx:id="sendPackageSize" prefHeight="25.0" prefWidth="129.0" />
+                                       </children>
+                                    </VBox>
                                     <WebView fx:id="sendWebView" layoutX="149.0" layoutY="14.0" prefHeight="256.0" prefWidth="444.0" />
                                  </children>
                               </AnchorPane>
