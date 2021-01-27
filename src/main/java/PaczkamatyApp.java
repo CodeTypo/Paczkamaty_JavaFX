@@ -23,7 +23,7 @@ public class  PaczkamatyApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent p  =(loadFXML("paczkamatFX"));
+        Parent p = loadFXML("./layout/paczkamatFX");
 
         p.setOnMousePressed(mouseEvent -> {
             xOffset = mouseEvent.getSceneX();
@@ -49,7 +49,7 @@ public class  PaczkamatyApp extends Application {
             stage.initStyle(StageStyle.UNDECORATED);
         }
 
-        scene.getStylesheets().add("paczkamatCSS.css");
+        scene.getStylesheets().add("layout/paczkamatCSS.css");
 
         stage.setScene(scene);
         stage.setTitle("Paczkamaty");

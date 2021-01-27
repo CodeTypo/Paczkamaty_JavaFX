@@ -101,7 +101,7 @@ public class Customer {
         return Objects.hash(id, email, name, lastName, phoneNumber, login, password);
     }
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender", fetch = FetchType.EAGER)
     public Collection<Order> getOrdersAsSender() {
         return ordersAsSender;
     }
@@ -110,7 +110,7 @@ public class Customer {
         this.ordersAsSender = ordersAsSender;
     }
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.EAGER)
     public Collection<Order> getOrdersAsReceiver() {
         return ordersAsReceiver;
     }

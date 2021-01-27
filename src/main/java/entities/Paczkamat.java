@@ -121,7 +121,7 @@ public class Paczkamat {
         return Objects.hash(name, buildingNumber, city, postCode, province, street, latitude, longitude, openingHours);
     }
 
-    @OneToMany(mappedBy = "paczkamat")
+    @OneToMany(mappedBy = "paczkamat", fetch = FetchType.EAGER)
     public Collection<Stash> getStashes() {
         return stashes;
     }

@@ -26,8 +26,8 @@
             <basic name="password">
                 <column name="password"/>
             </basic>
-            <one-to-many name="ordersAsSender" mapped-by="sender" target-entity="entities.Order"/>
-            <one-to-many name="ordersAsReceiver" mapped-by="receiver" target-entity="entities.Order"/>
+            <one-to-many name="ordersAsSender" fetch="EAGER" mapped-by="sender" target-entity="entities.Order"/>
+            <one-to-many name="ordersAsReceiver" fetch="EAGER" mapped-by="receiver" target-entity="entities.Order"/>
         </attributes>
     </entity>
 </entity-mappings>
