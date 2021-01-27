@@ -54,7 +54,7 @@
                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                              </HBox.margin>
                                           </PasswordField>
-                                          <Button fx:id="loginButtonDBLogin" mnemonicParsing="false" onAction="#onLoginClicked" text="DB Login">
+                                          <Button fx:id="loginButtonDBLogin" mnemonicParsing="false" onAction="#onDBLoginClicked" text="DB Login">
                                              <HBox.margin>
                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                              </HBox.margin>

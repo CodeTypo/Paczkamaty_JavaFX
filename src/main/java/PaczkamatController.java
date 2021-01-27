@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -18,7 +17,6 @@ import netscape.javascript.JSObject;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -100,24 +98,15 @@ public class PaczkamatController {
     private WebEngine adminWebEngine;
     private WebEngine customerWebEngine;
 
-    // Maintain a strong reference to prevent garbage collection:
-// https://bugs.openjdk.java.net/browse/JDK-8154127
-//    private final JavaBridge bridge = new JavaBridge();
 
-    /*
-        This method should be called only once
-        independent of user flow. It is needed to make
-        real connection with remote server.
-        Given login and password must be secret and cannot be stored in table.
-        Beside this, there is separate login for normal user and we check
-        his identity based on list of users returned in this method at the beginning.
-     */
     @FXML
-    void onLoginClicked() {
+    void onDBLoginClicked() {
         String login = loginLoginField.getText();
         String password = loginPasswordField.getText();
 
         service = new PaczkamatService(login, password);
+        webViewConnector = new WebViewConnector(service);
+
         loginButtonDBLogin.setDisable(true);
         loginLoginField.setText("");
         loginPasswordField.setText("");
@@ -127,16 +116,7 @@ public class PaczkamatController {
         stashes = service.getAllStashes();
         customers = service.getAllCustomers();
 
-//        System.out.println(paczkamats.get(0).getStashes().size());
-
-        loginTextArea.setText(customers.get(0).getName());
-
-        webViewConnector = new WebViewConnector(service);
-
-
     }
-
-
 
     @FXML
     void onUserLoginClicked() {
@@ -150,18 +130,18 @@ public class PaczkamatController {
                     .addListener((observable, oldValue, newValue) -> {
                         JSObject window = (JSObject) adminWebEngine.executeScript("window");
                         window.setMember("app", webViewConnector);
-                        System.out.println("Member set on window as connector");
-
                     });
 
-            adminWebEngine.load(getClass().getResource("/admin_map.html").toString());
+            adminWebEngine.load(getClass().getResource("/webview/admin_map.html").toString());
 
         } else {
             loggedUser = service.getLoggedInUser(login, password);
             if (loggedUser == null) {
-                System.out.println("Invalid login or password!");
+                loginTextArea.setText("Invalid login or password!");
             } else {
                 System.out.println(loggedUser.getName() + " " + loggedUser.getLastName() + " logged in!");
+                loginTextArea.setText("Witamy na pokładzie " + customers.get(0).getName());
+
                 enable(statusTab);
                 enable(sendTab);
 
@@ -172,23 +152,16 @@ public class PaczkamatController {
                             if (newValue != Worker.State.SUCCEEDED) {
                                 return;
                             }
-
                             JSObject window = (JSObject) customerWebEngine.executeScript("window");
                             window.setMember("app", webViewConnector);
-                            System.out.println("Member set on window as connector");
 
                         });
 
-                customerWebEngine.load(getClass().getResource("/web.html").toString());
+                customerWebEngine.load(getClass().getResource("/webview/customer_map.html").toString());
             }
 
         }
 
-    }
-
-
-    public void close(javafx.scene.input.MouseEvent mouseEvent) {
-        ((Stage) (((HBox) mouseEvent.getSource()).getScene().getWindow())).close();
     }
 
     @FXML
@@ -205,7 +178,6 @@ public class PaczkamatController {
 
         //End of console config
 
-
         statusTab.setDisable(true);
         sendTab.setDisable(true);
         adminTab.setDisable(true);
@@ -215,8 +187,6 @@ public class PaczkamatController {
 //        disable(adminTab);
 //        disable(statusTab);
 //        disable(sendTab);
-
-
 
         adminWebEngine = addPaczkamatWebView.getEngine();
         customerWebEngine = sendWebView.getEngine();
@@ -229,6 +199,10 @@ public class PaczkamatController {
     private void enable(Tab tab) {
         tab.setDisable(false);
         tab.getStyleClass().add("tab-enabled");
+    }
+
+    public void close(javafx.scene.input.MouseEvent mouseEvent) {
+        ((Stage) (((HBox) mouseEvent.getSource()).getScene().getWindow())).close();
     }
 
     //Klasa która pozwala na wykorzystanie textFieldu jako console output, dzięki czemu można wyświetlać w nim logi

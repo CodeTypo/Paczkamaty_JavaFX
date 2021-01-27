@@ -19,7 +19,7 @@ public class PaczkamatService {
     public PaczkamatService(String username, String password) {
         try {
             Configuration cfg = new Configuration();
-            cfg.configure("hibernate.cfg.xml"); //hibernate config xml file name
+            cfg.configure("hibernate/hibernate.cfg.xml"); //hibernate config xml file name
             cfg.getProperties().setProperty("hibernate.connection.password", password);
             cfg.getProperties().setProperty("hibernate.connection.username", username);
             factory = cfg.buildSessionFactory();
