@@ -86,18 +86,16 @@ public class PaczkamatController {
     @FXML // fx:id="adminTab"
     private Tab adminTab; // Value injected by FXMLLoader
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONTROLLER CLASS VARIABLES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private PaczkamatService service;
-    private List<Paczkamat> paczkamats = new ArrayList<>();
-    private List<Order> order = new ArrayList<>();
-    private List<Stash> stashes = new ArrayList<>();
-    private List<Customer> customers = new ArrayList<>();
-    private Customer loggedUser = null;
+
     private Console console;
+
+    private DataRepository data;
+    private WebViewConnector webViewConnector;
+
+    private Customer loggedUser = null;
 
     ObservableList<String> stashSizes = FXCollections.observableArrayList
             ("Small", "Medium", "Large");
-
-    private WebViewConnector webViewConnector;// = new WebViewConnector();
 
 
     @FXML
@@ -105,17 +103,12 @@ public class PaczkamatController {
         String login = loginLoginField.getText();
         String password = loginPasswordField.getText();
 
-        service = new PaczkamatService(login, password);
-        webViewConnector = new WebViewConnector(service);
+        data = new DataRepository(new PaczkamatService(login, password));
+        webViewConnector = new WebViewConnector(data);
 
         loginButtonDBLogin.setDisable(true);
         loginLoginField.setText("");
         loginPasswordField.setText("");
-
-        paczkamats = service.getAllPaczkamats();
-        order = service.getAllOrders();
-        stashes = service.getAllStashes();
-        customers = service.getAllCustomers();
     }
 
     @FXML
@@ -127,11 +120,12 @@ public class PaczkamatController {
             enable(adminTab);
             setupWebView(addPaczkamatWebView, "admin_map.html");
         } else {
-            loggedUser = service.getLoggedInUser(login, password);
+            loggedUser = data.getLoggedUser(login, password);
             if (loggedUser == null) {
                 loginTextArea.setText("Invalid login or password!");
             } else {
-                loginTextArea.setText("Witamy na pokładzie " + customers.get(0).getName() + " " + loggedUser.getLastName());
+                loginTextArea.setText("Witamy na pokładzie " + loggedUser.getName() + " " + loggedUser.getLastName());
+                System.out.println(data.getCustomers().get(0).getName());
 
                 enable(statusTab);
                 enable(sendTab);

@@ -142,5 +142,20 @@ public class PaczkamatService {
         }
     }
 
+    public <T> void updateEntity(T entity) {
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.update(entity);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 
 }
