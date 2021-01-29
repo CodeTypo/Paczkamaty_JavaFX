@@ -1,7 +1,10 @@
 package controllers;
 
-import entities.Customer;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,14 +13,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import services.DataSource;
-import services.SessionStore;
 
-import java.io.IOException;
 
-public class LoginController {
+public class DBLoginController {
+
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
 
     @FXML
     private TextField loginField;
@@ -29,12 +39,9 @@ public class LoginController {
     private Button loginBtn;
 
     @FXML
-    private Button registerBtn;
+    private Text mockButton;
 
-    @FXML
-    private Text msgText;
-
-    private void showNewlayout(String path, ActionEvent event) {
+    private void showNewlayout(String path, Event event) {
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
             Stage stage = new Stage();
@@ -49,37 +56,20 @@ public class LoginController {
     }
 
     @FXML
+    void onMockClicked(MouseEvent event) {
+        DataSource.setMockService();
+        showNewlayout("layout/login_screen.fxml", event);
+    }
+
+    @FXML
     void onLoginBtnClicked(ActionEvent event) {
         String login = loginField.getText();
         String password = passwordField.getText();
 
-        if (login.equals("admin") && password.equals("admin")) {
-            SessionStore.setAdmin(true);
-            SessionStore.setLoggedIn(true);
-            showNewlayout("layout/admin_screen.fxml", event);
-        } else {
-            try {
-                Customer loggedUser = DataSource.getLoggedUser(login, password);
-                SessionStore.setUser(loggedUser);
-                SessionStore.setLoggedIn(true);
-                showNewlayout("layout/customer_screen.fxml", event);
-            } catch (Exception e) {
-                msgText.setText("Invalid login or password!");
-                msgText.setVisible(true);
-            }
-            
-            //                sendPackageSize.setItems(stashSizes);
-//                setupWebView(sendWebView, "customer_map.html");
-
-        }
-
-
-
+        DataSource.setDBService(login, password);
+        showNewlayout("layout/login_screen.fxml", event);
     }
 
     @FXML
-    void onRegisterBtnClicked(ActionEvent event) {
-
-    }
-
+    void initialize() { }
 }

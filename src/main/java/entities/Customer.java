@@ -118,4 +118,9 @@ public class Customer {
     public void setOrdersAsReceiver(Collection<Order> ordersAsReceiver) {
         this.ordersAsReceiver = ordersAsReceiver;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + lastName;
+    }
 }

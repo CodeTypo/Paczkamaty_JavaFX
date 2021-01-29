@@ -1,3 +1,5 @@
+package services;
+
 import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;
@@ -11,12 +13,12 @@ import org.hibernate.cfg.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaczkamatService {
+public class DBService implements DataService {
     private static SessionFactory factory;
     private static Session session;
     private static Transaction tx = null;
 
-    public PaczkamatService(String username, String password) {
+    public DBService(String username, String password) {
         try {
             Configuration cfg = new Configuration();
             cfg.configure("hibernate/hibernate.cfg.xml"); //hibernate config xml file name
@@ -106,14 +108,29 @@ public class PaczkamatService {
         return stashes;
     }
 
-    public Customer getLoggedInUser(String login, String password) {
-        Customer customer = null;
+    public Customer getLoggedInUser(String login, String password) throws HibernateException {
         try {
             session = factory.openSession();
             tx = session.beginTransaction();
-            customer = (Customer) session.createQuery("FROM Customer customer where " +
+            return (Customer) session.createQuery("FROM Customer customer where " +
                     "customer.login like :login and customer.password like :password").
                     setParameter("login", login).setParameter("password", password).getSingleResult();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    public void insertPaczkamat( Paczkamat paczkamat ) {
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.save(paczkamat);
+            tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -122,15 +139,45 @@ public class PaczkamatService {
         } finally {
             session.close();
         }
-        return customer;
     }
 
-
-    public <T> void insertEntity(T entity) {
+    public void insertStash( Stash stash ) {
         try {
             session = factory.openSession();
             tx = session.beginTransaction();
-            session.save(entity);
+            session.save(stash);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void insertOrder( Order order ) {
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.save(order);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void insertCustomer( Customer customer ) {
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.save(customer);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -157,5 +204,90 @@ public class PaczkamatService {
             session.close();
         }
     }
+
+
+
+//    public <T> void insertEntity(T entity) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.save(entity);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//
+//    // UPDATE METHODS
+//
+//    public void updatePaczkamat( Paczkamat paczkamat ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(paczkamat);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//    public void updateStash( Stash stash ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(stash);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//    public void updateOrder( Order order ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(order);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//    public void updateCustomer( Customer customer ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(customer);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
 
 }
