@@ -11,7 +11,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
+import web.WebViewConnector;
 
 public class CustomerController {
 
@@ -28,7 +31,7 @@ public class CustomerController {
     private Tab sendTab;
 
     @FXML
-    private WebView selectWebView;
+    private WebView orderWebView;
 
     @FXML
     private GridPane paczkamatPreviewGrid;
@@ -55,14 +58,27 @@ public class CustomerController {
     private Tab trackTab;
 
     @FXML
-    private WebView ordersWebView;
+    private WebView trackWebView;
 
     @FXML
     private ListView<?> ordersList;
 
+    private WebViewConnector webViewConnector;
+
     @FXML
     void initialize() {
+        webViewConnector = new WebViewConnector();
+        setupWebView(orderWebView, "customer_map.html");
+    }
 
+    void setupWebView(WebView webView, String htmlFile) {
+        WebEngine webEngine = webView.getEngine();
+        webEngine.getLoadWorker().stateProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    JSObject window = (JSObject) webEngine.executeScript("window");
+                    window.setMember("app", webViewConnector);
+                });
 
+        webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
     }
 }

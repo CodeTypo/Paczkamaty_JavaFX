@@ -100,7 +100,7 @@ public class PaczkamatController {
         String password = loginPasswordField.getText();
 
 //        data = new DataRepository(new services.PaczkamatService(login, password));
-        webViewConnector = new WebViewConnector(data);
+//        webViewConnector = new WebViewConnector(data);
 
         loginButtonDBLogin.setDisable(true);
         loginLoginField.setText("");

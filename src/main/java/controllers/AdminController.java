@@ -10,7 +10,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
+import web.WebViewConnector;
 
 public class AdminController {
 
@@ -56,9 +59,22 @@ public class AdminController {
     @FXML
     private BarChart<?, ?> customersBarChart;
 
+    private WebViewConnector webViewConnector;
+
     @FXML
     void initialize() {
+        webViewConnector = new WebViewConnector();
+        setupWebView(paczkamatsWebView, "admin_map.html");
+    }
 
+    void setupWebView(WebView webView, String htmlFile) {
+        WebEngine webEngine = webView.getEngine();
+        webEngine.getLoadWorker().stateProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    JSObject window = (JSObject) webEngine.executeScript("window");
+                    window.setMember("app", webViewConnector);
+                });
 
+        webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
     }
 }

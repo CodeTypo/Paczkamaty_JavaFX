@@ -24,7 +24,7 @@
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <WebView fx:id="selectWebView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                  <WebView fx:id="orderWebView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </center>
                <bottom>
                   <GridPane fx:id="paczkamatPreviewGrid" BorderPane.alignment="CENTER">
@@ -86,7 +86,7 @@
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <WebView fx:id="ordersWebView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                  <WebView fx:id="trackWebView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </center>
                <top>
                   <ListView fx:id="ordersList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
