@@ -51,7 +51,7 @@ public class LoginController {
     @FXML
     void onLoginBtnClicked(ActionEvent event) {
         String login = loginField.getText();
-        String password = loginField.getText();
+        String password = passwordField.getText();
 
         if (login.equals("admin") && password.equals("admin")) {
             SessionStore.setAdmin(true);

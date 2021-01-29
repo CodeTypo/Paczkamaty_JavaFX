@@ -13,7 +13,7 @@ interface DataService {
     List<Customer> getAllCustomers();
     List<Stash> getAllStashes();
 
-    Customer getLoggedInUser(String login, String password);
+    Customer getLoggedInUser(String login, String password) throws Exception;
 
     <T> void insertEntity(T entity);
     <T> void updateEntity(T entity);

@@ -37,7 +37,7 @@ public class DataSource {
 
     public static void setMockService() {
         service = new MockService();
-        System.out.println("MOck service will be used");
+        System.out.println("Mock service will be used");
     }
 
     public static void updateOrder(Order order) {
@@ -108,11 +108,11 @@ public class DataSource {
         return customers;
     }
 
-    public static Customer getLoggedUser(String login, String password) {
+    public static Customer getLoggedUser(String login, String password) throws Exception {
         if (loggedUser == null) {
             try {
                 loggedUser = service.getLoggedInUser(login, password);
-            } catch (HibernateException e) {
+            } catch (Exception e) {
                 throw e;
             }
         }

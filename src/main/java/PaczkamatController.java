@@ -109,27 +109,27 @@ public class PaczkamatController {
 
     @FXML
     void onUserLoginClicked() {
-        String login = loginLoginField.getText();
-        String password = loginPasswordField.getText();
-
-        if (login.equals("admin") && password.equals("admin")) {
-            enable(adminTab);
-            setupWebView(addPaczkamatWebView, "admin_map.html");
-        } else {
-            loggedUser = data.getLoggedUser(login, password);
-            if (loggedUser == null) {
-                loginTextArea.setText("Invalid login or password!");
-            } else {
-                loginTextArea.setText("Witamy na pokładzie " + loggedUser.getName() + " " + loggedUser.getLastName());
-                System.out.println(data.getCustomers().get(0).getName());
-
-                enable(statusTab);
-                enable(sendTab);
-
-                sendPackageSize.setItems(stashSizes);
-                setupWebView(sendWebView, "customer_map.html");
-            }
-        }
+//        String login = loginLoginField.getText();
+//        String password = loginPasswordField.getText();
+//
+//        if (login.equals("admin") && password.equals("admin")) {
+//            enable(adminTab);
+//            setupWebView(addPaczkamatWebView, "admin_map.html");
+//        } else {
+//            loggedUser = data.getLoggedUser(login, password);
+//            if (loggedUser == null) {
+//                loginTextArea.setText("Invalid login or password!");
+//            } else {
+//                loginTextArea.setText("Witamy na pokładzie " + loggedUser.getName() + " " + loggedUser.getLastName());
+//                System.out.println(data.getCustomers().get(0).getName());
+//
+//                enable(statusTab);
+//                enable(sendTab);
+//
+//                sendPackageSize.setItems(stashSizes);
+//                setupWebView(sendWebView, "customer_map.html");
+//            }
+//        }
     }
 
     void setupWebView(WebView webView, String htmlFile) {
