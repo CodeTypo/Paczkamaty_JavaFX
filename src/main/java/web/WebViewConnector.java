@@ -33,15 +33,15 @@ public class WebViewConnector {
         String longitude = location.getMember("longitude").toString();
         String openingHours = object.getMember("opening_hours").toString();
 
-        System.out.println(name);
-        System.out.println(buildingNumber);
-        System.out.println(city);
-        System.out.println(postCode);
-        System.out.println(province);
-        System.out.println(street);
-        System.out.println(latitude);
-        System.out.println(longitude);
-        System.out.println(openingHours);
+//        System.out.println(name);
+//        System.out.println(buildingNumber);
+//        System.out.println(city);
+//        System.out.println(postCode);
+//        System.out.println(province);
+//        System.out.println(street);
+//        System.out.println(latitude);
+//        System.out.println(longitude);
+//        System.out.println(openingHours);
 
         Paczkamat paczkamat = new Paczkamat();
         paczkamat.setCity(city);

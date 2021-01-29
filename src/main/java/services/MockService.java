@@ -28,9 +28,31 @@ public class MockService implements DataService {
         customer.setId(1);
         customer.setLogin("adam");
         customer.setPassword("malysz");
+        customer.setName("Adam");
+        customer.setLastName("Malysz");
+        customer.setEmail("adam@gmail.com");
+        customer.setPhoneNumber("123456789");
+
+        customers.add(customer);
+
+        customer = new Customer();
+        customer.setId(2);
+        customer.setLogin("tomek");
+        customer.setPassword("kowalski");
         customer.setName("Tomasz");
         customer.setLastName("Kowalski");
         customer.setEmail("tomasz@gmail.com");
+        customer.setPhoneNumber("123456789");
+
+        customers.add(customer);
+
+        customer = new Customer();
+        customer.setId(3);
+        customer.setLogin("jan");
+        customer.setPassword("nowak");
+        customer.setName("Jan");
+        customer.setLastName("Nowak");
+        customer.setEmail("jan@gmail.com");
         customer.setPhoneNumber("123456789");
 
         customers.add(customer);

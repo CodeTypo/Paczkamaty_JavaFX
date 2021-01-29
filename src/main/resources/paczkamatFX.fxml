@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PaczkamatController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0" styleClass="title-bar" stylesheets="@paczkamatCSS.css">
          <children>
@@ -25,7 +25,7 @@
                   <Label prefHeight="25.0" prefWidth="126.0" styleClass="title" stylesheets="@paczkamatCSS.css" text="Paczkamatyy" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" onMouseClicked="#close" prefHeight="31.0" prefWidth="43.0">
+            <HBox alignment="CENTER" prefHeight="31.0" prefWidth="43.0">
                <children>
                   <Label prefHeight="31.0" prefWidth="20.0" styleClass="close-button" stylesheets="@paczkamatCSS.css" text="X" />
                </children>
@@ -54,12 +54,12 @@
                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                              </HBox.margin>
                                           </PasswordField>
-                                          <Button fx:id="loginButtonDBLogin" mnemonicParsing="false" onAction="#onDBLoginClicked" text="DB Login">
+                                          <Button fx:id="loginButtonDBLogin" mnemonicParsing="false" text="DB Login">
                                              <HBox.margin>
                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <Button fx:id="loginButtonCustomerLogin" layoutX="250.0" layoutY="18.0" mnemonicParsing="false" onAction="#onUserLoginClicked" text="Customer Login">
+                                          <Button fx:id="loginButtonCustomerLogin" layoutX="250.0" layoutY="18.0" mnemonicParsing="false" text="Customer Login">
                                              <HBox.margin>
                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                              </HBox.margin>

@@ -50,11 +50,6 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <ComboBox fx:id="paczkamatComboBox" prefWidth="150.0" promptText="Choose paczkamat">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </ComboBox>
                         <ComboBox fx:id="dimensionComboBox" prefWidth="150.0" promptText="Choose dimension">
                            <VBox.margin>
                               <Insets bottom="10.0" />
@@ -65,7 +60,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <Button fx:id="orderBtn" mnemonicParsing="false" text="Order">
+                        <Button fx:id="orderBtn" mnemonicParsing="false" onAction="#onOrderClicked" text="Order">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin></Button>

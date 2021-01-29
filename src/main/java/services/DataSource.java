@@ -9,34 +9,40 @@ import javafx.collections.ObservableList;
 import org.hibernate.HibernateException;
 
 public class DataSource {
-    private static ObservableList<Paczkamat> paczkamats = FXCollections.observableArrayList();
-    private static ObservableList<Order> orders = FXCollections.observableArrayList();
-    private static ObservableList<Stash> stashes = FXCollections.observableArrayList();
-    private static ObservableList<Customer> customers = FXCollections.observableArrayList();
+    private static ObservableList<Paczkamat> paczkamats;
+    private static ObservableList<Order> orders;
+    private static ObservableList<Stash> stashes;
+    private static ObservableList<Customer> customers;
 
     private static Customer loggedUser;
 
     private static DataService service;
-//
-//    public DataRepository(services.PaczkamatService service) {
-//        this.service = service;
-//        fetchCustomers();
-//        fetchStashes();
-//        fetchPaczkamats();
-//        fetchOrders();
-//    }
 
     private DataSource() {
 
     }
 
+    private static void prepareData() {
+        paczkamats = FXCollections.observableArrayList();
+        orders = FXCollections.observableArrayList();
+        stashes = FXCollections.observableArrayList();
+        customers = FXCollections.observableArrayList();
+
+        fetchCustomers();
+        fetchStashes();
+        fetchPaczkamats();
+        fetchOrders();
+    }
+
     public static void setDBService(String username, String password) {
         service = new DBService(username, password);
+        prepareData();
         System.out.println("Hibernate database connector set");
     }
 
     public static void setMockService() {
         service = new MockService();
+        prepareData();
         System.out.println("Mock service will be used");
     }
 
