@@ -13,12 +13,12 @@ import org.hibernate.cfg.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaczkamatService {
+public class DBService implements DataService {
     private static SessionFactory factory;
     private static Session session;
     private static Transaction tx = null;
 
-    public PaczkamatService(String username, String password) {
+    public DBService(String username, String password) {
         try {
             Configuration cfg = new Configuration();
             cfg.configure("hibernate/hibernate.cfg.xml"); //hibernate config xml file name
@@ -108,23 +108,21 @@ public class PaczkamatService {
         return stashes;
     }
 
-    public Customer getLoggedInUser(String login, String password) {
-        Customer customer = null;
+    public Customer getLoggedInUser(String login, String password) throws HibernateException {
         try {
             session = factory.openSession();
             tx = session.beginTransaction();
-            customer = (Customer) session.createQuery("FROM Customer customer where " +
+            return (Customer) session.createQuery("FROM Customer customer where " +
                     "customer.login like :login and customer.password like :password").
                     setParameter("login", login).setParameter("password", password).getSingleResult();
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
+            throw e;
         } finally {
             session.close();
         }
-        return customer;
     }
 
 

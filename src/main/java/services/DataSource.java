@@ -6,6 +6,7 @@ import entities.Paczkamat;
 import entities.Stash;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.hibernate.HibernateException;
 
 public class DataSource {
     private static ObservableList<Paczkamat> paczkamats = FXCollections.observableArrayList();
@@ -15,7 +16,7 @@ public class DataSource {
 
     private static Customer loggedUser;
 
-    private static PaczkamatService service;
+    private static DataService service;
 //
 //    public DataRepository(services.PaczkamatService service) {
 //        this.service = service;
@@ -30,8 +31,13 @@ public class DataSource {
     }
 
     public static void setDBService(String username, String password) {
-        service = new PaczkamatService(username, password);
+        service = new DBService(username, password);
         System.out.println("Hibernate database connector set");
+    }
+
+    public static void setMockService() {
+        service = new MockService();
+        System.out.println("MOck service will be used");
     }
 
     public static void updateOrder(Order order) {
@@ -104,8 +110,13 @@ public class DataSource {
 
     public static Customer getLoggedUser(String login, String password) {
         if (loggedUser == null) {
-            loggedUser = service.getLoggedInUser(login, password);
+            try {
+                loggedUser = service.getLoggedInUser(login, password);
+            } catch (HibernateException e) {
+                throw e;
+            }
         }
+
         return loggedUser;
     }
 }

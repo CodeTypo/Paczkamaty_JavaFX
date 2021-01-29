@@ -46,6 +46,11 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Button>
+            <Text fx:id="mockButton" fill="#01b53d" onMouseClicked="#onMockClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Skip DB and mock data">
+               <font>
+                  <Font name="Corbel Light" size="18.0" />
+               </font>
+            </Text>
          </children>
          <FlowPane.margin>
             <Insets />
