@@ -1,3 +1,5 @@
+package services;
+
 import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;

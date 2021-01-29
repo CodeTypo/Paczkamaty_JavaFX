@@ -1,11 +1,7 @@
 import entities.Customer;
-import entities.Order;
-import entities.Paczkamat;
-import entities.Stash;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -13,11 +9,11 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
+import services.DataSource;
+import web.WebViewConnector;
 
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -89,7 +85,7 @@ public class PaczkamatController {
 
     private Console console;
 
-    private DataRepository data;
+    private DataSource data;
     private WebViewConnector webViewConnector;
 
     private Customer loggedUser = null;
@@ -103,7 +99,7 @@ public class PaczkamatController {
         String login = loginLoginField.getText();
         String password = loginPasswordField.getText();
 
-        data = new DataRepository(new PaczkamatService(login, password));
+//        data = new DataRepository(new services.PaczkamatService(login, password));
         webViewConnector = new WebViewConnector(data);
 
         loginButtonDBLogin.setDisable(true);

@@ -22,6 +22,10 @@ public class LoginController {
 
     @FXML
     void onLoginBtnClicked(ActionEvent event) {
+        String login = loginField.getText();
+        String password = loginField.getText();
+
+
 
     }
 

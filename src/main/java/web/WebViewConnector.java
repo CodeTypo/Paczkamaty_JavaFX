@@ -1,14 +1,17 @@
+package web;
+
 import entities.Paczkamat;
 import entities.Stash;
 import netscape.javascript.JSObject;
+import services.DataSource;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class WebViewConnector {
-    private DataRepository data;
+    private DataSource data;
 
-    public WebViewConnector(DataRepository data) {
+    public WebViewConnector(DataSource data) {
         this.data = data;
     }
 
