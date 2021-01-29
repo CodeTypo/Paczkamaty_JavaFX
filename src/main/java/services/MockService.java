@@ -71,11 +71,32 @@ public class MockService implements DataService {
     }
 
     @Override
-    public <T> void insertEntity(T entity) {
+    public void insertCustomer(Customer customer) {
+        customers.add(customer);
     }
 
     @Override
-    public <T> void updateEntity(T entity) {
+    public void insertOrder(Order order) {
+        orders.add(order);
+    }
 
+    @Override
+    public void insertStash(Stash stash) {
+        stashes.add(stash);
+    }
+
+    @Override
+    public void insertPaczkamat(Paczkamat paczkamat) {
+        paczkamats.add(paczkamat);
+    }
+
+//    @Override
+//    public <T> void insertEntity(T entity) {
+//    }
+
+    @Override
+    public <T> void updateEntity(T entity) {
+        // do nothing hence we do not have backend to update
+        // in mock service
     }
 }

@@ -14,7 +14,7 @@
    <children>
       <VBox alignment="CENTER">
          <children>
-            <TextField fx:id="loginField" alignment="CENTER" promptText="login">
+            <TextField fx:id="loginField" alignment="CENTER" promptText="login" text="adam">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -22,7 +22,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password">
+            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" text="malysz">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>

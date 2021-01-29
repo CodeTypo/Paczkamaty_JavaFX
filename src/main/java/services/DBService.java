@@ -125,12 +125,59 @@ public class DBService implements DataService {
         }
     }
 
-
-    public <T> void insertEntity(T entity) {
+    public void insertPaczkamat( Paczkamat paczkamat ) {
         try {
             session = factory.openSession();
             tx = session.beginTransaction();
-            session.save(entity);
+            session.save(paczkamat);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void insertStash( Stash stash ) {
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.save(stash);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void insertOrder( Order order ) {
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.save(order);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void insertCustomer( Customer customer ) {
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            session.save(customer);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -157,5 +204,90 @@ public class DBService implements DataService {
             session.close();
         }
     }
+
+
+
+//    public <T> void insertEntity(T entity) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.save(entity);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//
+//    // UPDATE METHODS
+//
+//    public void updatePaczkamat( Paczkamat paczkamat ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(paczkamat);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//    public void updateStash( Stash stash ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(stash);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//    public void updateOrder( Order order ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(order);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
+//
+//    public void updateCustomer( Customer customer ) {
+//        try {
+//            session = factory.openSession();
+//            tx = session.beginTransaction();
+//            session.update(customer);
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//    }
 
 }

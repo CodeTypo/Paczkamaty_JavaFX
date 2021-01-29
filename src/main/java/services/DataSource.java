@@ -74,22 +74,22 @@ public class DataSource {
 
     public static void addPaczkamat(Paczkamat paczkamat){
         paczkamats.add(paczkamat);
-        service.insertEntity(paczkamat);
+        service.insertPaczkamat(paczkamat);
     }
 
     public static void addOrder(Order order){
         orders.add(order);
-        service.insertEntity(order);
+        service.insertOrder(order);
     }
 
     public static void addCustomer(Customer customer){
         customers.add(customer);
-        service.insertEntity(customer);
+        service.insertCustomer(customer);
     }
 
     public static void addStash(Stash stash){
         stashes.add(stash);
-        service.insertEntity(stash);
+        service.insertStash(stash);
     }
 
     public static ObservableList<Paczkamat> getPaczkamats() {
