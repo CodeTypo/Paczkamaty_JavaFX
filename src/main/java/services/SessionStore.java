@@ -4,17 +4,19 @@ import entities.Customer;
 
 public class SessionStore {
     private static boolean admin = false;
+    private static boolean loggedIn = false;
+
     private static Customer user;
 
     public static Customer getUser() {
         return user;
     }
 
-    public static void setUser(Customer user) throws Exception {
-        if (user == null) {
-            throw new Exception("User doesn't exists!");
+    public static void setUser(Customer user) {
+        if (!loggedIn) {
+            loggedIn = true;
+            SessionStore.user = user;
         }
-        SessionStore.user = user;
     }
 
     public static boolean isAdmin() {
@@ -23,6 +25,14 @@ public class SessionStore {
 
     public static void setAdmin(boolean admin) {
         SessionStore.admin = admin;
+    }
+
+    public static void setLoggedIn(boolean loggedIn) {
+        SessionStore.loggedIn = loggedIn;
+    }
+
+    public static boolean isLoggedIn() {
+        return loggedIn;
     }
 
     private SessionStore() {}

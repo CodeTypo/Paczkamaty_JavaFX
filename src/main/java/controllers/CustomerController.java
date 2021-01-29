@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,14 +9,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import netscape.javascript.JSObject;
 import services.DataSource;
+import services.SessionStore;
 import web.WebViewConnector;
 
 public class CustomerController {
@@ -62,11 +69,19 @@ public class CustomerController {
     @FXML
     private ListView<?> ordersList;
 
+    @FXML
+    private Button logoutBtn;
+
     private WebViewConnector webViewConnector;
 
     private ObservableList<String> dimensions = FXCollections.observableArrayList
             ("Small", "Medium", "Large");
 
+    @FXML
+    void onLogoutClicked(ActionEvent event) {
+        SessionStore.setLoggedIn(false);
+        showNewlayout("layout/login_screen.fxml", event);
+    }
 
     @FXML
     void onOrderClicked(ActionEvent event) {
@@ -116,5 +131,19 @@ public class CustomerController {
                 });
 
         webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
+    }
+
+    private void showNewlayout(String path, ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
+            Stage stage = new Stage();
+            stage.setTitle("Login");
+            stage.setScene(new Scene(root));
+            stage.show();
+            // Hide current window
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

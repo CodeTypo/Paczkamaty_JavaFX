@@ -75,7 +75,6 @@ public class WebViewConnector {
 
         System.out.println(paczkamat.getPostCode());
         System.out.println(paczkamat.getStashes().size());
-
-
     }
+
 }

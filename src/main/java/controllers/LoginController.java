@@ -55,11 +55,13 @@ public class LoginController {
 
         if (login.equals("admin") && password.equals("admin")) {
             SessionStore.setAdmin(true);
+            SessionStore.setLoggedIn(true);
             showNewlayout("layout/admin_screen.fxml", event);
         } else {
             try {
                 Customer loggedUser = DataSource.getLoggedUser(login, password);
                 SessionStore.setUser(loggedUser);
+                SessionStore.setLoggedIn(true);
                 showNewlayout("layout/customer_screen.fxml", event);
             } catch (Exception e) {
                 msgText.setText("Invalid login or password!");
