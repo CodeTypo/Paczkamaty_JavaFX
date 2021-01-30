@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import entities.Order;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +21,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
+import services.DataSource;
 import services.SessionStore;
 import web.WebViewConnector;
 
@@ -36,9 +40,6 @@ public class AdminController {
     private Tab paczkamatsTab;
 
     @FXML
-    private ListView<?> paczkamatsListView;
-
-    @FXML
     private WebView paczkamatsWebView;
 
     @FXML
@@ -48,7 +49,7 @@ public class AdminController {
     private Tab ordersTab;
 
     @FXML
-    private TableView<?> ordersTable;
+    private TableView<Order> ordersTable;
 
     @FXML
     private GridPane orderDetailsGrid;
@@ -80,6 +81,18 @@ public class AdminController {
     void initialize() {
         webViewConnector = new WebViewConnector();
         setupWebView(paczkamatsWebView, "admin_map.html");
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Tab>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                        System.out.println("Tab Selection changed to" + t1.getText());
+                    }
+                }
+        );
+
+        ordersTable.setItems(DataSource.getOrders());
+
     }
 
     void setupWebView(WebView webView, String htmlFile) {

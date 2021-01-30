@@ -1,10 +1,14 @@
 package controllers;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import entities.Customer;
+import entities.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,9 +56,6 @@ public class CustomerController {
     private ComboBox<String> dimensionComboBox;
 
     @FXML
-    private CheckBox expressCheckbox;
-
-    @FXML
     private Button orderBtn;
 
     @FXML
@@ -86,6 +87,27 @@ public class CustomerController {
     @FXML
     void onOrderClicked(ActionEvent event) {
         Customer recipient = recipientComboBox.getValue();
+        String dimension = dimensionComboBox.getValue().toString();
+
+        Order order = new Order();
+        order.setSender(SessionStore.getUser());
+        order.setOrderStatus("AWAITING_PICKUP");
+        order.setReceiver(recipient);
+        order.setSendDatetime(new Timestamp(Calendar.getInstance().getTime().getTime()));
+
+        BigDecimal price = BigDecimal.ONE;
+        if (dimension.equals("SMALL")) {
+            price = BigDecimal.valueOf(9.90);
+        } else if (dimension.equals("MEDIUM")) {
+            price = BigDecimal.valueOf(16.90);
+        } else if (dimension.equals("LARGE")) {
+            price = BigDecimal.valueOf(28.90);
+        }
+
+        order.setPrice(price);
+
+        DataSource.addOrder(order);
+
         System.out.println("Send order to: " + recipient.getName());
     }
 
