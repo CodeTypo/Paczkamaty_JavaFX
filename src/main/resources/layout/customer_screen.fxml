@@ -58,11 +58,6 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <CheckBox fx:id="expressCheckbox" mnemonicParsing="false" text="Express">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </CheckBox>
                               <Button fx:id="orderBtn" mnemonicParsing="false" onAction="#onOrderClicked" text="Order">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
