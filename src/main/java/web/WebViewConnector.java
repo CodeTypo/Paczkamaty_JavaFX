@@ -106,8 +106,10 @@ public class WebViewConnector {
 
         if (selectSendPaczkamat) {
             sendPaczkamat.set(choosedPaczkamat);
+            System.out.println("selected send paczkamat");
         } else {
             receivePaczkamat.set(choosedPaczkamat);
+            System.out.println("selected receive paczkamat");
         }
         selectSendPaczkamat = !selectSendPaczkamat;
 
