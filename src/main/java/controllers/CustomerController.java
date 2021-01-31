@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 
 import entities.Customer;
 import entities.Order;
+import entities.Paczkamat;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -62,6 +64,12 @@ public class CustomerController {
     private Text textMsg;
 
     @FXML
+    private Text sendPaczkamatName;
+
+    @FXML
+    private Text receivePaczkamatName;
+
+    @FXML
     private Tab trackTab;
 
     @FXML
@@ -77,6 +85,9 @@ public class CustomerController {
 
     private ObservableList<String> dimensions = FXCollections.observableArrayList
             ("Small", "Medium", "Large");
+
+    private Paczkamat sendPaczkamat;
+    private Paczkamat receivePaczkamat;
 
     @FXML
     void onLogoutClicked(ActionEvent event) {
@@ -142,6 +153,17 @@ public class CustomerController {
         });
 
         recipientComboBox.setItems(DataSource.getCustomers());
+
+        webViewConnector.receivePaczkamatProperty().addListener((observableValue, paczkamat, t1) -> {
+            receivePaczkamat = paczkamat;
+            receivePaczkamatName.setText(receivePaczkamat.getName());
+        });
+
+        webViewConnector.sendPaczkamatProperty().addListener((observableValue, paczkamat, t1) -> {
+            sendPaczkamat = paczkamat;
+            sendPaczkamatName.setText(sendPaczkamat.getName());
+        });
+
     }
 
     void setupWebView(WebView webView, String htmlFile) {

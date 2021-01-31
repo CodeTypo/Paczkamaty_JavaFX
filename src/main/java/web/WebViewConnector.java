@@ -2,6 +2,9 @@ package web;
 
 import entities.Paczkamat;
 import entities.Stash;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableObjectValue;
 import netscape.javascript.JSObject;
 import services.DataSource;
 
@@ -9,17 +12,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class WebViewConnector {
-//    private DataSource data;
 
-    public WebViewConnector() {
-    }
+    private ObjectProperty<Paczkamat> sendPaczkamat = new SimpleObjectProperty<>();
+    private ObjectProperty<Paczkamat> receivePaczkamat = new SimpleObjectProperty<>();
+    private boolean selectSendPaczkamat = true;
+
+    public WebViewConnector() { }
 
     public void log(String text)
     {
         System.out.println(text);
     }
 
-    public void addPaczkamat(JSObject object) {
+    private Paczkamat getPaczkamatFromJS(JSObject object) {
         JSObject location = (JSObject) object.getMember("location");
         JSObject address_details = (JSObject) object.getMember("address_details");
 
@@ -54,10 +59,8 @@ public class WebViewConnector {
         paczkamat.setPostCode(postCode);
         paczkamat.setStreet(street);
 
-        DataSource.addPaczkamat(paczkamat);
-
         Collection<Stash> stashes = new ArrayList<>();
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < 15; i++) {
             Stash stash = new Stash();
             if (i%3 == 0){
                 stash.setDimension("SMALL");
@@ -67,14 +70,55 @@ public class WebViewConnector {
                 stash.setDimension("LARGE");
             }
             stash.setPaczkamat(paczkamat);
-            DataSource.addStash(stash);
-
             stashes.add(stash);
         }
+
         paczkamat.setStashes(stashes);
 
-        System.out.println(paczkamat.getPostCode());
-        System.out.println(paczkamat.getStashes().size());
+        return paczkamat;
+    }
+
+    public void addPaczkamat(JSObject object) {
+        Paczkamat paczkamat = getPaczkamatFromJS(object);
+
+        DataSource.addPaczkamat(paczkamat);
+        System.out.println("Paczkamat added");
+        for (Stash stash: paczkamat.getStashes()) {
+            DataSource.addStash(stash);
+            System.out.println("Stash added");
+        }
+    }
+
+    public void selectPaczkamat(JSObject object) {
+        String name = object.getMember("name").toString();
+        Paczkamat choosedPaczkamat = null;
+        for (Paczkamat paczkamat: DataSource.getPaczkamats()) {
+            if (paczkamat.getName().equals(name)){
+                choosedPaczkamat = paczkamat;
+            }
+        }
+
+        if (choosedPaczkamat == null) {
+            choosedPaczkamat = getPaczkamatFromJS(object);
+            DataSource.addPaczkamat(choosedPaczkamat);
+            System.out.println("Paczkamat added on demand");
+        }
+
+        if (selectSendPaczkamat) {
+            sendPaczkamat.set(choosedPaczkamat);
+        } else {
+            receivePaczkamat.set(choosedPaczkamat);
+        }
+        selectSendPaczkamat = !selectSendPaczkamat;
+
+    }
+
+    public ObjectProperty<Paczkamat> sendPaczkamatProperty() {
+        return sendPaczkamat;
+    }
+
+    public ObjectProperty<Paczkamat> receivePaczkamatProperty() {
+        return receivePaczkamat;
     }
 
 }
