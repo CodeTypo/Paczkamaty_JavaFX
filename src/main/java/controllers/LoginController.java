@@ -67,9 +67,6 @@ public class LoginController {
                 msgText.setText("Invalid login or password!");
                 msgText.setVisible(true);
             }
-            
-            //                sendPackageSize.setItems(stashSizes);
-//                setupWebView(sendWebView, "customer_map.html");
 
         }
 
@@ -79,7 +76,7 @@ public class LoginController {
 
     @FXML
     void onRegisterBtnClicked(ActionEvent event) {
-
+        showNewlayout("layout/register_screen.fxml", event);
     }
 
 }

@@ -94,9 +94,14 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </Button>
+            <Text fx:id="statusMsg" strokeType="OUTSIDE" strokeWidth="0.0" text="Register status">
+               <font>
+                  <Font name="Corbel Light" size="14.0" />
+               </font>
+            </Text>
          </children>
          <FlowPane.margin>
             <Insets />
