@@ -22,7 +22,8 @@
             });
 
             var map = easyPack.mapWidget('easypack-map', function(point) {
-                app.addPaczkamat(point);
+                // app.addPaczkamat(point);
+                app.selectPaczkamat(point);
                 app.log(point.name);
             });
         };

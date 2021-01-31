@@ -154,14 +154,14 @@ public class CustomerController {
 
         recipientComboBox.setItems(DataSource.getCustomers());
 
-        webViewConnector.receivePaczkamatProperty().addListener((observableValue, paczkamat, t1) -> {
-            receivePaczkamat = paczkamat;
-            receivePaczkamatName.setText(receivePaczkamat.getName());
+        webViewConnector.receivePaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
+            receivePaczkamat = newPaczkamat;
+            receivePaczkamatName.setText(newPaczkamat.getName());
         });
 
-        webViewConnector.sendPaczkamatProperty().addListener((observableValue, paczkamat, t1) -> {
-            sendPaczkamat = paczkamat;
-            sendPaczkamatName.setText(sendPaczkamat.getName());
+        webViewConnector.sendPaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
+            sendPaczkamat = newPaczkamat;
+            sendPaczkamatName.setText(newPaczkamat.getName());
         });
 
     }
