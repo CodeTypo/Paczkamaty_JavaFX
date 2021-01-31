@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,8 +12,8 @@ public class Stash {
     private Integer id;
 //    private String paczkamatId;
     private String dimension;
-    private Set<Order> ordersToSend;
-    private Set<Order> ordersToReceive;
+    private Set<Order> ordersToSend = new HashSet<>();
+    private Set<Order> ordersToReceive = new HashSet<>();
     private Paczkamat paczkamat;
 
     @Id

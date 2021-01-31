@@ -5,13 +5,16 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;
 import entities.Stash;
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -83,7 +86,7 @@ public class CustomerController {
     private WebView trackWebView;
 
     @FXML
-    private TableView<?> ordersList;
+    private TableView<Order> ordersList;
 
     @FXML
     private Button logoutBtn;
@@ -104,8 +107,12 @@ public class CustomerController {
 
     @FXML
     void onOrderClicked(ActionEvent event) {
+        Customer customer = SessionStore.getUser();
+
         Customer recipient = recipientComboBox.getValue();
         String dimension = dimensionComboBox.getValue();
+        Stash senderStash = sendStash.getValue();
+        Stash receiverStash = receiveStash.getValue();
 
         if (recipient == null) {
             textMsg.setText("Choose recipient to send order");
@@ -127,24 +134,43 @@ public class CustomerController {
             return;
         }
 
+        if (senderStash == null) {
+            textMsg.setText("Choose sender stash to send order");
+            return;
+        }
+
+        if (receiverStash == null) {
+            textMsg.setText("Choose receiver stash to send order");
+            return;
+        }
+
         Order order = new Order();
-        order.setSender(SessionStore.getUser());
+        order.setSender(customer);
         order.setOrderStatus("AWAITING_PICKUP");
         order.setReceiver(recipient);
         order.setSendDatetime(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
         BigDecimal price = BigDecimal.ONE;
-        if (dimension.equals("SMALL")) {
+        if (dimension.equals("Small")) {
             price = BigDecimal.valueOf(9.90);
-        } else if (dimension.equals("MEDIUM")) {
+        } else if (dimension.equals("Medium")) {
             price = BigDecimal.valueOf(16.90);
-        } else if (dimension.equals("LARGE")) {
+        } else if (dimension.equals("Large")) {
             price = BigDecimal.valueOf(28.90);
+        } else {
+            textMsg.setText("Wrong dimension");
         }
 
         order.setPrice(price);
 
+        order.setSenderStash(senderStash);
+        order.setReceiverStash(receiverStash);
+
         DataSource.addOrder(order);
+
+        senderStash.getOrdersToSend().add(order);
+        receiverStash.getOrdersToReceive().add(order);
+        customer.getOrdersAsSender().add(order);
 
         System.out.println("Send order to: " + recipient.getName());
     }
@@ -241,6 +267,31 @@ public class CustomerController {
 
             });
         });
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Tab>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                        System.out.println("Tab Selection changed to " + t1.getText());
+
+                        if (t1.getId().equals("trackTab")) {
+                            Collection<Order> ordersAsSender = SessionStore.getUser().getOrdersAsSender();
+                            Collection<Order> ordersAsReceiver = SessionStore.getUser().getOrdersAsReceiver();
+
+                            ObservableList<Order> orders = FXCollections.observableArrayList(ordersAsSender);
+//                            orders.addAll(ordersAsReceiver);
+
+                            ordersList.setItems(orders);
+                            System.out.println("Track tab");
+
+                        }
+
+
+                    }
+                }
+        );
+
+
 
     }
 

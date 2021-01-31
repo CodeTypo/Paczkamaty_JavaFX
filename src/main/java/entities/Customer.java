@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -14,8 +15,8 @@ public class Customer {
     private String phoneNumber;
     private String login;
     private String password;
-    private Collection<Order> ordersAsSender;
-    private Collection<Order> ordersAsReceiver;
+    private Collection<Order> ordersAsSender = new ArrayList<>();
+    private Collection<Order> ordersAsReceiver = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -16,7 +17,7 @@ public class Paczkamat {
     private String latitude;
     private String longitude;
     private String openingHours;
-    private Collection<Stash> stashes;
+    private Collection<Stash> stashes = new ArrayList<>();
 
     @Id
     @Column(name = "name")
