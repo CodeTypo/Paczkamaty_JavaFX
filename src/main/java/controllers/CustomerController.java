@@ -83,7 +83,7 @@ public class CustomerController {
     private WebView trackWebView;
 
     @FXML
-    private ListView<?> ordersList;
+    private TableView<?> ordersList;
 
     @FXML
     private Button logoutBtn;
