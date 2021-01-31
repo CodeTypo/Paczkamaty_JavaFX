@@ -86,4 +86,5 @@ public class Stash {
     public void setPaczkamat(Paczkamat paczkamat) {
         this.paczkamat = paczkamat;
     }
+
 }

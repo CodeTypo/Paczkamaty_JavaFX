@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;
+import entities.Stash;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -67,7 +68,13 @@ public class CustomerController {
     private Text sendPaczkamatName;
 
     @FXML
+    private ComboBox<Stash> sendStash;
+
+    @FXML
     private Text receivePaczkamatName;
+
+    @FXML
+    private ComboBox<Stash> receiveStash;
 
     @FXML
     private Tab trackTab;
@@ -98,7 +105,27 @@ public class CustomerController {
     @FXML
     void onOrderClicked(ActionEvent event) {
         Customer recipient = recipientComboBox.getValue();
-        String dimension = dimensionComboBox.getValue().toString();
+        String dimension = dimensionComboBox.getValue();
+
+        if (recipient == null) {
+            textMsg.setText("Choose recipient to send order");
+            return;
+        }
+
+        if (dimension == null) {
+            textMsg.setText("Choose package dimension to send order");
+            return;
+        }
+
+        if (sendPaczkamat == null) {
+            textMsg.setText("Choose send paczkamat from map to send order");
+            return;
+        }
+
+        if (receivePaczkamat == null) {
+            textMsg.setText("Choose recipient paczkamat from map to send order");
+            return;
+        }
 
         Order order = new Order();
         order.setSender(SessionStore.getUser());
@@ -157,11 +184,62 @@ public class CustomerController {
         webViewConnector.receivePaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
             receivePaczkamat = newPaczkamat;
             receivePaczkamatName.setText(newPaczkamat.getName());
+
+            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()));
+
+            receiveStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
+
+                @Override
+                public ListCell<Stash> call(ListView<Stash> stashListView) {
+                    final ListCell<Stash> cell = new ListCell<Stash>(){
+                        @Override
+                        protected void updateItem(Stash stash, boolean b) {
+                            super.updateItem(stash, b);
+
+                            if (stash != null) {
+                                String stashObjectId = stash.toString();
+                                setText(stashObjectId.split("entities.")[1]);
+                            } else {
+                                setText(null);
+                            }
+                        }
+                    };
+
+                    return cell;
+                }
+
+            });
+
         });
 
         webViewConnector.sendPaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
             sendPaczkamat = newPaczkamat;
             sendPaczkamatName.setText(newPaczkamat.getName());
+
+            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()));
+
+            sendStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
+
+                @Override
+                public ListCell<Stash> call(ListView<Stash> stashListView) {
+                    final ListCell<Stash> cell = new ListCell<Stash>(){
+                        @Override
+                        protected void updateItem(Stash stash, boolean b) {
+                            super.updateItem(stash, b);
+
+                            if (stash != null) {
+                                String stashObjectId = stash.toString();
+                                setText(stashObjectId.split("entities.")[1]);
+                            } else {
+                                setText(null);
+                            }
+                        }
+                    };
+
+                    return cell;
+                }
+
+            });
         });
 
     }
