@@ -43,9 +43,6 @@ public class AdminController {
     private WebView paczkamatsWebView;
 
     @FXML
-    private GridPane paczkamatStashesGrid;
-
-    @FXML
     private Tab ordersTab;
 
     @FXML
