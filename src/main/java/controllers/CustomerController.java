@@ -6,7 +6,6 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.Customer;
@@ -41,7 +40,16 @@ public class CustomerController {
     private ResourceBundle resources;
 
     @FXML
+    private TableView<Order> ordersListSentTo;
+
+    @FXML
+    private Text loggedInAs;
+
+    @FXML
     private URL location;
+
+    @FXML
+    private Text SendTextHint;
 
     @FXML
     private TabPane tabPane;
@@ -86,13 +94,10 @@ public class CustomerController {
     private WebView trackWebView;
 
     @FXML
-    private TableView<Order> ordersList;
+    private TableView<Order> ordersListReceivingFrom;
 
     @FXML
     private Button logoutBtn;
-
-    @FXML
-    private Text SendTextHint;
 
 
     private WebViewConnector webViewConnector;
@@ -182,7 +187,8 @@ public class CustomerController {
     void initialize() {
         webViewConnector = new WebViewConnector();
         setupWebView(orderWebView, "customer_map.html");
-        setupWebView(trackWebView, "customer_map.html");
+        //setupWebView(trackWebView, "customer_map.html");
+        loggedInAs.setText("Logged in as: " + SessionStore.getUser().toString());
         dimensionComboBox.setItems(dimensions);
         recipientComboBox.setCellFactory(new Callback<ListView<Customer>, ListCell<Customer>>() {
 
@@ -211,7 +217,7 @@ public class CustomerController {
         webViewConnector.receivePaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
             receivePaczkamat = newPaczkamat;
             receivePaczkamatName.setText(newPaczkamat.getName());
-
+            SendTextHint.setText("Uzupełnij dane i kliknij \"zamów\" lub wybierz inny paczkamat nadawczy.");
             receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()));
 
             receiveStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
@@ -242,7 +248,7 @@ public class CustomerController {
         webViewConnector.sendPaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
             sendPaczkamat = newPaczkamat;
             sendPaczkamatName.setText(newPaczkamat.getName());
-
+            SendTextHint.setText("Wybierz paczkamat, w którym odbiorca odbierze paczkę");
             sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()));
 
             sendStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
@@ -280,10 +286,10 @@ public class CustomerController {
                             Collection<Order> ordersAsSender   = SessionStore.getUser().getOrdersAsSender();
                             Collection<Order> ordersAsReceiver = SessionStore.getUser().getOrdersAsReceiver();
 
-                            ObservableList<Order> orders = FXCollections.observableArrayList(ordersAsSender);
+                            ObservableList<Order> ordersSent = FXCollections.observableArrayList(ordersAsSender);
 //                            orders.addAll(ordersAsReceiver);
 
-                            ordersList.setItems(orders);
+                            ordersListSentTo.setItems(ordersSent);
                             System.out.println("Track tab");
 
                         }

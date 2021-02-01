@@ -64,6 +64,7 @@ public class LoginController {
                 Customer loggedUser = DataSource.getLoggedUser(login, password);
                 SessionStore.setUser(loggedUser);
                 System.out.println(loggedUser);
+
                 SessionStore.setLoggedIn(true);
                 showNewlayout("layout/customer_screen.fxml", event);
             } catch (Exception e) {
