@@ -7,6 +7,7 @@ import entities.Stash;
 
 import java.util.List;
 
+//An interface shared by both the online and offline data sources
 interface DataService {
     List<Paczkamat> getAllPaczkamats();
     List<Order> getAllOrders();
@@ -15,10 +16,10 @@ interface DataService {
 
     Customer getLoggedInUser(String login, String password) throws Exception;
 
-    void insertCustomer( Customer customer );
-    void insertOrder( Order order );
-    void insertStash( Stash stash );
-    void insertPaczkamat( Paczkamat paczkamat );
+    void insertCustomer  ( Customer customer );
+    void insertOrder     ( Order order );
+    void insertStash     ( Stash stash );
+    void insertPaczkamat ( Paczkamat paczkamat );
 
 //    void updateCustomer( Customer customer );
 //    void updateOrder( Order order );

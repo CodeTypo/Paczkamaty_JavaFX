@@ -51,7 +51,9 @@ public class LoginController {
     @FXML
     void onLoginBtnClicked(ActionEvent event) {
         String login = loginField.getText();
+        System.out.println(login);
         String password = passwordField.getText();
+        System.out.println(password);
 
         if (login.equals("admin") && password.equals("admin")) {
             SessionStore.setAdmin(true);
@@ -61,6 +63,7 @@ public class LoginController {
             try {
                 Customer loggedUser = DataSource.getLoggedUser(login, password);
                 SessionStore.setUser(loggedUser);
+                System.out.println(loggedUser);
                 SessionStore.setLoggedIn(true);
                 showNewlayout("layout/customer_screen.fxml", event);
             } catch (Exception e) {

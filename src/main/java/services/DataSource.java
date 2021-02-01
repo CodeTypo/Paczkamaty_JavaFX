@@ -125,4 +125,8 @@ public class DataSource {
 
         return loggedUser;
     }
+
+    public static void setLoggedUser(Customer loggedUser) {
+        DataSource.loggedUser = loggedUser;
+    }
 }

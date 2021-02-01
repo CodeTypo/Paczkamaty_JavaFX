@@ -91,6 +91,10 @@ public class CustomerController {
     @FXML
     private Button logoutBtn;
 
+    @FXML
+    private Text SendTextHint;
+
+
     private WebViewConnector webViewConnector;
 
     private ObservableList<String> dimensions = FXCollections.observableArrayList
@@ -101,7 +105,9 @@ public class CustomerController {
 
     @FXML
     void onLogoutClicked(ActionEvent event) {
+        DataSource.setLoggedUser(null);
         SessionStore.setLoggedIn(false);
+        System.out.println(SessionStore.isLoggedIn());
         showNewlayout("layout/login_screen.fxml", event);
     }
 
@@ -151,14 +157,11 @@ public class CustomerController {
         order.setSendDatetime(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
         BigDecimal price = BigDecimal.ONE;
-        if (dimension.equals("Small")) {
-            price = BigDecimal.valueOf(9.90);
-        } else if (dimension.equals("Medium")) {
-            price = BigDecimal.valueOf(16.90);
-        } else if (dimension.equals("Large")) {
-            price = BigDecimal.valueOf(28.90);
-        } else {
-            textMsg.setText("Wrong dimension");
+        switch (dimension) {
+            case "Small" -> price = BigDecimal.valueOf(9.90);
+            case "Medium" -> price = BigDecimal.valueOf(16.90);
+            case "Large" -> price = BigDecimal.valueOf(28.90);
+            default -> textMsg.setText("Wrong dimension");
         }
 
         order.setPrice(price);
@@ -180,9 +183,7 @@ public class CustomerController {
         webViewConnector = new WebViewConnector();
         setupWebView(orderWebView, "customer_map.html");
         setupWebView(trackWebView, "customer_map.html");
-
         dimensionComboBox.setItems(dimensions);
-
         recipientComboBox.setCellFactory(new Callback<ListView<Customer>, ListCell<Customer>>() {
 
             @Override
@@ -275,7 +276,8 @@ public class CustomerController {
                         System.out.println("Tab Selection changed to " + t1.getText());
 
                         if (t1.getId().equals("trackTab")) {
-                            Collection<Order> ordersAsSender = SessionStore.getUser().getOrdersAsSender();
+                            System.out.println(SessionStore.getUser().getName());
+                            Collection<Order> ordersAsSender   = SessionStore.getUser().getOrdersAsSender();
                             Collection<Order> ordersAsReceiver = SessionStore.getUser().getOrdersAsReceiver();
 
                             ObservableList<Order> orders = FXCollections.observableArrayList(ordersAsSender);

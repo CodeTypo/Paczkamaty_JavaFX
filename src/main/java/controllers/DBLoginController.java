@@ -15,12 +15,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import services.DataSource;
 
-
+// This screen appears as soon as we launch the app
 public class DBLoginController {
 
     @FXML
@@ -41,7 +39,10 @@ public class DBLoginController {
     @FXML
     private Text mockButton;
 
-    private void showNewlayout(String path, Event event) {
+    @FXML
+    private Text registerLink;
+
+    private void showNewLayout(String path, Event event) {
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
             Stage stage = new Stage();
@@ -58,7 +59,7 @@ public class DBLoginController {
     @FXML
     void onMockClicked(MouseEvent event) {
         DataSource.setMockService();
-        showNewlayout("layout/login_screen.fxml", event);
+        showNewLayout("layout/login_screen.fxml", event);
     }
 
     @FXML
@@ -67,7 +68,12 @@ public class DBLoginController {
         String password = passwordField.getText();
 
         DataSource.setDBService(login, password);
-        showNewlayout("layout/login_screen.fxml", event);
+        showNewLayout("layout/login_screen.fxml", event);
+    }
+
+    @FXML
+    void onRegisterClicked(MouseEvent event) {
+        showNewLayout("layout/register_screen.fxml", event);
     }
 
     @FXML

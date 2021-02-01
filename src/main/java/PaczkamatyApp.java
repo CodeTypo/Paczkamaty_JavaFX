@@ -65,8 +65,8 @@ public class  PaczkamatyApp extends Application {
 //
 //        stage.setScene(scene);
 //        stage.setTitle("Paczkamaty");
-//        stage.setMinWidth(600);
-//        stage.setMinHeight(400);
+//        stage.setMinWidth(1280);
+//        stage.setMinHeight(800);
 //        stage.show();
 //    }
 //

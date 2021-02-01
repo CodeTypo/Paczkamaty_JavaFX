@@ -8,18 +8,18 @@ import entities.Stash;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockService implements DataService {
+//An offline data source made for the purpose of debugging the app without the need of connecting to AWS
+public class    MockService implements DataService {
     private List<Paczkamat> paczkamats;
-    private List<Order> orders;
-    private List<Customer> customers;
-    private List<Stash> stashes;
+    private List<Order>     orders;
+    private List<Customer>  customers;
+    private List<Stash>     stashes;
 
     public MockService() {
         this.paczkamats = new ArrayList<>();
-        this.orders = new ArrayList<>();
-        this.customers = new ArrayList<>();
-        this.stashes = new ArrayList<>();
-
+        this.orders     = new ArrayList<>();
+        this.customers  = new ArrayList<>();
+        this.stashes    = new ArrayList<>();
         mockCustomers();
     }
 
@@ -64,7 +64,7 @@ public class MockService implements DataService {
     }
 
     @Override
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders()       {
         return orders;
     }
 
@@ -89,6 +89,7 @@ public class MockService implements DataService {
         if (loggedUser == null) {
             throw new Exception("Invalid login and password. Search for existing user in MockService");
         }
+        System.out.println(loggedUser.getName());
         return loggedUser;
     }
 
