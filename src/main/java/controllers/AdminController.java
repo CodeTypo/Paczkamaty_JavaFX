@@ -2,12 +2,12 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import entities.Order;
+import entities.Paczkamat;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -47,7 +47,7 @@ public class AdminController {
     private Tab ordersTab;
 
     @FXML
-    private TableView<Order> ordersTable;
+    private TableView<Order> sentOrdersTable;
 
     @FXML
     private GridPane orderDetailsGrid;
@@ -61,7 +61,28 @@ public class AdminController {
     @FXML
     private DatePicker datePicker;
 
+    @FXML
+    private DatePicker datePickerOrders;
+
+    @FXML
+    private TableView<Order> receivedOrdersTable;
+
+    @FXML
+    private Label senderLabel;
+
+    @FXML
+    private Label recipientLabel;
+
+    @FXML
+    private Label senderPaczkamatLabel;
+
+    @FXML
+    private Label recipientPaczkamatLabel;
+
+
     private WebViewConnector webViewConnector;
+
+    private Paczkamat adminPaczkamat;
 
     @FXML
     void onLogoutClicked(ActionEvent event) {
@@ -83,23 +104,48 @@ public class AdminController {
                 }
         );
 
+        webViewConnector.adminSetPaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
+            adminPaczkamat = newPaczkamat;
+            System.out.println(adminPaczkamat.getName());
+            paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order ->
+                    order.getSenderStash().getPaczkamat().getName().equals(adminPaczkamat.getName())  ||
+                    order.getReceiverStash().getPaczkamat().getName().equals(adminPaczkamat.getName())
+            ));
+
+        });
+
         datePicker.setOnAction(actionEvent -> {
             LocalDate date = datePicker.getValue();
             paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> {
                 LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
-                if (sendTime.getMonthValue() != date.getMonthValue()) {
-                    return false;
-                }
-                if (sendTime.getDayOfMonth() != date.getDayOfMonth()) {
-                    return false;
-                }
+                if (
+                        (order.getSenderStash().getPaczkamat().getName().equals(adminPaczkamat.getName())
+                                || order.getReceiverStash().getPaczkamat().getName().equals(adminPaczkamat.getName())) &&
+                                sendTime.getYear() == date.getYear() &&
+                                sendTime.getMonthValue() == date.getMonthValue() &&
+                                sendTime.getDayOfMonth() == date.getDayOfMonth()
+                ) {
+                    // display only orders for this paczkamat and given day
                     return true;
+                }
+
+                return false;
             }));
         });
 
         paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("AWAITING_PICKUP")));
 
-        ordersTable.setItems(DataSource.getOrders());
+        sentOrdersTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("AWAITING_PICKUP") || order.getOrderStatus().equals("IN_DELIVERY")));
+
+        sentOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, order, newOrder) -> {
+            System.out.println("Selected: " + newOrder.getOrderStatus());
+            senderLabel.setText(newOrder.getSender().getName());
+            senderPaczkamatLabel.setText(newOrder.getSenderStash().getPaczkamat().getName());
+            recipientLabel.setText(newOrder.getReceiver().getName());
+            recipientPaczkamatLabel.setText(newOrder.getReceiverStash().getPaczkamat().getName());
+        });
+
+        receivedOrdersTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("IN_SHIPMENT") || order.getOrderStatus().equals("REALIZED") ));
 
     }
 

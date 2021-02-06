@@ -15,6 +15,7 @@ public class WebViewConnector {
 
     private ObjectProperty<Paczkamat> sendPaczkamat = new SimpleObjectProperty<>();
     private ObjectProperty<Paczkamat> receivePaczkamat = new SimpleObjectProperty<>();
+    private ObjectProperty<Paczkamat> adminSetPaczkamat = new SimpleObjectProperty<>();
     private boolean selectSendPaczkamat = true;
 
     public WebViewConnector() { }
@@ -100,7 +101,8 @@ public class WebViewConnector {
 
         if (choosedPaczkamat == null) {
             choosedPaczkamat = getPaczkamatFromJS(object);
-            DataSource.addPaczkamat(choosedPaczkamat);
+//            DataSource.addPaczkamat(choosedPaczkamat);
+            addPaczkamat(object);
             System.out.println("Paczkamat added on demand");
         }
 
@@ -115,6 +117,24 @@ public class WebViewConnector {
 
     }
 
+    public void selectAdminPaczkamat(JSObject object) {
+        String name = object.getMember("name").toString();
+        Paczkamat adminPaczkamat = null;
+        for (Paczkamat paczkamat: DataSource.getPaczkamats()) {
+            if (paczkamat.getName().equals(name)){
+                adminPaczkamat = paczkamat;
+            }
+        }
+
+        if (adminPaczkamat == null) {
+            adminPaczkamat = getPaczkamatFromJS(object);
+            DataSource.addPaczkamat(adminPaczkamat);
+            System.out.println("Paczkamat added on demand");
+        }
+
+        adminSetPaczkamat.set(adminPaczkamat);
+    }
+
     public ObjectProperty<Paczkamat> sendPaczkamatProperty() {
         return sendPaczkamat;
     }
@@ -123,4 +143,7 @@ public class WebViewConnector {
         return receivePaczkamat;
     }
 
+    public ObjectProperty<Paczkamat> adminSetPaczkamatProperty() {
+        return adminSetPaczkamat;
+    }
 }
