@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -163,11 +164,14 @@ public class CustomerController {
         order.setSender(customer);
         order.setOrderStatus("AWAITING_PICKUP");
         order.setReceiver(recipient);
-        Timestamp sendTime = new Timestamp(Calendar.getInstance().getTime().getTime());
+//        Timestamp sendTime = new Timestamp(Calendar.getInstance().getTime().getTime());
+        Timestamp sendTime = Timestamp.from(Instant.now());
         order.setSendDatetime(sendTime);
         ZonedDateTime zonedDateTime = sendTime.toInstant().atZone(ZoneId.of("UTC"));
         Timestamp receiveTime = Timestamp.from(zonedDateTime.plus(3, ChronoUnit.DAYS).toInstant());
+//        Timestamp receiveTime = Timestamp.from(sendTime.plus(3, ChronoUnit.DAYS).toInstant());
         order.setReceiveDatetime(receiveTime);
+//        order.setReceiveDatetime(sendTime);
 
         BigDecimal price = BigDecimal.ONE;
         switch (dimension) {
@@ -187,6 +191,7 @@ public class CustomerController {
         senderStash.getOrdersToSend().add(order);
         receiverStash.getOrdersToReceive().add(order);
         customer.getOrdersAsSender().add(order);
+        recipient.getOrdersAsReceiver().add(order);
 
         System.out.println("Sent order to: " + recipient.getName());
     }
@@ -296,9 +301,11 @@ public class CustomerController {
                             Collection<Order> ordersAsReceiver = SessionStore.getUser().getOrdersAsReceiver();
 
                             ObservableList<Order> ordersSent = FXCollections.observableArrayList(ordersAsSender);
+                            ObservableList<Order> ordersReceived = FXCollections.observableArrayList(ordersAsReceiver);
 //                            orders.addAll(ordersAsReceiver);
 
                             ordersListSentTo.setItems(ordersSent);
+                            ordersListReceivingFrom.setItems(ordersReceived);
                             System.out.println("Track tab");
 
                         }

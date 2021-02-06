@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -14,6 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
@@ -28,8 +26,44 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <WebView fx:id="paczkamatsWebView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                        <WebView fx:id="paczkamatsWebView" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
                      </center>
+                     <bottom>
+                        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TableView fx:id="paczkamatStatsTable" prefHeight="100.0" prefWidth="1073.0">
+                                  <columns>
+                                      <TableColumn prefWidth="75.0" text="id">
+                                          <cellValueFactory>
+                                              <PropertyValueFactory property="id" />
+                                          </cellValueFactory>
+                                      </TableColumn>
+                                      <TableColumn prefWidth="144.0" text="status">
+                                          <cellValueFactory>
+                                              <PropertyValueFactory property="orderStatus" />
+                                          </cellValueFactory>
+                                      </TableColumn>
+                                      <TableColumn minWidth="0.0" prefWidth="49.0" text="price">
+                                          <cellValueFactory>
+                                              <PropertyValueFactory property="price" />
+                                          </cellValueFactory>
+                                      </TableColumn>
+                                      <TableColumn prefWidth="90.0" text="send date">
+                                          <cellValueFactory>
+                                              <PropertyValueFactory property="sendDatetime" />
+                                          </cellValueFactory>
+                                      </TableColumn>
+                                      <TableColumn prefWidth="90.0" text="receive date">
+                                          <cellValueFactory>
+                                              <PropertyValueFactory property="receiveDatetime" />
+                                          </cellValueFactory>
+                                      </TableColumn>
+                                  </columns>
+                              </TableView>
+                              <DatePicker fx:id="datePicker" />
+                           </children>
+                        </HBox>
+                     </bottom>
                   </BorderPane>
                </content>
             </Tab>
@@ -101,51 +135,6 @@
                   </SplitPane>
                </content>
           </Tab>
-            <Tab fx:id="customersTab" text="Customers">
-                <content>
-                    <SplitPane dividerPositions="0.3296875">
-                        <items>
-                            <Pane>
-                                <children>
-                                    <TableView fx:id="customersTable" prefHeight="322.0" prefWidth="378.0">
-                                        <columns>
-                                            <TableColumn prefWidth="75.0" text="id" />
-                                            <TableColumn prefWidth="75.0" text="login" />
-                                            <TableColumn prefWidth="75.0" text="payments" />
-                                            <TableColumn prefWidth="75.0" text="sent" />
-                                    <TableColumn prefWidth="75.0" text="received" />
-                                        </columns>
-                                    </TableView>
-                                </children>
-                            </Pane>
-                            <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <VBox maxHeight="1.7976931348623157E308" prefHeight="760.0" prefWidth="800.0">
-                                 <children>
-                                    <LineChart fx:id="customersLineChart" VBox.vgrow="ALWAYS">
-                                      <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                      </xAxis>
-                                      <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                      </yAxis>
-                                    </LineChart>
-                                    <BarChart fx:id="customersBarChart" VBox.vgrow="ALWAYS">
-                                      <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                      </xAxis>
-                                      <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                      </yAxis>
-                                    </BarChart>
-                                 </children>
-                              </VBox>
-                           </children>
-                            </Pane>
-                        </items>
-                    </SplitPane>
-                </content>
-            </Tab>
         </tabs>
       </TabPane>
    </center>

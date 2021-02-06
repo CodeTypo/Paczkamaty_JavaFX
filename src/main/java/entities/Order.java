@@ -76,13 +76,13 @@ public class Order {
 
     @Basic
     @Column(name = "send_datetime")
-//    public Timestamp getSendDatetime() {
-//        return sendDatetime;
-//    }
-    public String getSendDatetime() {
-        String s = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(sendDatetime);
-        return s;
+    public Timestamp getSendDatetime() {
+        return sendDatetime;
     }
+//    public String getSendDatetime() {
+//        String s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sendDatetime);
+//        return s;
+//    }
 
 
     public void setSendDatetime(Timestamp sendDatetime) {
@@ -111,14 +111,14 @@ public class Order {
 
     @Basic
     @Column(name = "receive_datetime")
-//    public Timestamp getReceiveDatetime() {
-//        return receiveDatetime;
-//    }
-
-    public String getReceiveDatetime() {
-        String s = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(receiveDatetime);
-        return s;
+    public Timestamp getReceiveDatetime() {
+        return receiveDatetime;
     }
+
+//    public String getReceiveDatetime() {
+//        String s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(receiveDatetime);
+//        return s;
+//    }
 
     public void setReceiveDatetime(Timestamp receiveDatetime) {
         this.receiveDatetime = receiveDatetime;

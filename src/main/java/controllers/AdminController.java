@@ -2,6 +2,9 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import entities.Order;
@@ -13,8 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
@@ -52,19 +53,13 @@ public class AdminController {
     private GridPane orderDetailsGrid;
 
     @FXML
-    private Tab customersTab;
-
-    @FXML
-    private TableView<?> customersTable;
-
-    @FXML
-    private LineChart<?, ?> customersLineChart;
-
-    @FXML
-    private BarChart<?, ?> customersBarChart;
-
-    @FXML
     private Button logoutBtn;
+
+    @FXML
+    private TableView<Order> paczkamatStatsTable;
+
+    @FXML
+    private DatePicker datePicker;
 
     private WebViewConnector webViewConnector;
 
@@ -87,6 +82,22 @@ public class AdminController {
                     }
                 }
         );
+
+        datePicker.setOnAction(actionEvent -> {
+            LocalDate date = datePicker.getValue();
+            paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> {
+                LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
+                if (sendTime.getMonthValue() != date.getMonthValue()) {
+                    return false;
+                }
+                if (sendTime.getDayOfMonth() != date.getDayOfMonth()) {
+                    return false;
+                }
+                    return true;
+            }));
+        });
+
+        paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("AWAITING_PICKUP")));
 
         ordersTable.setItems(DataSource.getOrders());
 
