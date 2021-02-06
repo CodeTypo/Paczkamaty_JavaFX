@@ -60,7 +60,7 @@
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></ComboBox>
-                              <Button fx:id="orderBtn" mnemonicParsing="false" onAction="#onOrderClicked" styleClass="rich-blue" text="Order">
+                              <Button fx:id="orderBtn" mnemonicParsing="false" onAction="#onOrderClicked" prefWidth="100.0" styleClass="rich-blue" text="Order">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="15.0" />
                                  </VBox.margin>
@@ -110,7 +110,7 @@
 
       </content>
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="tab_background">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Packages You sent:" textAlignment="CENTER" wrappingWidth="1280.13671875">
                            <font>
@@ -174,9 +174,14 @@
                                     <PropertyValueFactory property="price" />
                                  </cellValueFactory>
                               </TableColumn>
-                              <TableColumn prefWidth="90.0" text="send date">
+                              <TableColumn prefWidth="120.0" text="send date">
                                  <cellValueFactory>
                                     <PropertyValueFactory property="sendDatetime" />
+                                 </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn prefWidth="120.0" text="estimated receive date">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="receiveDatetime" />
                                  </cellValueFactory>
                               </TableColumn>
                            </columns>
@@ -202,7 +207,7 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </Text>
-            <Button fx:id="logoutBtn" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#onLogoutClicked" prefHeight="30.0" prefWidth="74.0" styleClass="rich-blue" text="out" textAlignment="CENTER">
+            <Button fx:id="logoutBtn" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#onLogoutClicked" prefHeight="30.0" prefWidth="74.0" styleClass="rich-blue" text="Log out" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="7.0" />
                </font></Button>
