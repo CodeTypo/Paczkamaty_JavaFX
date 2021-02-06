@@ -99,18 +99,22 @@ public class DataSource {
     }
 
     public static ObservableList<Paczkamat> getPaczkamats() {
+        paczkamats = FXCollections.observableArrayList(service.getAllPaczkamats());
         return paczkamats;
     }
 
     public static ObservableList<Order> getOrders() {
+        orders = FXCollections.observableArrayList(service.getAllOrders());
         return orders;
     }
 
     public static ObservableList<Stash> getStashes() {
+        stashes = FXCollections.observableArrayList(service.getAllStashes());
         return stashes;
     }
 
     public static ObservableList<Customer> getCustomers() {
+        customers = FXCollections.observableArrayList(service.getAllCustomers());
         return customers;
     }
 
