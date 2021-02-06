@@ -100,10 +100,16 @@ public class WebViewConnector {
         }
 
         if (choosedPaczkamat == null) {
-            choosedPaczkamat = getPaczkamatFromJS(object);
+//            choosedPaczkamat = getPaczkamatFromJS(object);
 //            DataSource.addPaczkamat(choosedPaczkamat);
             addPaczkamat(object);
             System.out.println("Paczkamat added on demand");
+        }
+
+        for (Paczkamat paczkamat: DataSource.getPaczkamats()) {
+            if (paczkamat.getName().equals(name)){
+                choosedPaczkamat = paczkamat;
+            }
         }
 
         if (selectSendPaczkamat) {
@@ -128,8 +134,15 @@ public class WebViewConnector {
 
         if (adminPaczkamat == null) {
             adminPaczkamat = getPaczkamatFromJS(object);
-            DataSource.addPaczkamat(adminPaczkamat);
+//            DataSource.addPaczkamat(adminPaczkamat);
+            addPaczkamat(object);
             System.out.println("Paczkamat added on demand");
+        }
+
+        for (Paczkamat paczkamat: DataSource.getPaczkamats()) {
+            if (paczkamat.getName().equals(name)){
+                adminPaczkamat = paczkamat;
+            }
         }
 
         adminSetPaczkamat.set(adminPaczkamat);
