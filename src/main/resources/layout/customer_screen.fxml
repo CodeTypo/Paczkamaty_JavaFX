@@ -15,25 +15,25 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane nodeOrientation="LEFT_TO_RIGHT" styleClass="background" stylesheets="@../css/customer_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="756.0" styleClass="background" stylesheets="@../css/customer_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
    <center>
-      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="814.0" prefWidth="1280.0" stylesheets="@../css/customer_screenCSS.css" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1280.0" styleClass="tab_pane_background" stylesheets="@../css/customer_screenCSS.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="sendTab" text="Send">
             <content>
 
       </content>
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane styleClass="tab_background">
                      <left>
-                        <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="200.0" prefWidth="216.0" styleClass="vbox" BorderPane.alignment="CENTER">
+                        <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="450.0" prefWidth="216.0" styleClass="vbox">
                            <children>
-                              <ComboBox fx:id="recipientComboBox" prefWidth="150.0" promptText="Choose recipient" styleClass="combo-box">
+                              <ComboBox fx:id="recipientComboBox" prefWidth="150.0" promptText="Choose recipient" styleClass="combobox">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="80.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <ComboBox fx:id="dimensionComboBox" prefWidth="150.0" promptText="Choose dimension" styleClass="combo-box">
+                              <ComboBox fx:id="dimensionComboBox" prefWidth="150.0" promptText="Choose dimension" styleClass="combobox">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
@@ -45,7 +45,7 @@
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin></Text>
-                              <ComboBox fx:id="sendStash" prefWidth="150.0" styleClass="combo-box">
+                              <ComboBox fx:id="sendStash" prefWidth="150.0" styleClass="combobox">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></ComboBox>
@@ -56,7 +56,7 @@
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin></Text>
-                              <ComboBox fx:id="receiveStash" prefWidth="150.0" styleClass="combo-box">
+                              <ComboBox fx:id="receiveStash" prefWidth="150.0" styleClass="combobox">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></ComboBox>
@@ -74,23 +74,32 @@
                                  </VBox.margin>
                               </Text>
                            </children>
-                           <padding>
-                              <Insets top="20.0" />
-                           </padding>
+                           <BorderPane.margin>
+                              <Insets left="10.0" top="75.0" />
+                           </BorderPane.margin>
                         </VBox>
                      </left>
                      <center>
-                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                        <VBox minHeight="-Infinity" prefHeight="600.0" prefWidth="1065.0" BorderPane.alignment="CENTER">
                            <children>
-                              <WebView fx:id="orderWebView" prefHeight="747.0" prefWidth="1065.0" />
+                              <WebView fx:id="orderWebView" prefHeight="535.0" prefWidth="1065.0">
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin></WebView>
                            </children>
+                           <BorderPane.margin>
+                              <Insets top="30.0" />
+                           </BorderPane.margin>
                         </VBox>
                      </center>
                      <top>
-                        <Text fx:id="SendTextHint" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz paczkamat, w którym chcesz nadać paczkę" textAlignment="CENTER" wrappingWidth="1277.6875" BorderPane.alignment="CENTER">
+                        <Text fx:id="SendTextHint" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz paczkamat, w którym chcesz nadać paczkę" textAlignment="CENTER" wrappingWidth="1063.6875" BorderPane.alignment="CENTER">
                            <font>
                               <Font name="Arial" size="32.0" />
                            </font>
+                           <BorderPane.margin>
+                              <Insets top="30.0" />
+                           </BorderPane.margin>
                         </Text>
                      </top>
                   </BorderPane>
@@ -177,10 +186,13 @@
                </content>
           </Tab>
         </tabs>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </TabPane>
    </center>
    <top>
-      <HBox prefHeight="27.0" prefWidth="1280.0" stylesheets="@../css/customer_screenCSS.css" BorderPane.alignment="CENTER">
+      <HBox maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" prefWidth="1276.0" styleClass="label-bar" stylesheets="@../css/customer_screenCSS.css" BorderPane.alignment="CENTER">
          <children>
             <Text fx:id="loggedInAs" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as:" wrappingWidth="1200.224609375">
                <font>
@@ -190,7 +202,10 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </Text>
-            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutClicked" prefHeight="27.0" prefWidth="76.0" styleClass="rich-blue" text="out" textAlignment="CENTER" />
+            <Button fx:id="logoutBtn" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#onLogoutClicked" prefHeight="30.0" prefWidth="74.0" styleClass="rich-blue" text="out" textAlignment="CENTER">
+               <font>
+                  <Font size="7.0" />
+               </font></Button>
          </children>
       </HBox>
    </top>
