@@ -10,11 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" rowValignment="TOP" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" rowValignment="TOP" styleClass="background" stylesheets="@../css/login_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
       <VBox alignment="CENTER">
          <children>
-            <TextField fx:id="loginField" alignment="CENTER" promptText="login" text="adam">
+            <TextField fx:id="loginField" alignment="CENTER" promptText="login" styleClass="input-fields" stylesheets="@../css/login_screenCSS.css" text="adam">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -22,7 +22,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" text="malysz">
+            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" styleClass="input-fields" stylesheets="@../css/login_screenCSS.css" text="malysz">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -30,7 +30,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </PasswordField>
-            <Button fx:id="loginBtn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginBtnClicked" text="LOGIN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button fx:id="loginBtn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginBtnClicked" styleClass="rich-blue" stylesheets="@../css/login_screenCSS.css" text="LOGIN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -40,8 +40,11 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button fx:id="registerBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="118.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegisterBtnClicked" text="REGISTER" textAlignment="CENTER">
+            <Button fx:id="registerBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="118.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegisterBtnClicked" styleClass="rich-blue" text="REGISTER" textAlignment="CENTER">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -51,8 +54,11 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Text fx:id="msgText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false">
+            <Text fx:id="msgText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false">
                <font>
                   <Font name="Corbel Light" size="14.0" />
                </font>
@@ -64,6 +70,6 @@
       </VBox>
    </children>
    <cursor>
-      <Cursor fx:constant="HAND" />
+      <Cursor fx:constant="DEFAULT" />
    </cursor>
 </FlowPane>

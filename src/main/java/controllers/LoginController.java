@@ -34,6 +34,11 @@ public class LoginController {
     @FXML
     private Text msgText;
 
+    @FXML
+    void initialize(){
+        registerBtn.setVisible(false);
+    }
+
     private void showNewlayout(String path, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
@@ -70,6 +75,7 @@ public class LoginController {
             } catch (Exception e) {
                 msgText.setText("Invalid login or password!");
                 msgText.setVisible(true);
+                registerBtn.setVisible(true);
             }
 
         }
@@ -82,5 +88,4 @@ public class LoginController {
     void onRegisterBtnClicked(ActionEvent event) {
         showNewlayout("layout/register_screen.fxml", event);
     }
-
 }

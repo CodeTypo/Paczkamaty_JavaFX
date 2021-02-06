@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" rowValignment="TOP" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
+<FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" rowValignment="TOP" styleClass="background" stylesheets="@../css/register_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
    <children>
       <VBox alignment="CENTER">
          <children>
@@ -19,7 +19,7 @@
                   <Font name="Corbel Light" size="36.0" />
                </font>
             </Text>
-            <TextField fx:id="emailField" alignment="CENTER" promptText="email">
+            <TextField fx:id="emailField" alignment="CENTER" promptText="email" styleClass="input-fields">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -27,7 +27,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="nameField" alignment="CENTER" layoutX="10.0" layoutY="64.0" promptText="name">
+            <TextField fx:id="nameField" alignment="CENTER" layoutX="10.0" layoutY="64.0" promptText="name" styleClass="input-fields" stylesheets="@../css/register_screenCSS.css">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="lastNameField" alignment="CENTER" layoutX="10.0" layoutY="64.0" promptText="last name">
+            <TextField fx:id="lastNameField" alignment="CENTER" layoutX="10.0" layoutY="64.0" promptText="last name" styleClass="input-fields" stylesheets="@../css/register_screenCSS.css">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="phoneNumberField" alignment="CENTER" layoutX="10.0" layoutY="10.0" promptText="phone number">
+            <TextField fx:id="phoneNumberField" alignment="CENTER" layoutX="10.0" layoutY="10.0" promptText="phone number" styleClass="input-fields" stylesheets="@../css/register_screenCSS.css">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -51,7 +51,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="loginField" alignment="CENTER" layoutX="10.0" layoutY="152.0" promptText="login">
+            <TextField fx:id="loginField" alignment="CENTER" layoutX="10.0" layoutY="152.0" promptText="login" styleClass="input-fields" stylesheets="@../css/register_screenCSS.css">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -59,7 +59,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password">
+            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" styleClass="input-fields" stylesheets="@../css/register_screenCSS.css">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </PasswordField>
-            <PasswordField fx:id="repeatPasswordField" alignment="CENTER" layoutX="10.0" layoutY="196.0" promptText="repeat password">
+            <PasswordField fx:id="repeatPasswordField" alignment="CENTER" layoutX="10.0" layoutY="196.0" promptText="repeat password" styleClass="input-fields" stylesheets="@../css/register_screenCSS.css">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -75,7 +75,7 @@
                   <Insets bottom="30.0" />
                </VBox.margin>
             </PasswordField>
-            <Button fx:id="registerBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="118.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegisterBtnClicked" text="REGISTER" textAlignment="CENTER">
+            <Button fx:id="registerBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="118.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegisterBtnClicked" styleClass="rich-blue" stylesheets="@../css/register_screenCSS.css" text="REGISTER" textAlignment="CENTER">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -85,8 +85,11 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button fx:id="loginBtn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginBtnClicked" text="LOGIN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button fx:id="loginBtn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginBtnClicked" styleClass="rich-blue" stylesheets="@../css/register_screenCSS.css" text="LOGIN" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Corbel Light" size="24.0" />
                </font>
@@ -96,6 +99,9 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Text fx:id="statusMsg" strokeType="OUTSIDE" strokeWidth="0.0" text="Register status">
                <font>
@@ -109,6 +115,6 @@
       </VBox>
    </children>
    <cursor>
-      <Cursor fx:constant="HAND" />
+      <Cursor fx:constant="DEFAULT" />
    </cursor>
 </FlowPane>

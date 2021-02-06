@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.ResourceBundle;
@@ -23,6 +26,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
@@ -159,7 +163,11 @@ public class CustomerController {
         order.setSender(customer);
         order.setOrderStatus("AWAITING_PICKUP");
         order.setReceiver(recipient);
-        order.setSendDatetime(new Timestamp(Calendar.getInstance().getTime().getTime()));
+        Timestamp sendTime = new Timestamp(Calendar.getInstance().getTime().getTime());
+        order.setSendDatetime(sendTime);
+        ZonedDateTime zonedDateTime = sendTime.toInstant().atZone(ZoneId.of("UTC"));
+        Timestamp receiveTime = Timestamp.from(zonedDateTime.plus(3, ChronoUnit.DAYS).toInstant());
+        order.setReceiveDatetime(receiveTime);
 
         BigDecimal price = BigDecimal.ONE;
         switch (dimension) {
@@ -180,13 +188,14 @@ public class CustomerController {
         receiverStash.getOrdersToReceive().add(order);
         customer.getOrdersAsSender().add(order);
 
-        System.out.println("Send order to: " + recipient.getName());
+        System.out.println("Sent order to: " + recipient.getName());
     }
 
     @FXML
     void initialize() {
         webViewConnector = new WebViewConnector();
         setupWebView(orderWebView, "customer_map.html");
+        //orderWebView.setBlendMode(BlendMode.HARD_LIGHT);
         //setupWebView(trackWebView, "customer_map.html");
         loggedInAs.setText("Logged in as: " + SessionStore.getUser().toString());
         dimensionComboBox.setItems(dimensions);
@@ -298,6 +307,7 @@ public class CustomerController {
                     }
                 }
         );
+
 
 
 

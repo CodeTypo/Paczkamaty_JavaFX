@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane nodeOrientation="LEFT_TO_RIGHT" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
+<BorderPane nodeOrientation="LEFT_TO_RIGHT" styleClass="background" stylesheets="@../css/customer_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
    <center>
-      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="814.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="814.0" prefWidth="1280.0" stylesheets="@../css/customer_screenCSS.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="sendTab" text="Send">
             <content>
@@ -26,37 +26,52 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <left>
-                        <VBox alignment="TOP_CENTER" prefHeight="681.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+                        <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="200.0" prefWidth="216.0" styleClass="vbox" BorderPane.alignment="CENTER">
                            <children>
-                              <ComboBox fx:id="recipientComboBox" prefWidth="150.0" promptText="Choose recipient">
+                              <ComboBox fx:id="recipientComboBox" prefWidth="150.0" promptText="Choose recipient" styleClass="combo-box">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets bottom="10.0" top="80.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <ComboBox fx:id="dimensionComboBox" prefWidth="150.0" promptText="Choose dimension">
+                              <ComboBox fx:id="dimensionComboBox" prefWidth="150.0" promptText="Choose dimension" styleClass="combo-box">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets top="15.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <Text fx:id="sendPaczkamatName" strokeType="OUTSIDE" strokeWidth="0.0" text="Sender paczkamat">
-                                 <font>
-                                    <Font name="Corbel Light" size="14.0" />
-                                 </font></Text>
-                              <ComboBox fx:id="sendStash" prefWidth="150.0" />
-                              <Text fx:id="receivePaczkamatName" strokeType="OUTSIDE" strokeWidth="0.0" text="Receiver paczkamat">
-                                 <font>
-                                    <Font name="Corbel Light" size="14.0" />
-                                 </font></Text>
-                              <ComboBox fx:id="receiveStash" prefWidth="150.0" />
-                              <Button fx:id="orderBtn" mnemonicParsing="false" onAction="#onOrderClicked" text="Order">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Text fx:id="textMsg" strokeType="OUTSIDE" strokeWidth="0.0" text="Order status">
+                              <Text fx:id="sendPaczkamatName" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Sender paczkamat">
                                  <font>
                                     <Font name="Corbel Light" size="14.0" />
                                  </font>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin></Text>
+                              <ComboBox fx:id="sendStash" prefWidth="150.0" styleClass="combo-box">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></ComboBox>
+                              <Text fx:id="receivePaczkamatName" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Receiver paczkamat">
+                                 <font>
+                                    <Font name="Corbel Light" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin></Text>
+                              <ComboBox fx:id="receiveStash" prefWidth="150.0" styleClass="combo-box">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></ComboBox>
+                              <Button fx:id="orderBtn" mnemonicParsing="false" onAction="#onOrderClicked" styleClass="rich-blue" text="Order">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="15.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Text fx:id="textMsg" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Order status">
+                                 <font>
+                                    <Font name="Corbel Light" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
                               </Text>
                            </children>
                            <padding>
@@ -67,15 +82,17 @@
                      <center>
                         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Text fx:id="SendTextHint" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz paczkamat, w którym chcesz nadać paczkę" textAlignment="CENTER" wrappingWidth="1067.6875">
-                                 <font>
-                                    <Font name="Comic Sans MS" size="32.0" />
-                                 </font>
-                              </Text>
-                              <WebView fx:id="orderWebView" prefHeight="727.0" prefWidth="1068.0" />
+                              <WebView fx:id="orderWebView" prefHeight="747.0" prefWidth="1065.0" />
                            </children>
                         </VBox>
                      </center>
+                     <top>
+                        <Text fx:id="SendTextHint" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz paczkamat, w którym chcesz nadać paczkę" textAlignment="CENTER" wrappingWidth="1277.6875" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Arial" size="32.0" />
+                           </font>
+                        </Text>
+                     </top>
                   </BorderPane>
                </content>
           </Tab>
@@ -86,9 +103,9 @@
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Packages You sent:" textAlignment="CENTER" wrappingWidth="1280.13671875">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Packages You sent:" textAlignment="CENTER" wrappingWidth="1280.13671875">
                            <font>
-                              <Font name="Comic Sans MS" size="20.0" />
+                              <Font name="Arial" size="24.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="10.0" top="20.0" />
@@ -111,16 +128,21 @@
                                     <PropertyValueFactory property="price" />
                                  </cellValueFactory>
                               </TableColumn>
-                              <TableColumn prefWidth="90.0" text="send date">
+                              <TableColumn prefWidth="120.0" text="send date">
                                  <cellValueFactory>
                                     <PropertyValueFactory property="sendDatetime" />
                                  </cellValueFactory>
                               </TableColumn>
+                              <TableColumn prefWidth="120.0" text="estimated arrival">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="receiveDatetime" />
+                                 </cellValueFactory>
+                              </TableColumn>
                            </columns>
                         </TableView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Packages sent to You:" textAlignment="CENTER" wrappingWidth="1279.78125">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Packages sent to You:" textAlignment="CENTER" wrappingWidth="1279.78125">
                            <font>
-                              <Font name="Comic Sans MS" size="20.0" />
+                              <Font name="Arial" size="24.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="10.0" top="20.0" />
@@ -158,14 +180,17 @@
       </TabPane>
    </center>
    <top>
-      <HBox prefHeight="27.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="27.0" prefWidth="1280.0" stylesheets="@../css/customer_screenCSS.css" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="loggedInAs" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as:" wrappingWidth="1222.224609375">
+            <Text fx:id="loggedInAs" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as:" wrappingWidth="1200.224609375">
                <font>
                   <Font size="19.0" />
                </font>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
             </Text>
-            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutClicked" prefHeight="32.0" prefWidth="57.0" text="Log out" textAlignment="CENTER" />
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutClicked" prefHeight="27.0" prefWidth="76.0" styleClass="rich-blue" text="out" textAlignment="CENTER" />
          </children>
       </HBox>
    </top>

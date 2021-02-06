@@ -3,6 +3,7 @@ package entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 @Entity
@@ -75,9 +76,14 @@ public class Order {
 
     @Basic
     @Column(name = "send_datetime")
-    public Timestamp getSendDatetime() {
-        return sendDatetime;
+//    public Timestamp getSendDatetime() {
+//        return sendDatetime;
+//    }
+    public String getSendDatetime() {
+        String s = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(sendDatetime);
+        return s;
     }
+
 
     public void setSendDatetime(Timestamp sendDatetime) {
         this.sendDatetime = sendDatetime;
@@ -105,8 +111,13 @@ public class Order {
 
     @Basic
     @Column(name = "receive_datetime")
-    public Timestamp getReceiveDatetime() {
-        return receiveDatetime;
+//    public Timestamp getReceiveDatetime() {
+//        return receiveDatetime;
+//    }
+
+    public String getReceiveDatetime() {
+        String s = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(receiveDatetime);
+        return s;
     }
 
     public void setReceiveDatetime(Timestamp receiveDatetime) {
