@@ -108,7 +108,7 @@ public class CustomerController {
     private WebViewConnector webViewConnector;
 
     private ObservableList<String> dimensions = FXCollections.observableArrayList
-            ("Small", "Medium", "Large");
+            ("SMALL", "MEDIUM", "LARGE");
 
     private Paczkamat sendPaczkamat;
     private Paczkamat receivePaczkamat;
@@ -175,9 +175,9 @@ public class CustomerController {
 
         BigDecimal price = BigDecimal.ONE;
         switch (dimension) {
-            case "Small" -> price = BigDecimal.valueOf(9.90);
-            case "Medium" -> price = BigDecimal.valueOf(16.90);
-            case "Large" -> price = BigDecimal.valueOf(28.90);
+            case "SMALL" -> price = BigDecimal.valueOf(9.90);
+            case "MEDIUM" -> price = BigDecimal.valueOf(16.90);
+            case "LARGE" -> price = BigDecimal.valueOf(28.90);
             default -> textMsg.setText("Wrong dimension");
         }
 
@@ -204,6 +204,20 @@ public class CustomerController {
         //setupWebView(trackWebView, "customer_map.html");
         loggedInAs.setText("Logged in as: " + SessionStore.getUser().toString());
         dimensionComboBox.setItems(dimensions);
+
+        dimensionComboBox.valueProperty().addListener((observableValue, s, newValue) -> {
+            if (newValue != null) {
+                if (sendPaczkamat != null) {
+                    sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash -> stash.getDimension().equals(newValue)));
+                }
+                if (receivePaczkamat != null) {
+                receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash -> stash.getDimension().equals(newValue)));
+                }
+
+            }
+        });
+
+
         recipientComboBox.setCellFactory(new Callback<ListView<Customer>, ListCell<Customer>>() {
 
             @Override
@@ -232,7 +246,9 @@ public class CustomerController {
             receivePaczkamat = newPaczkamat;
             receivePaczkamatName.setText(newPaczkamat.getName());
             SendTextHint.setText("Uzupełnij dane i kliknij \"zamów\" lub wybierz inny paczkamat nadawczy.");
-            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()));
+            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash ->
+                    stash.getDimension().equals(dimensionComboBox.getValue())
+            ));
 
             receiveStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
 
@@ -263,7 +279,9 @@ public class CustomerController {
             sendPaczkamat = newPaczkamat;
             sendPaczkamatName.setText(newPaczkamat.getName());
             SendTextHint.setText("Wybierz paczkamat, w którym odbiorca odbierze paczkę");
-            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()));
+            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash ->
+                    stash.getDimension().equals(dimensionComboBox.getValue())
+            ));
 
             sendStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
 
