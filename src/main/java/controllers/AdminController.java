@@ -84,7 +84,7 @@ public class AdminController {
 
     private WebViewConnector webViewConnector;
 
-    private Paczkamat adminPaczkamat;
+    private Paczkamat adminPaczkamat = null;
 
     private  BigDecimal income = BigDecimal.ZERO;
 
@@ -117,7 +117,16 @@ public class AdminController {
             LocalDate date = datePickerPaczkamats.getValue();
             paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> {
                 LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
-                if (
+                if (adminPaczkamat == null) {
+                    if (
+                            sendTime.getYear() == date.getYear() &&
+                            sendTime.getMonthValue() == date.getMonthValue() &&
+                            sendTime.getDayOfMonth() == date.getDayOfMonth()
+                    ) {
+                        // display only orders for this paczkamat and given day
+                        return true;
+                    }
+                } else if (
                         (
                                 (order.getSenderStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("AWAITING_PICKUP"))
                                 || (order.getReceiverStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("IN_SHIPMENT") )
