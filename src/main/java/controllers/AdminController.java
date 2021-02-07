@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -85,6 +86,8 @@ public class AdminController {
 
     private Paczkamat adminPaczkamat;
 
+    private  BigDecimal income = BigDecimal.ZERO;
+
     @FXML
     void onLogoutClicked(ActionEvent event) {
         SessionStore.setLoggedIn(false);
@@ -132,7 +135,10 @@ public class AdminController {
         });
 
         datePickerOrders.setOnAction(actionEvent -> {
+
             LocalDate date = datePickerOrders.getValue();
+            income = BigDecimal.ZERO;
+
             sentOrdersTable.setItems(DataSource.getOrders().filtered(order -> {
                 LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
                 if (
@@ -141,6 +147,7 @@ public class AdminController {
                         sendTime.getMonthValue() == date.getMonthValue() &&
                         sendTime.getDayOfMonth() == date.getDayOfMonth()
                 ) {
+                    income = income.add(order.getPrice());
                     // display only orders for this paczkamat and given day
                     return true;
                 }
@@ -157,11 +164,14 @@ public class AdminController {
                         sendTime.getDayOfMonth() == date.getDayOfMonth()
                 ) {
                     // display only orders for this paczkamat and given day
+                    income = income.add(order.getPrice());
                     return true;
                 }
 
                 return false;
             }));
+
+            incomeInfo.setText("Income: " + income.toString());
         });
 
         paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("AWAITING_PICKUP")));
@@ -169,12 +179,19 @@ public class AdminController {
         sentOrdersTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("AWAITING_PICKUP") || order.getOrderStatus().equals("IN_DELIVERY")));
 
         sentOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, order, newOrder) -> {
-            System.out.println("Selected: " + newOrder.getOrderStatus());
-            printDetailedInfo(newOrder);
-//            senderLabel.setText(newOrder.getSender().getName());
-//            senderPaczkamatLabel.setText(newOrder.getSenderStash().getPaczkamat().getName());
-//            recipientLabel.setText(newOrder.getReceiver().getName());
-//            recipientPaczkamatLabel.setText(newOrder.getReceiverStash().getPaczkamat().getName());
+            if (newOrder != null) {
+                System.out.println("Selected order: " + newOrder.getId());
+                printDetailedInfo(newOrder);
+            }
+
+        });
+
+        receivedOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, order, newOrder) -> {
+            if (newOrder != null) {
+                System.out.println("Selected order: " + newOrder.getId());
+                printDetailedInfo(newOrder);
+            }
+
         });
 
         receivedOrdersTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("IN_SHIPMENT") || order.getOrderStatus().equals("REALIZED") ));
@@ -191,8 +208,6 @@ public class AdminController {
         senderPaczkamatLabel.setText("Sender paczkamat: \n" + senderPaczkamat.toString());
         recipientLabel.setText("Recipient: \n" + recipient.toString());
         recipientPaczkamatLabel.setText("Recipient paczkamat: \n" + recipientPaczkamat.toString());
-
-
     }
 
     void setupWebView(WebView webView, String htmlFile) {

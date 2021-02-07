@@ -84,7 +84,12 @@ public class    MockService implements DataService {
                 Order order = new Order();
                 order.setSenderStash(stashes.get(i*10+j));
                 order.setReceiverStash(stashes.get((i+1)*10+j));
-                order.setOrderStatus("AWAITING_PICKUP");
+                if (j%2 == 0) {
+                    order.setOrderStatus("AWAITING_PICKUP");
+                } else {
+                    order.setOrderStatus("REALIZED");
+                }
+
                 order.setSender(customers.get(i));
                 order.setReceiver(customers.get(i+1));
                 order.setSendDatetime(Timestamp.from(Instant.now()));
