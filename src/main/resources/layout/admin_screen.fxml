@@ -81,16 +81,9 @@
                                           <Insets left="20.0" right="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label fx:id="setDeliveryStatus" onMouseClicked="#setDeliveryStatus" text="Delivery">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="setShipmentStatus" layoutX="255.0" layoutY="14.0" onMouseClicked="#setShipmentStatus" text="Shipment">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin></Label>
-                                    <Label fx:id="setRealizedStatus" onMouseClicked="#setRealizedStatus" text="Realized" />
+                                    <Button mnemonicParsing="false" onAction="#setDeliveryStatus" text="Delivery" />
+                                    <Button layoutX="420.0" layoutY="10.0" mnemonicParsing="false" onAction="#setShipmentStatus" text="Shipment" />
+                                    <Button layoutX="425.0" layoutY="10.0" mnemonicParsing="false" onAction="#setRealizedStatus" text="Realized" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />

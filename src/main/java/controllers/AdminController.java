@@ -259,7 +259,9 @@ public class AdminController {
             sentOrdersTable.setItems(DataSource.getOrders().filtered(order -> {
                 LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
                 if (
-                        order.getOrderStatus().equals("AWAITING_PICKUP") &&
+                        (order.getOrderStatus().equals("AWAITING_PICKUP") ||
+                                order.getOrderStatus().equals("IN_DELIVERY") ||
+                                order.getOrderStatus().equals("IN_SHIPMENT")) &&
                         sendTime.getYear() == date.getYear() &&
                         sendTime.getMonthValue() == date.getMonthValue() &&
                         sendTime.getDayOfMonth() == date.getDayOfMonth()
@@ -367,19 +369,20 @@ public class AdminController {
 
 
     @FXML
-    void setDeliveryStatus(MouseEvent event) {
+    void setDeliveryStatus(ActionEvent event) {
         selectedOrder.setOrderStatus("IN_DELIVERY");
         DataSource.updateOrder(selectedOrder);
+
     }
 
     @FXML
-    void setShipmentStatus(MouseEvent event) {
+    void setShipmentStatus(ActionEvent event) {
         selectedOrder.setOrderStatus("IN_SHIPMENT");
         DataSource.updateOrder(selectedOrder);
     }
 
     @FXML
-    void setRealizedStatus(MouseEvent event) {
+    void setRealizedStatus(ActionEvent event) {
         selectedOrder.setOrderStatus("REALIZED");
         DataSource.updateOrder(selectedOrder);
     }
