@@ -133,8 +133,7 @@ public class Paczkamat {
 
     @Override
     public String toString() {
-        return "Paczkamat" + '\n' +
-                "name = " + name + '\n' +
+        return  "name = " + name + '\n' +
                 "buildingNumber = " + buildingNumber + '\n' +
                 "city = " + city + '\n' +
                 "postCode = " + postCode + '\n' +

@@ -122,8 +122,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer" + '\n' +
-                "id = " + id + '\n' +
+        return  "id = " + id + '\n' +
                 "name = " + name + '\n' +
                 "lastName = " + lastName + '\n' +
                 "email = " + email + '\n' +

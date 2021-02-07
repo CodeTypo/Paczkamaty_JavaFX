@@ -55,7 +55,7 @@
                                       </TableColumn>
                                   </columns>
                               </TableView>
-                              <DatePicker fx:id="datePicker" />
+                              <DatePicker fx:id="datePickerPaczkamats" />
                            </children>
                         </HBox>
                      </bottom>
@@ -130,6 +130,13 @@
                            </children>
                         </VBox>
                      </center>
+                     <right>
+                        <VBox prefHeight="740.0" prefWidth="326.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="incomeInfo" text="Label" />
+                           </children>
+                        </VBox>
+                     </right>
                   </BorderPane>
                </content>
           </Tab>

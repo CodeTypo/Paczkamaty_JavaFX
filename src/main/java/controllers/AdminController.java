@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,7 +58,7 @@ public class AdminController {
     private TableView<Order> paczkamatStatsTable;
 
     @FXML
-    private DatePicker datePicker;
+    private DatePicker datePickerPaczkamats;
 
     @FXML
     private DatePicker datePickerOrders;
@@ -80,6 +78,8 @@ public class AdminController {
     @FXML
     private Label recipientPaczkamatLabel;
 
+    @FXML
+    private Label incomeInfo;
 
     private WebViewConnector webViewConnector;
 
@@ -110,16 +110,51 @@ public class AdminController {
 
         });
 
-        datePicker.setOnAction(actionEvent -> {
-            LocalDate date = datePicker.getValue();
+        datePickerPaczkamats.setOnAction(actionEvent -> {
+            LocalDate date = datePickerPaczkamats.getValue();
             paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> {
                 LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
                 if (
-                        (order.getSenderStash().getPaczkamat().getName().equals(adminPaczkamat.getName())
-                                || order.getReceiverStash().getPaczkamat().getName().equals(adminPaczkamat.getName())) &&
+                        (
+                                (order.getSenderStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("AWAITING_PICKUP"))
+                                || (order.getReceiverStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("IN_SHIPMENT") )
+                        ) &&
                                 sendTime.getYear() == date.getYear() &&
                                 sendTime.getMonthValue() == date.getMonthValue() &&
                                 sendTime.getDayOfMonth() == date.getDayOfMonth()
+                ) {
+                    // display only orders for this paczkamat and given day
+                    return true;
+                }
+
+                return false;
+            }));
+        });
+
+        datePickerOrders.setOnAction(actionEvent -> {
+            LocalDate date = datePickerOrders.getValue();
+            sentOrdersTable.setItems(DataSource.getOrders().filtered(order -> {
+                LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
+                if (
+                        order.getOrderStatus().equals("AWAITING_PICKUP") &&
+                        sendTime.getYear() == date.getYear() &&
+                        sendTime.getMonthValue() == date.getMonthValue() &&
+                        sendTime.getDayOfMonth() == date.getDayOfMonth()
+                ) {
+                    // display only orders for this paczkamat and given day
+                    return true;
+                }
+
+                return false;
+            }));
+
+            receivedOrdersTable.setItems(DataSource.getOrders().filtered(order -> {
+                LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
+                if (
+                        order.getOrderStatus().equals("REALIZED") &&
+                        sendTime.getYear() == date.getYear() &&
+                        sendTime.getMonthValue() == date.getMonthValue() &&
+                        sendTime.getDayOfMonth() == date.getDayOfMonth()
                 ) {
                     // display only orders for this paczkamat and given day
                     return true;
