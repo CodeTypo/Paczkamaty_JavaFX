@@ -213,9 +213,9 @@ public class AdminController {
         Paczkamat senderPaczkamat = order.getSenderStash().getPaczkamat();
         Paczkamat recipientPaczkamat = order.getReceiverStash().getPaczkamat();
 
-        senderLabel.setText("Sender: \n" + sender.toString());
+        senderLabel.setText("Sender: \n" + sender.toStringCustom());
         senderPaczkamatLabel.setText("Sender paczkamat: \n" + senderPaczkamat.toString());
-        recipientLabel.setText("Recipient: \n" + recipient.toString());
+        recipientLabel.setText("Recipient: \n" + recipient.toStringCustom());
         recipientPaczkamatLabel.setText("Recipient paczkamat: \n" + recipientPaczkamat.toString());
     }
 

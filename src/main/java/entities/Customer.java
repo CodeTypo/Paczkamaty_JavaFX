@@ -122,6 +122,10 @@ public class Customer {
 
     @Override
     public String toString() {
+        return  name + ' ' + lastName;
+    }
+
+    public String toStringCustom() {
         return  "id = " + id + '\n' +
                 "name = " + name + '\n' +
                 "lastName = " + lastName + '\n' +

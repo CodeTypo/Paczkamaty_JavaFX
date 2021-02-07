@@ -88,4 +88,8 @@ public class Stash {
         this.paczkamat = paczkamat;
     }
 
+    @Override
+    public String toString() {
+        return "Stash " + id +" " + dimension;
+    }
 }

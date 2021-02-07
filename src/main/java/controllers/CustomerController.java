@@ -194,6 +194,7 @@ public class CustomerController {
         recipient.getOrdersAsReceiver().add(order);
 
         System.out.println("Sent order to: " + recipient.getName());
+        textMsg.setText("Order sent");
     }
 
     @FXML
@@ -260,8 +261,7 @@ public class CustomerController {
                             super.updateItem(stash, b);
 
                             if (stash != null) {
-                                String stashObjectId = stash.toString();
-                                setText(stashObjectId.split("entities.")[1]);
+                                setText(stash.toString());
                             } else {
                                 setText(null);
                             }
@@ -293,8 +293,8 @@ public class CustomerController {
                             super.updateItem(stash, b);
 
                             if (stash != null) {
-                                String stashObjectId = stash.toString();
-                                setText(stashObjectId.split("entities.")[1]);
+//                                String stashObjectId = stash.toString();
+                                setText(stash.toString());
                             } else {
                                 setText(null);
                             }
