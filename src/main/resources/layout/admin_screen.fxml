@@ -10,17 +10,21 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+<BorderPane styleClass="background" stylesheets="@../css/admin_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
    <center>
-      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="tab_pane_background" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="paczkamatsTab" text="Paczkamats">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="tab_background">
                      <center>
                         <WebView fx:id="paczkamatsWebView" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
                      </center>
@@ -65,7 +69,7 @@
             </Tab>
           <Tab fx:id="ordersTab" text="Orders">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="tab_background">
                      <left>
                         <VBox alignment="CENTER" prefHeight="740.0" prefWidth="469.0" BorderPane.alignment="CENTER">
                            <children>
@@ -131,14 +135,163 @@
                         </VBox>
                      </left>
                      <center>
-                        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                        <GridPane maxHeight="-Infinity" prefHeight="540.0" styleClass="grid-pane" BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="579.0" minWidth="10.0" prefWidth="412.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="10.0" prefWidth="400.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <Label fx:id="senderLabel" style="-fx-padding:10;" text="Sender" />
-                              <Label fx:id="recipientLabel" style="-fx-padding:10;" text="Recipient" />
-                              <Label fx:id="senderPaczkamatLabel" style="-fx-padding:10;" text="Sender paczkamat" />
-                              <Label fx:id="recipientPaczkamatLabel" style="-fx-padding:10;" text="Recipient paczkamat" />
+                              <GridPane alignment="CENTER" maxHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="210.0" GridPane.rowIndex="1">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="103.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="309.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="-Infinity" minHeight="7.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label fx:id="senderLabel" style="-fx-padding:10;" styleClass="customLabel" text="ID:" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Name:" GridPane.rowIndex="1" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="E-mail:" GridPane.rowIndex="3" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Last name:" GridPane.rowIndex="2" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Phone number:" GridPane.rowIndex="4" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Login:" GridPane.rowIndex="5" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Password:" GridPane.rowIndex="6" />
+                                    <Text fx:id="SenderTextID" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" />
+                                    <Text fx:id="SenderTextName" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Text fx:id="SenderTextEmail" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Text fx:id="SenderTextLastName" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Text fx:id="SenderTextPassword" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Text fx:id="SenderTextLogin" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Text fx:id="SenderTextPhone" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                 </children>
+                              </GridPane>
+                              <GridPane prefHeight="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="109.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="291.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label fx:id="recipientLabel" style="-fx-padding:10;" styleClass="customLabel" text="ID:" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Name:" GridPane.rowIndex="1" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Last name:" GridPane.rowIndex="2" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="E-mail:" GridPane.rowIndex="3" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Phone number:" GridPane.rowIndex="4" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Login:" GridPane.rowIndex="5" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Password:" GridPane.rowIndex="6" />
+                                    <Text fx:id="ReceiverTextID" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" />
+                                    <Text fx:id="ReceiverTextPassword" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Text fx:id="ReceiverTextLogin" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Text fx:id="ReceiverTextPhone" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Text fx:id="ReceiverTextEmail" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Text fx:id="ReceiverTextLastName" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Text fx:id="ReceiverTextName" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <GridPane maxHeight="-Infinity" prefHeight="270.0" GridPane.rowIndex="3">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="128.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="264.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label fx:id="senderPaczkamatLabel" style="-fx-padding:10;" styleClass="customLabel" text="Name:" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Building number:" GridPane.rowIndex="1" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="City:" GridPane.rowIndex="2" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Post code:" GridPane.rowIndex="3" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Province:" GridPane.rowIndex="4" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Street:" GridPane.rowIndex="5" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Latitude:" GridPane.rowIndex="6" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Longitude:" GridPane.rowIndex="7" />
+                                    <Label style="-fx-padding:10;" styleClass="customLabel" text="Openinig hours:" GridPane.rowIndex="8" />
+                                    <Text fx:id="PaczkamatSenderTextName" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" />
+                                    <Text fx:id="PaczkamatSenderTextBuilding" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Text fx:id="PaczkamatSenderTextCity" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Text fx:id="PaczkamatSenderTextPostal" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Text fx:id="PaczkamatSenderTextProvince" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Text fx:id="PaczkamatSenderTextStreet" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Text fx:id="PaczkamatSenderTextLatitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Text fx:id="PaczkamatSenderTextLongitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Text fx:id="PaczkamatSenderTextOpening" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                 </children>
+                              </GridPane>
+                              <GridPane maxHeight="-Infinity" prefHeight="270.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="114.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="266.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label fx:id="recipientPaczkamatLabel" style="-fx-padding:10;" styleClass="customLabel" text="Name:" />
+                                    <Label fx:id="recipientPaczkamatLabel1" style="-fx-padding:10;" styleClass="customLabel" text="Building number:" GridPane.rowIndex="1" />
+                                    <Label fx:id="recipientPaczkamatLabel2" style="-fx-padding:10;" styleClass="customLabel" text="Province:" GridPane.rowIndex="4" />
+                                    <Label fx:id="recipientPaczkamatLabel3" style="-fx-padding:10;" styleClass="customLabel" text="Post code:" GridPane.rowIndex="3" />
+                                    <Label fx:id="recipientPaczkamatLabel4" style="-fx-padding:10;" styleClass="customLabel" text="City:" GridPane.rowIndex="2" />
+                                    <Label fx:id="recipientPaczkamatLabel5" style="-fx-padding:10;" styleClass="customLabel" text="Street:" GridPane.rowIndex="5" />
+                                    <Label fx:id="recipientPaczkamatLabel6" style="-fx-padding:10;" styleClass="customLabel" text="Latitude:" GridPane.rowIndex="6" />
+                                    <Label fx:id="recipientPaczkamatLabel7" style="-fx-padding:10;" styleClass="customLabel" text="Longitude:" GridPane.rowIndex="7" />
+                                    <Label fx:id="recipientPaczkamatLabel8" style="-fx-padding:10;" styleClass="customLabel" text="Openinig hours:" GridPane.rowIndex="8" />
+                                    <Text fx:id="PaczkamatRecipientTextName" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" />
+                                    <Text fx:id="PaczkamatRecipientTextBuilding" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Text fx:id="PaczkamatRecipientTextCity" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Text fx:id="PaczkamatRecipientTextPostal" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Text fx:id="PaczkamatRecipientTextProvince" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Text fx:id="PaczkamatRecipientTextStrret" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Text fx:id="PaczkamatRecipientTextLatitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Text fx:id="PaczkamatRecipientTextLongitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Text fx:id="PaczkamatRecipientTextOpeninig" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                 </children>
+                              </GridPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sender details" textAlignment="CENTER" wrappingWidth="392.0" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recipient details" textAlignment="CENTER" wrappingWidth="392.0" GridPane.columnIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sender paczkamat details" textAlignment="CENTER" wrappingWidth="392.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recipient paczkamat details" textAlignment="CENTER" wrappingWidth="392.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
-                        </VBox>
+                           <BorderPane.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </BorderPane.margin>
+                        </GridPane>
                      </center>
                   </BorderPane>
                </content>
@@ -147,6 +300,10 @@
       </TabPane>
    </center>
    <top>
-      <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutClicked" text="Log out" BorderPane.alignment="CENTER" />
+      <HBox alignment="TOP_RIGHT" styleClass="label-bar" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutClicked" text="Log out" />
+         </children>
+      </HBox>
    </top>
 </BorderPane>

@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -81,6 +82,110 @@ public class AdminController {
 
     @FXML
     private Label incomeInfo;
+
+
+    @FXML
+    private Text SenderTextID;
+
+    @FXML
+    private Text SenderTextName;
+
+    @FXML
+    private Text SenderTextEmail;
+
+    @FXML
+    private Text SenderTextLastName;
+
+    @FXML
+    private Text SenderTextPassword;
+
+    @FXML
+    private Text SenderTextLogin;
+
+    @FXML
+    private Text SenderTextPhone;
+
+
+    @FXML
+    private Text ReceiverTextID;
+
+    @FXML
+    private Text ReceiverTextPassword;
+
+    @FXML
+    private Text ReceiverTextLogin;
+
+    @FXML
+    private Text ReceiverTextPhone;
+
+    @FXML
+    private Text ReceiverTextEmail;
+
+    @FXML
+    private Text ReceiverTextLastName;
+
+    @FXML
+    private Text ReceiverTextName;
+
+
+
+    @FXML
+    private Text PaczkamatSenderTextName;
+
+    @FXML
+    private Text PaczkamatSenderTextBuilding;
+
+    @FXML
+    private Text PaczkamatSenderTextCity;
+
+    @FXML
+    private Text PaczkamatSenderTextPostal;
+
+    @FXML
+    private Text PaczkamatSenderTextProvince;
+
+    @FXML
+    private Text PaczkamatSenderTextStreet;
+
+    @FXML
+    private Text PaczkamatSenderTextLatitude;
+
+    @FXML
+    private Text PaczkamatSenderTextLongitude;
+
+    @FXML
+    private Text PaczkamatSenderTextOpening;
+
+
+    @FXML
+    private Text PaczkamatRecipientTextName;
+
+    @FXML
+    private Text PaczkamatRecipientTextBuilding;
+
+    @FXML
+    private Text PaczkamatRecipientTextCity;
+
+    @FXML
+    private Text PaczkamatRecipientTextPostal;
+
+    @FXML
+    private Text PaczkamatRecipientTextProvince;
+
+    @FXML
+    private Text PaczkamatRecipientTextStrret;
+
+    @FXML
+    private Text PaczkamatRecipientTextLatitude;
+
+    @FXML
+    private Text PaczkamatRecipientTextLongitude;
+
+    @FXML
+    private Text PaczkamatRecipientTextOpeninig;
+
+
+
 
     private WebViewConnector webViewConnector;
 
@@ -213,10 +318,47 @@ public class AdminController {
         Paczkamat senderPaczkamat = order.getSenderStash().getPaczkamat();
         Paczkamat recipientPaczkamat = order.getReceiverStash().getPaczkamat();
 
-        senderLabel.setText("Sender: \n" + sender.toStringCustom());
-        senderPaczkamatLabel.setText("Sender paczkamat: \n" + senderPaczkamat.toString());
-        recipientLabel.setText("Recipient: \n" + recipient.toStringCustom());
-        recipientPaczkamatLabel.setText("Recipient paczkamat: \n" + recipientPaczkamat.toString());
+        //senderLabel.setText("Sender: \n" + sender.toStringCustom());
+        SenderTextID.setText(String.valueOf(sender.getId()));
+        SenderTextName.setText(sender.getName());
+        SenderTextLastName.setText(sender.getLastName());
+        SenderTextEmail.setText(sender.getEmail());
+        SenderTextPhone.setText(sender.getPhoneNumber());
+        SenderTextLogin.setText(sender.getLogin());
+        SenderTextPassword.setText(sender.getPassword());
+
+        //recipientLabel.setText("Recipient: \n" + recipient.toStringCustom());
+
+        ReceiverTextID.setText(String.valueOf(recipient.getId()));
+        ReceiverTextName.setText(recipient.getName());
+        ReceiverTextLastName.setText(recipient.getLastName());
+        ReceiverTextEmail.setText(recipient.getEmail());
+        ReceiverTextPhone.setText(recipient.getPhoneNumber());
+        ReceiverTextLogin.setText(recipient.getLogin());
+        ReceiverTextPassword.setText(recipient.getPassword());
+
+        //senderPaczkamatLabel.setText("Sender paczkamat: \n" + senderPaczkamat.toString());
+        PaczkamatSenderTextName.setText(senderPaczkamat.getName());
+        PaczkamatSenderTextBuilding.setText(senderPaczkamat.getBuildingNumber());
+        PaczkamatSenderTextCity.setText(senderPaczkamat.getCity());
+        PaczkamatSenderTextPostal.setText(senderPaczkamat.getPostCode());
+        PaczkamatSenderTextProvince.setText(senderPaczkamat.getProvince());
+        PaczkamatSenderTextStreet.setText(senderPaczkamat.getStreet());
+        PaczkamatSenderTextLatitude.setText(senderPaczkamat.getLatitude());
+        PaczkamatSenderTextLongitude.setText(senderPaczkamat.getLongitude());
+        PaczkamatSenderTextOpening.setText(senderPaczkamat.getOpeningHours());
+
+        //recipientPaczkamatLabel.setText("Recipient paczkamat: \n" + recipientPaczkamat.toString());
+        PaczkamatRecipientTextName.setText(recipientPaczkamat.getName());
+        PaczkamatRecipientTextBuilding.setText(recipientPaczkamat.getBuildingNumber());
+        PaczkamatRecipientTextCity.setText(recipientPaczkamat.getCity());
+        PaczkamatRecipientTextPostal.setText(recipientPaczkamat.getPostCode());
+        PaczkamatRecipientTextProvince.setText(recipientPaczkamat.getProvince());
+        PaczkamatRecipientTextStrret.setText(recipientPaczkamat.getStreet());
+        PaczkamatRecipientTextLatitude.setText(recipientPaczkamat.getLatitude());
+        PaczkamatRecipientTextLongitude.setText(recipientPaczkamat.getLongitude());
+        PaczkamatRecipientTextOpeninig.setText(recipientPaczkamat.getOpeningHours());
+
     }
 
     void setupWebView(WebView webView, String htmlFile) {

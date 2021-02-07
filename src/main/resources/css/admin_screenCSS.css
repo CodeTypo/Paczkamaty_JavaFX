@@ -1,0 +1,172 @@
+.button{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1em; /* 12 */
+    -fx-text-fill: #ffffff;
+}
+
+.button:focused {
+    -fx-border-color: transparent, black;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 2);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:hover{
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+
+}
+
+.button:pressed {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.background{
+    -fx-background-color: rgb(107, 179, 253);
+}
+
+#tabPane {
+    -fx-tab-min-height: 2em;
+    /* 24 */
+    -fx-tab-max-height: 5em;
+    /* 24 */
+    -fx-tab-min-width: 5em;
+    -fx-tab-max-width: 100em;
+    -fx-padding: 0 -1 -1 0
+}
+.tab .tab-label {
+    -fx-background-color: transparent;
+    -fx-alignment: CENTER;
+    -fx-text-fill: #EBEAF0;
+}
+
+.tab{
+    -fx-background-color: rgba(58, 68, 76, 0.2);
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-padding: 0 30 0 30;
+}
+
+.tab:selected
+{
+    -fx-background-color: rgba(58, 68, 76, 0.4);
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-width: 5 0 0 0;
+    -fx-border-color: #eeeeee;
+
+
+
+}
+
+.tab:focused
+{
+    -fx-focus-color: rgb(236, 0, 0);
+}
+
+.tab-pane *.tab-header-background
+{
+    -fx-background-color: transparent;
+}
+
+.tab-pane:left *.tab-header-area
+{
+    -fx-background-insets: 0, 0 0 10;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em;
+
+
+}
+
+.tab:selected .focus-indicator
+{
+    -fx-focus-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.web-view{
+    -fx-background-color: transparent;
+}
+
+.tab_background{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgba(58, 68, 76, 0.4), rgb(79, 144, 196));
+
+}
+
+.tab_pane_background{
+    -fx-background-color: rgba(31, 91, 153, 0.1);
+}
+
+.label-bar{
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8));
+    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-insets: 0 11px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+}
+.table-row-cell:hover {
+    -fx-background-color: rgba(179, 191, 183, 0.5);
+    -fx-text-background-color: #00d1ff;
+}
+.table-row-cell:odd{
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell:even{
+    -fx-background-color: rgba(224, 224, 224, 0.9);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-view .virtual-flow .scroll-bar:vertical,
+.table-view .virtual-flow .scroll-bar:vertical .track,
+.table-view .virtual-flow .scroll-bar:vertical .track-background,
+.table-view .virtual-flow .scroll-bar:horizontal,
+.table-view .virtual-flow .scroll-bar:horizontal .track,
+.table-view .virtual-flow .scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+}
+.table-view.virtual-flow.scroll-bar.increment-button,
+.table-view.virtual-flow.scroll-bar.decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 2;
+}
+.table-view.virtual-flow.scroll-bar:vertical.thumb{
+    -fx-background-color:  linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.table-view.virtual-flow.scroll-bar:horizontal.thumb {
+    -fx-background-color:  linear-gradient(to right, #1dbbdd44, #93f9b944);
+}
+
+.customLabel {
+    -fx-background-color: rgb(255,255,255);
+}
+
+.grid-pane{
+    -fx-background-color: rgb(255,255,255);
+
+}
+
