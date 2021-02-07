@@ -194,27 +194,23 @@ public class CustomerController {
         recipient.getOrdersAsReceiver().add(order);
 
         System.out.println("Sent order to: " + recipient.getName());
-        textMsg.setText("Order sent");
+//        textMsg.setText("Order sent");
+        updateStashesList(dimensionComboBox.getValue());
     }
+
 
     @FXML
     void initialize() {
         webViewConnector = new WebViewConnector();
         setupWebView(orderWebView, "customer_map.html");
-        //orderWebView.setBlendMode(BlendMode.HARD_LIGHT);
-        //setupWebView(trackWebView, "customer_map.html");
+
         loggedInAs.setText("Logged in as: " + SessionStore.getUser().getName() + " " + SessionStore.getUser().getLastName());
+
         dimensionComboBox.setItems(dimensions);
 
         dimensionComboBox.valueProperty().addListener((observableValue, s, newValue) -> {
             if (newValue != null) {
-                if (sendPaczkamat != null) {
-                    sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash -> stash.getDimension().equals(newValue)));
-                }
-                if (receivePaczkamat != null) {
-                receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash -> stash.getDimension().equals(newValue)));
-                }
-
+                updateStashesList(newValue);
             }
         });
 
@@ -247,9 +243,11 @@ public class CustomerController {
             receivePaczkamat = newPaczkamat;
             receivePaczkamatName.setText(newPaczkamat.getName());
             SendTextHint.setText("Uzupełnij dane i kliknij \"zamów\" lub wybierz inny paczkamat nadawczy.");
-            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash ->
-                    stash.getDimension().equals(dimensionComboBox.getValue())
-            ));
+//            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash ->
+//                    stash.getDimension().equals(dimensionComboBox.getValue())
+//            ));
+//
+            updateStashesList(dimensionComboBox.getValue());
 
             receiveStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
 
@@ -279,9 +277,10 @@ public class CustomerController {
             sendPaczkamat = newPaczkamat;
             sendPaczkamatName.setText(newPaczkamat.getName());
             SendTextHint.setText("Wybierz paczkamat, w którym odbiorca odbierze paczkę");
-            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash ->
-                    stash.getDimension().equals(dimensionComboBox.getValue())
-            ));
+//            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash ->
+//                    stash.getDimension().equals(dimensionComboBox.getValue())
+//            ));
+            updateStashesList(dimensionComboBox.getValue());
 
             sendStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
 
@@ -293,14 +292,12 @@ public class CustomerController {
                             super.updateItem(stash, b);
 
                             if (stash != null) {
-//                                String stashObjectId = stash.toString();
                                 setText(stash.toString());
                             } else {
                                 setText(null);
                             }
                         }
                     };
-//c
                     return cell;
                 }
 
@@ -308,37 +305,83 @@ public class CustomerController {
         });
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Tab>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
-                        System.out.println("Tab Selection changed to " + t1.getText());
+                (ov, t, t1) -> {
+                    System.out.println("Tab Selection changed to " + t1.getText());
 
-                        if (t1.getId().equals("trackTab")) {
-                            System.out.println(SessionStore.getUser().getName());
-                            Collection<Order> ordersAsSender   = SessionStore.getUser().getOrdersAsSender();
-                            Collection<Order> ordersAsReceiver = SessionStore.getUser().getOrdersAsReceiver();
+                    if (t1.getId().equals("trackTab")) {
+                        System.out.println(SessionStore.getUser().getName());
+                        Collection<Order> ordersAsSender   = SessionStore.getUser().getOrdersAsSender();
+                        Collection<Order> ordersAsReceiver = SessionStore.getUser().getOrdersAsReceiver();
 
-                            ObservableList<Order> ordersSent = FXCollections.observableArrayList(ordersAsSender);
-                            ObservableList<Order> ordersReceived = FXCollections.observableArrayList(ordersAsReceiver);
-//                            orders.addAll(ordersAsReceiver);
+                        ObservableList<Order> ordersSent = FXCollections.observableArrayList(ordersAsSender);
+                        ObservableList<Order> ordersReceived = FXCollections.observableArrayList(ordersAsReceiver);
 
-                            ordersListSentTo.setItems(ordersSent);
-                            ordersListReceivingFrom.setItems(ordersReceived);
-                            System.out.println("Track tab");
-
-                        }
-
+                        ordersListSentTo.setItems(ordersSent);
+                        ordersListReceivingFrom.setItems(ordersReceived);
+                        System.out.println("Track tab");
 
                     }
                 }
         );
 
+    }
 
+    private void updateStashesList(String newValue) {
+        if (sendPaczkamat != null) {
+            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash -> {
+                if (stash.getDimension().equals(newValue)){
+                    for (Order order: stash.getOrdersToSend()) {
+                        if (order.getOrderStatus().equals("AWAITING_PICKUP")){
+                            return false;
+                        }
+                    }
 
+                    for (Order order: stash.getOrdersToReceive()) {
+                        if (order.getOrderStatus().equals("IN_SHIPMENT") ||
+                                order.getOrderStatus().equals("IN_DELIVERY") ||
+                                order.getOrderStatus().equals("AWAITING_PICKUP")
+                        ){
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }));
+        }
+        if (receivePaczkamat != null) {
+            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash -> {
+                if (stash.getDimension().equals(newValue)){
+                    for (Order order: stash.getOrdersToSend()) {
+                        if (order.getOrderStatus().equals("AWAITING_PICKUP")){
+                            return false;
+                        }
+                    }
+
+                    for (Order order: stash.getOrdersToReceive()) {
+                        if (order.getOrderStatus().equals("IN_SHIPMENT") ||
+                                order.getOrderStatus().equals("IN_DELIVERY") ||
+                                order.getOrderStatus().equals("AWAITING_PICKUP")
+                        ){
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }));
+        }
+    }
+
+    private void updateRecipientStashes() {
 
     }
 
-    void setupWebView(WebView webView, String htmlFile) {
+    private void setupWebView(WebView webView, String htmlFile) {
         WebEngine webEngine = webView.getEngine();
         webEngine.getLoadWorker().stateProperty()
                 .addListener((observable, oldValue, newValue) -> {

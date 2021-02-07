@@ -90,6 +90,6 @@ public class Stash {
 
     @Override
     public String toString() {
-        return "Stash " + id +" " + dimension;
+        return "Stash " + this.hashCode() +" " + dimension;
     }
 }
