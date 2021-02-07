@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
@@ -191,6 +192,8 @@ public class AdminController {
 
     private Paczkamat adminPaczkamat = null;
 
+    private Order selectedOrder = null;
+
     private  BigDecimal income = BigDecimal.ZERO;
 
     @FXML
@@ -295,6 +298,7 @@ public class AdminController {
         sentOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, order, newOrder) -> {
             if (newOrder != null) {
                 System.out.println("Selected order: " + newOrder.getId());
+                selectedOrder = newOrder;
                 printDetailedInfo(newOrder);
             }
 
@@ -359,6 +363,25 @@ public class AdminController {
         PaczkamatRecipientTextLongitude.setText(recipientPaczkamat.getLongitude());
         PaczkamatRecipientTextOpeninig.setText(recipientPaczkamat.getOpeningHours());
 
+    }
+
+
+    @FXML
+    void setDeliveryStatus(MouseEvent event) {
+        selectedOrder.setOrderStatus("IN_DELIVERY");
+        DataSource.updateOrder(selectedOrder);
+    }
+
+    @FXML
+    void setShipmentStatus(MouseEvent event) {
+        selectedOrder.setOrderStatus("IN_SHIPMENT");
+        DataSource.updateOrder(selectedOrder);
+    }
+
+    @FXML
+    void setRealizedStatus(MouseEvent event) {
+        selectedOrder.setOrderStatus("REALIZED");
+        DataSource.updateOrder(selectedOrder);
     }
 
     void setupWebView(WebView webView, String htmlFile) {
