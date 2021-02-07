@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;
 import javafx.beans.value.ChangeListener;
@@ -96,12 +97,7 @@ public class AdminController {
         setupWebView(paczkamatsWebView, "admin_map.html");
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Tab>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
-                        System.out.println("Tab Selection changed to " + t1.getText());
-                    }
-                }
+                (ov, oldTab, newTab) -> System.out.println("Tab Selection changed to " + newTab.getText())
         );
 
         webViewConnector.adminSetPaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
@@ -139,13 +135,28 @@ public class AdminController {
 
         sentOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, order, newOrder) -> {
             System.out.println("Selected: " + newOrder.getOrderStatus());
-            senderLabel.setText(newOrder.getSender().getName());
-            senderPaczkamatLabel.setText(newOrder.getSenderStash().getPaczkamat().getName());
-            recipientLabel.setText(newOrder.getReceiver().getName());
-            recipientPaczkamatLabel.setText(newOrder.getReceiverStash().getPaczkamat().getName());
+            printDetailedInfo(newOrder);
+//            senderLabel.setText(newOrder.getSender().getName());
+//            senderPaczkamatLabel.setText(newOrder.getSenderStash().getPaczkamat().getName());
+//            recipientLabel.setText(newOrder.getReceiver().getName());
+//            recipientPaczkamatLabel.setText(newOrder.getReceiverStash().getPaczkamat().getName());
         });
 
         receivedOrdersTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("IN_SHIPMENT") || order.getOrderStatus().equals("REALIZED") ));
+
+    }
+
+    private void printDetailedInfo(Order order) {
+        Customer sender = order.getSender();
+        Customer recipient = order.getReceiver();
+        Paczkamat senderPaczkamat = order.getSenderStash().getPaczkamat();
+        Paczkamat recipientPaczkamat = order.getReceiverStash().getPaczkamat();
+
+        senderLabel.setText("Sender: \n" + sender.toString());
+        senderPaczkamatLabel.setText("Sender paczkamat: \n" + senderPaczkamat.toString());
+        recipientLabel.setText("Recipient: \n" + recipient.toString());
+        recipientPaczkamatLabel.setText("Recipient paczkamat: \n" + recipientPaczkamat.toString());
+
 
     }
 

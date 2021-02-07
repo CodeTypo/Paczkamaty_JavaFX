@@ -130,4 +130,18 @@ public class Paczkamat {
     public void setStashes(Collection<Stash> stashes) {
         this.stashes = stashes;
     }
+
+    @Override
+    public String toString() {
+        return "Paczkamat" + '\n' +
+                "name = " + name + '\n' +
+                "buildingNumber = " + buildingNumber + '\n' +
+                "city = " + city + '\n' +
+                "postCode = " + postCode + '\n' +
+                "province = " + province + '\n' +
+                "street = " + street + '\n' +
+                "latitude = " + latitude + '\n' +
+                "longitude = " + longitude + '\n' +
+                "openingHours = " + openingHours + '\n';
+    }
 }

@@ -122,6 +122,13 @@ public class Customer {
 
     @Override
     public String toString() {
-        return name + " " + lastName;
+        return "Customer" + '\n' +
+                "id = " + id + '\n' +
+                "name = " + name + '\n' +
+                "lastName = " + lastName + '\n' +
+                "email = " + email + '\n' +
+                "phoneNumber = " + phoneNumber + '\n' +
+                "login = " + login + '\n' +
+                "password = " + password + '\n';
     }
 }

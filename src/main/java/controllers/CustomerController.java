@@ -202,7 +202,7 @@ public class CustomerController {
         setupWebView(orderWebView, "customer_map.html");
         //orderWebView.setBlendMode(BlendMode.HARD_LIGHT);
         //setupWebView(trackWebView, "customer_map.html");
-        loggedInAs.setText("Logged in as: " + SessionStore.getUser().toString());
+        loggedInAs.setText("Logged in as: " + SessionStore.getUser().getName() + " " + SessionStore.getUser().getLastName());
         dimensionComboBox.setItems(dimensions);
 
         dimensionComboBox.valueProperty().addListener((observableValue, s, newValue) -> {
