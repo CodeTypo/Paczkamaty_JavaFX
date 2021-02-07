@@ -3,6 +3,8 @@ package controllers;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -384,6 +386,7 @@ public class AdminController {
     @FXML
     void setRealizedStatus(ActionEvent event) {
         selectedOrder.setOrderStatus("REALIZED");
+        selectedOrder.setReceiveDatetime(Timestamp.from(Instant.now()));
         DataSource.updateOrder(selectedOrder);
     }
 
