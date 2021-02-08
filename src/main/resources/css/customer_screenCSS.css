@@ -118,7 +118,7 @@
 }
 .table-row-cell:hover {
     -fx-background-color: rgba(179, 191, 183, 0.5);
-    -fx-text-background-color: #ffe700;
+    -fx-text-background-color: #0018cb;
 }
 .table-row-cell:odd{
     -fx-background-color: rgb(229, 229, 229);
