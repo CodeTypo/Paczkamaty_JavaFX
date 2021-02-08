@@ -16,6 +16,7 @@ import services.DataSource;
 import services.SessionStore;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginController {
 
@@ -24,9 +25,6 @@ public class LoginController {
 
     @FXML
     private PasswordField passwordField;
-
-    @FXML
-    private Button loginBtn;
 
     @FXML
     private Button registerBtn;
@@ -41,7 +39,7 @@ public class LoginController {
 
     private void showNewlayout(String path, ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));
             Stage stage = new Stage();
             stage.setTitle("Login");
             stage.setScene(new Scene(root));

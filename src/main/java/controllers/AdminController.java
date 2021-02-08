@@ -1,14 +1,5 @@
 package controllers;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ResourceBundle;
-
 import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;
@@ -18,9 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -30,34 +22,24 @@ import services.DataSource;
 import services.SessionStore;
 import web.WebViewConnector;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 public class AdminController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TabPane tabPane;
 
     @FXML
-    private Tab paczkamatsTab;
-
-    @FXML
     private WebView paczkamatsWebView;
 
     @FXML
-    private Tab ordersTab;
-
-    @FXML
     private TableView<Order> sentOrdersTable;
-
-    @FXML
-    private GridPane orderDetailsGrid;
-
-    @FXML
-    private Button logoutBtn;
 
     @FXML
     private TableView<Order> paczkamatStatsTable;
@@ -72,20 +54,7 @@ public class AdminController {
     private TableView<Order> receivedOrdersTable;
 
     @FXML
-    private Label senderLabel;
-
-    @FXML
-    private Label recipientLabel;
-
-    @FXML
-    private Label senderPaczkamatLabel;
-
-    @FXML
-    private Label recipientPaczkamatLabel;
-
-    @FXML
     private Label incomeInfo;
-
 
     @FXML
     private Text SenderTextID;
@@ -108,7 +77,6 @@ public class AdminController {
     @FXML
     private Text SenderTextPhone;
 
-
     @FXML
     private Text ReceiverTextID;
 
@@ -129,8 +97,6 @@ public class AdminController {
 
     @FXML
     private Text ReceiverTextName;
-
-
 
     @FXML
     private Text PaczkamatSenderTextName;
@@ -226,29 +192,19 @@ public class AdminController {
             LocalDate date = datePickerPaczkamats.getValue();
             paczkamatStatsTable.setItems(DataSource.getOrders().filtered(order -> {
                 LocalDateTime sendTime = order.getSendDatetime().toLocalDateTime();
+                // display only orders for this paczkamat and given day
                 if (adminPaczkamat == null) {
-                    if (
-                            sendTime.getYear() == date.getYear() &&
-                            sendTime.getMonthValue() == date.getMonthValue() &&
-                            sendTime.getDayOfMonth() == date.getDayOfMonth()
-                    ) {
-                        // display only orders for this paczkamat and given day
-                        return true;
-                    }
-                } else if (
-                        (
-                                (order.getSenderStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("AWAITING_PICKUP"))
-                                || (order.getReceiverStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("IN_SHIPMENT") )
-                        ) &&
-                                sendTime.getYear() == date.getYear() &&
-                                sendTime.getMonthValue() == date.getMonthValue() &&
-                                sendTime.getDayOfMonth() == date.getDayOfMonth()
-                ) {
                     // display only orders for this paczkamat and given day
-                    return true;
-                }
-
-                return false;
+                    return sendTime.getYear() == date.getYear() &&
+                            sendTime.getMonthValue() == date.getMonthValue() &&
+                            sendTime.getDayOfMonth() == date.getDayOfMonth();
+                } else return (
+                        (order.getSenderStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("AWAITING_PICKUP"))
+                                || (order.getReceiverStash().getPaczkamat().getName().equals(adminPaczkamat.getName()) && order.getOrderStatus().equals("IN_SHIPMENT"))
+                ) &&
+                        sendTime.getYear() == date.getYear() &&
+                        sendTime.getMonthValue() == date.getMonthValue() &&
+                        sendTime.getDayOfMonth() == date.getDayOfMonth();
             }));
         });
 
@@ -370,7 +326,7 @@ public class AdminController {
 
 
     @FXML
-    void setDeliveryStatus(ActionEvent event) {
+    void setDeliveryStatus() {
         selectedOrder.setOrderStatus("IN_DELIVERY");
         DataSource.updateOrder(selectedOrder);
         sentOrdersTable.refresh();
@@ -379,7 +335,7 @@ public class AdminController {
     }
 
     @FXML
-    void setShipmentStatus(ActionEvent event) {
+    void setShipmentStatus() {
         selectedOrder.setOrderStatus("IN_SHIPMENT");
         DataSource.updateOrder(selectedOrder);
         sentOrdersTable.refresh();
@@ -387,7 +343,7 @@ public class AdminController {
     }
 
     @FXML
-    void setRealizedStatus(ActionEvent event) {
+    void setRealizedStatus() {
         selectedOrder.setOrderStatus("REALIZED");
         selectedOrder.setReceiveDatetime(Timestamp.from(Instant.now()));
         DataSource.updateOrder(selectedOrder);
@@ -408,7 +364,7 @@ public class AdminController {
 
     private void showNewlayout(String path, ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));
             Stage stage = new Stage();
             stage.setTitle("Login");
             stage.setScene(new Scene(root));

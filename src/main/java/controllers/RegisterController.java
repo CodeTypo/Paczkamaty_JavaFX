@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -15,7 +14,7 @@ import javafx.stage.Stage;
 import services.DataSource;
 
 import java.io.IOException;
-import java.util.Locale;
+import java.util.Objects;
 
 public class RegisterController {
 
@@ -41,17 +40,11 @@ public class RegisterController {
     private PasswordField repeatPasswordField;
 
     @FXML
-    private Button registerBtn;
-
-    @FXML
-    private Button loginBtn;
-
-    @FXML
     private Text statusMsg;
 
     private void showNewlayout(String path, ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));
             Stage stage = new Stage();
             stage.setTitle("Login");
             stage.setScene(new Scene(root));

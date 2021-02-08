@@ -1,23 +1,9 @@
 package controllers;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.ResourceBundle;
-
 import entities.Customer;
 import entities.Order;
 import entities.Paczkamat;
 import entities.Stash;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,8 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -39,10 +23,17 @@ import services.DataSource;
 import services.SessionStore;
 import web.WebViewConnector;
 
-public class CustomerController {
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.Objects;
 
-    @FXML
-    private ResourceBundle resources;
+public class CustomerController {
 
     @FXML
     private TableView<Order> ordersListSentTo;
@@ -51,34 +42,19 @@ public class CustomerController {
     private Text loggedInAs;
 
     @FXML
-    private URL location;
-
-    @FXML
     private Text SendTextHint;
 
     @FXML
     private TabPane tabPane;
 
     @FXML
-    private Tab sendTab;
-
-    @FXML
     private WebView orderWebView;
-
-    @FXML
-    private GridPane paczkamatPreviewGrid;
 
     @FXML
     private ComboBox<Customer> recipientComboBox;
 
     @FXML
     private ComboBox<String> dimensionComboBox;
-
-    @FXML
-    private Button orderBtn;
-
-    @FXML
-    private Text textMsg;
 
     @FXML
     private Text sendPaczkamatName;
@@ -93,21 +69,12 @@ public class CustomerController {
     private ComboBox<Stash> receiveStash;
 
     @FXML
-    private Tab trackTab;
-
-    @FXML
-    private WebView trackWebView;
-
-    @FXML
     private TableView<Order> ordersListReceivingFrom;
-
-    @FXML
-    private Button logoutBtn;
 
 
     private WebViewConnector webViewConnector;
 
-    private ObservableList<String> dimensions = FXCollections.observableArrayList
+    private final ObservableList<String> dimensions = FXCollections.observableArrayList
             ("SMALL", "MEDIUM", "LARGE");
 
     private Paczkamat sendPaczkamat;
@@ -122,7 +89,7 @@ public class CustomerController {
     }
 
     @FXML
-    void onOrderClicked(ActionEvent event) {
+    void onOrderClicked() {
         Customer customer = SessionStore.getUser();
 
         Customer recipient = recipientComboBox.getValue();
@@ -131,32 +98,32 @@ public class CustomerController {
         Stash receiverStash = receiveStash.getValue();
 
         if (recipient == null) {
-            textMsg.setText("Choose recipient to send order");
+            SendTextHint.setText("Choose recipient to send order");
             return;
         }
 
         if (dimension == null) {
-            textMsg.setText("Choose package dimension to send order");
+            SendTextHint.setText("Choose package dimension to send order");
             return;
         }
 
         if (sendPaczkamat == null) {
-            textMsg.setText("Choose send paczkamat from map to send order");
+            SendTextHint.setText("Choose send paczkamat from map to send order");
             return;
         }
 
         if (receivePaczkamat == null) {
-            textMsg.setText("Choose recipient paczkamat from map to send order");
+            SendTextHint.setText("Choose recipient paczkamat from map to send order");
             return;
         }
 
         if (senderStash == null) {
-            textMsg.setText("Choose sender stash to send order");
+            SendTextHint.setText("Choose sender stash to send order");
             return;
         }
 
         if (receiverStash == null) {
-            textMsg.setText("Choose receiver stash to send order");
+            SendTextHint.setText("Choose receiver stash to send order");
             return;
         }
 
@@ -178,7 +145,7 @@ public class CustomerController {
             case "SMALL" -> price = BigDecimal.valueOf(9.90);
             case "MEDIUM" -> price = BigDecimal.valueOf(16.90);
             case "LARGE" -> price = BigDecimal.valueOf(28.90);
-            default -> textMsg.setText("Wrong dimension");
+            default -> SendTextHint.setText("Wrong dimension");
         }
 
         order.setPrice(price);
@@ -193,8 +160,7 @@ public class CustomerController {
         customer.getOrdersAsSender().add(order);
         recipient.getOrdersAsReceiver().add(order);
 
-        System.out.println("Sent order to: " + recipient.getName());
-//        textMsg.setText("Order sent");
+        SendTextHint.setText("Order sent to: " + recipient.getName()+" "+recipient.getLastName());
         updateStashesList(dimensionComboBox.getValue());
     }
 
@@ -202,7 +168,7 @@ public class CustomerController {
     @FXML
     void initialize() {
         webViewConnector = new WebViewConnector();
-        setupWebView(orderWebView, "customer_map.html");
+        setupWebView(orderWebView);
 
         loggedInAs.setText("Logged in as: " + SessionStore.getUser().getName() + " " + SessionStore.getUser().getLastName());
 
@@ -215,12 +181,12 @@ public class CustomerController {
         });
 
 
-        recipientComboBox.setCellFactory(new Callback<ListView<Customer>, ListCell<Customer>>() {
+        recipientComboBox.setCellFactory(new Callback<>() {
 
             @Override
             public ListCell<Customer> call(ListView<Customer> customerListView) {
 
-                final ListCell<Customer> cell = new ListCell<Customer>(){
+                return new ListCell<>() {
                     @Override
                     protected void updateItem(Customer customer, boolean b) {
                         super.updateItem(customer, b);
@@ -232,8 +198,6 @@ public class CustomerController {
                         }
                     }
                 };
-
-                return cell;
             }
         });
 
@@ -242,18 +206,19 @@ public class CustomerController {
         webViewConnector.receivePaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
             receivePaczkamat = newPaczkamat;
             receivePaczkamatName.setText(newPaczkamat.getName());
-            SendTextHint.setText("Uzupełnij dane i kliknij \"zamów\" lub wybierz inny paczkamat nadawczy.");
+            SendTextHint.setText("Fill in the details and select \"Order\" to send the package or select another paczkamat if You wish.");
 //            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash ->
 //                    stash.getDimension().equals(dimensionComboBox.getValue())
 //            ));
 //
             updateStashesList(dimensionComboBox.getValue());
 
-            receiveStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
+            receiveStash.setCellFactory(new Callback<>() {
 
                 @Override
                 public ListCell<Stash> call(ListView<Stash> stashListView) {
-                    final ListCell<Stash> cell = new ListCell<Stash>(){
+
+                    return new ListCell<>() {
                         @Override
                         protected void updateItem(Stash stash, boolean b) {
                             super.updateItem(stash, b);
@@ -265,8 +230,6 @@ public class CustomerController {
                             }
                         }
                     };
-
-                    return cell;
                 }
 
             });
@@ -276,17 +239,17 @@ public class CustomerController {
         webViewConnector.sendPaczkamatProperty().addListener((observableValue, oldPaczkamat, newPaczkamat) -> {
             sendPaczkamat = newPaczkamat;
             sendPaczkamatName.setText(newPaczkamat.getName());
-            SendTextHint.setText("Wybierz paczkamat, w którym odbiorca odbierze paczkę");
+            SendTextHint.setText("Select the receiver's paczkamat");
 //            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash ->
 //                    stash.getDimension().equals(dimensionComboBox.getValue())
 //            ));
             updateStashesList(dimensionComboBox.getValue());
 
-            sendStash.setCellFactory(new Callback<ListView<Stash>, ListCell<Stash>>() {
+            sendStash.setCellFactory(new Callback<>() {
 
                 @Override
                 public ListCell<Stash> call(ListView<Stash> stashListView) {
-                    final ListCell<Stash> cell = new ListCell<Stash>(){
+                    return new ListCell<>() {
                         @Override
                         protected void updateItem(Stash stash, boolean b) {
                             super.updateItem(stash, b);
@@ -298,7 +261,6 @@ public class CustomerController {
                             }
                         }
                     };
-                    return cell;
                 }
 
             });
@@ -327,30 +289,11 @@ public class CustomerController {
     }
 
     private void updateStashesList(String newValue) {
-        if (sendPaczkamat != null) {
-            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash -> {
-                if (stash.getDimension().equals(newValue)){
-                    for (Order order: stash.getOrdersToSend()) {
-                        if (order.getOrderStatus().equals("AWAITING_PICKUP")){
-                            return false;
-                        }
-                    }
+        addPaczkamats(newValue, sendPaczkamat, sendStash);
+        addPaczkamats(newValue, receivePaczkamat, receiveStash);
+    }
 
-                    for (Order order: stash.getOrdersToReceive()) {
-                        if (order.getOrderStatus().equals("IN_SHIPMENT") ||
-                                order.getOrderStatus().equals("IN_DELIVERY") ||
-                                order.getOrderStatus().equals("AWAITING_PICKUP")
-                        ){
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-
-                return false;
-            }));
-        }
+    private void addPaczkamats(String newValue, Paczkamat receivePaczkamat, ComboBox<Stash> receiveStash) {
         if (receivePaczkamat != null) {
             receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash -> {
                 if (stash.getDimension().equals(newValue)){
@@ -377,11 +320,7 @@ public class CustomerController {
         }
     }
 
-    private void updateRecipientStashes() {
-
-    }
-
-    private void setupWebView(WebView webView, String htmlFile) {
+    private void setupWebView(WebView webView) {
         WebEngine webEngine = webView.getEngine();
         webEngine.getLoadWorker().stateProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -389,12 +328,12 @@ public class CustomerController {
                     window.setMember("app", webViewConnector);
                 });
 
-        webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
+        webEngine.load(getClass().getResource("/webview/" + "customer_map.html").toString());
     }
 
     private void showNewlayout(String path, ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(path));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));
             Stage stage = new Stage();
             stage.setTitle("Login");
             stage.setScene(new Scene(root));

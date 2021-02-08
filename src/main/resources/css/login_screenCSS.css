@@ -20,18 +20,30 @@
     -fx-background-color: transparent;
 }
 
-.rich-blue {
-    -fx-background-color:
-            #000000,
-            linear-gradient(#e55002, #deb032),
-            linear-gradient(#de9626, #dae0ad),
-            linear-gradient(#ffa503, #dd8314);
-    -fx-background-insets: 0,1,2,3;
-    -fx-background-radius: 3,2,2,2;
-    -fx-padding: 12 30 12 30;
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
+.button{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1.4em; /* 12 */
+    -fx-text-fill: #ffffff;
 }
-.rich-blue Text {
-    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , 1);
+
+.button:focused {
+    -fx-border-color: transparent, black;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 2);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:hover{
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-font-size: 1.4em; /* 12 */
+}
+
+.button:pressed {
+    -fx-background-color: black;
+    -fx-text-fill: white;
 }
