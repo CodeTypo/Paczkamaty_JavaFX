@@ -116,12 +116,9 @@
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
 }
-.table-row-cell:hover {
-    -fx-background-color: rgba(179, 191, 183, 0.5);
-    -fx-text-background-color: #0018cb;
-}
+
 .table-row-cell:odd{
-    -fx-background-color: rgb(229, 229, 229);
+    -fx-background-color: rgb(215, 215, 215);
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0em;
 }
@@ -129,6 +126,19 @@
     -fx-background-color: rgb(194, 194, 194);
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0em;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #000000;
+    -fx-text-background-color: #ffffff;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #000000;
+}
+.table-row-cell:selected .text {
+    -fx-fill: #ffffff;
+
 }
 .table-view .virtual-flow .scroll-bar:vertical,
 .table-view .virtual-flow .scroll-bar:vertical .track,

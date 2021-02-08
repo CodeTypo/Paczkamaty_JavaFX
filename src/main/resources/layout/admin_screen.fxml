@@ -27,12 +27,15 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="tab_background">
                      <center>
-                        <WebView fx:id="paczkamatsWebView" prefHeight="400.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+                        <WebView fx:id="paczkamatsWebView" prefHeight="400.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets left="30.0" right="30.0" top="30.0" />
+                           </BorderPane.margin></WebView>
                      </center>
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="319.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                            <children>
-                              <TableView fx:id="paczkamatStatsTable" prefHeight="100.0" prefWidth="546.0">
+                              <TableView fx:id="paczkamatStatsTable" blendMode="SRC_ATOP" prefHeight="100.0" prefWidth="546.0">
                                   <columns>
                                       <TableColumn prefWidth="75.0" text="id">
                                           <cellValueFactory>
@@ -60,8 +63,11 @@
                                           </cellValueFactory>
                                       </TableColumn>
                                   </columns>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
                               </TableView>
-                              <DatePicker fx:id="datePickerPaczkamats" />
+                              <DatePicker fx:id="datePickerPaczkamats" blendMode="MULTIPLY" />
                            </children>
                         </HBox>
                      </bottom>
@@ -76,18 +82,27 @@
                            <children>
                               <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="500.0">
                                  <children>
-                                    <DatePicker fx:id="datePickerOrders" />
-                                    <Label fx:id="incomeInfo" prefHeight="16.0" prefWidth="67.0" text="Income">
+                                    <Label fx:id="incomeInfo" prefHeight="17.0" prefWidth="276.0" text="Income" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="20.0" right="10.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
                                     </Label>
+                                    <DatePicker fx:id="datePickerOrders" blendMode="MULTIPLY">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets></DatePicker>
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" top="10.0" />
+                                 </padding>
                               </HBox>
-                              <TableView fx:id="sentOrdersTable" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="500.0">
+                              <TableView fx:id="sentOrdersTable" blendMode="SRC_ATOP" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="500.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="id">
                                        <cellValueFactory>
@@ -111,7 +126,7 @@
                                     </TableColumn>
                                  </columns>
                               </TableView>
-                              <TableView fx:id="receivedOrdersTable" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="500.0">
+                              <TableView fx:id="receivedOrdersTable" blendMode="SRC_ATOP" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="500.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="id">
                                        <cellValueFactory>
@@ -142,17 +157,20 @@
                                           <Insets bottom="5.0" right="20.0" top="5.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#setRealizedStatus" prefHeight="26.0" prefWidth="91.0" text="Realized">
+                                    <Button mnemonicParsing="false" onAction="#setDeliveryStatus" prefHeight="26.0" prefWidth="87.0" text="Delivery">
                                        <HBox.margin>
                                           <Insets bottom="5.0" right="20.0" top="5.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#setDeliveryStatus" prefHeight="26.0" prefWidth="87.0" text="Delivery">
+                                    <Button mnemonicParsing="false" onAction="#setRealizedStatus" prefHeight="26.0" prefWidth="91.0" text="Realized">
                                        <HBox.margin>
                                           <Insets bottom="5.0" top="5.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
                               </HBox>
                            </children>
                         </VBox>

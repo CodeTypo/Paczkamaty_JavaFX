@@ -64,10 +64,6 @@
 
 }
 
-.tab:focused
-{
-    -fx-focus-color: rgb(236, 0, 0);
-}
 
 .tab-pane *.tab-header-background
 {
@@ -128,10 +124,7 @@
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
 }
-.table-row-cell:hover {
-    -fx-background-color: rgba(179, 191, 183, 0.5);
-    -fx-text-background-color: #0018cb;
-}
+
 .table-row-cell:odd{
     -fx-background-color: rgb(229, 229, 229);
     -fx-background-insets: 0, 0 0 1 0;
@@ -142,6 +135,20 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0em;
 }
+
+.table-row-cell:hover {
+    -fx-background-color: #000000;
+    -fx-text-background-color: #ffffff;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #000000;
+}
+.table-row-cell:selected .text {
+    -fx-fill: #ffffff;
+
+}
+
 .table-view .virtual-flow .scroll-bar:vertical,
 .table-view .virtual-flow .scroll-bar:vertical .track,
 .table-view .virtual-flow .scroll-bar:vertical .track-background,
@@ -163,7 +170,7 @@
 }
 
 .customLabel {
-    -fx-text-fill: rgb(208, 255, 0);
+    -fx-text-fill: rgb(214, 214, 214);
 }
 
 .grid-pane{

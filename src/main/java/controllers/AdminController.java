@@ -159,7 +159,6 @@ public class AdminController {
     @FXML
     private Text PaczkamatSenderTextOpening;
 
-
     @FXML
     private Text PaczkamatRecipientTextName;
 
@@ -374,6 +373,8 @@ public class AdminController {
     void setDeliveryStatus(ActionEvent event) {
         selectedOrder.setOrderStatus("IN_DELIVERY");
         DataSource.updateOrder(selectedOrder);
+        sentOrdersTable.refresh();
+        receivedOrdersTable.refresh();
 
     }
 
@@ -381,6 +382,8 @@ public class AdminController {
     void setShipmentStatus(ActionEvent event) {
         selectedOrder.setOrderStatus("IN_SHIPMENT");
         DataSource.updateOrder(selectedOrder);
+        sentOrdersTable.refresh();
+        receivedOrdersTable.refresh();
     }
 
     @FXML
@@ -388,6 +391,8 @@ public class AdminController {
         selectedOrder.setOrderStatus("REALIZED");
         selectedOrder.setReceiveDatetime(Timestamp.from(Instant.now()));
         DataSource.updateOrder(selectedOrder);
+        sentOrdersTable.refresh();
+        receivedOrdersTable.refresh();
     }
 
     void setupWebView(WebView webView, String htmlFile) {
