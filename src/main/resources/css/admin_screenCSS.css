@@ -163,11 +163,11 @@
 }
 
 .customLabel {
-    -fx-text-fill: rgb(0, 124, 229);
+    -fx-text-fill: rgb(208, 255, 0);
 }
 
 .grid-pane{
-    -fx-background-color: rgba(0, 0, 0,0.9);
+    -fx-background-color: rgba(0, 0, 0,0.6);
     -fx-border-radius: 5px 5px 5px 5px;
 }
 
