@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane styleClass="background" stylesheets="@../css/admin_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+<BorderPane styleClass="background" stylesheets="@../css/admin_screenCSS.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
    <center>
       <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="tab_pane_background" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -71,72 +71,88 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="tab_background">
                      <left>
-                        <VBox alignment="CENTER" prefHeight="740.0" prefWidth="469.0" BorderPane.alignment="CENTER">
+                        <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="500.0" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="469.0">
+                              <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="500.0">
                                  <children>
                                     <DatePicker fx:id="datePickerOrders" />
-                                    <Label fx:id="incomeInfo" text="Income">
+                                    <Label fx:id="incomeInfo" prefHeight="16.0" prefWidth="67.0" text="Income">
                                        <HBox.margin>
                                           <Insets left="20.0" right="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Button mnemonicParsing="false" onAction="#setDeliveryStatus" text="Delivery" />
-                                    <Button layoutX="420.0" layoutY="10.0" mnemonicParsing="false" onAction="#setShipmentStatus" text="Shipment" />
-                                    <Button layoutX="425.0" layoutY="10.0" mnemonicParsing="false" onAction="#setRealizedStatus" text="Realized" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
-                              <TableView fx:id="sentOrdersTable" prefHeight="800.0" prefWidth="400.0">
+                              <TableView fx:id="sentOrdersTable" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="500.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="id">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="id" />
                                        </cellValueFactory>
                                     </TableColumn>
-                                    <TableColumn prefWidth="171.0" text="send date">
+                                    <TableColumn prefWidth="150.0" text="send date">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="sendDatetime" />
                                        </cellValueFactory>
                                     </TableColumn>
-                                    <TableColumn prefWidth="144.0" text="status">
+                                    <TableColumn prefWidth="150.0" text="status">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="orderStatus" />
                                        </cellValueFactory>
                                     </TableColumn>
-                                    <TableColumn minWidth="0.0" prefWidth="81.0" text="price">
+                                    <TableColumn minWidth="0.0" prefWidth="125.0" text="price">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="price" />
                                        </cellValueFactory>
                                     </TableColumn>
                                  </columns>
                               </TableView>
-                              <TableView fx:id="receivedOrdersTable" prefHeight="800.0" prefWidth="400.0">
+                              <TableView fx:id="receivedOrdersTable" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="500.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="id">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="id" />
                                        </cellValueFactory>
                                     </TableColumn>
-                                    <TableColumn prefWidth="175.0" text="receive date">
+                                    <TableColumn prefWidth="150.0" text="receive date">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="sendDatetime" />
                                        </cellValueFactory>
                                     </TableColumn>
-                                    <TableColumn prefWidth="146.0" text="status">
+                                    <TableColumn prefWidth="150.0" text="status">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="orderStatus" />
                                        </cellValueFactory>
                                     </TableColumn>
-                                    <TableColumn minWidth="0.0" prefWidth="145.0" text="price">
+                                    <TableColumn minWidth="0.0" prefWidth="125.0" text="price">
                                        <cellValueFactory>
                                           <PropertyValueFactory property="price" />
                                        </cellValueFactory>
                                     </TableColumn>
                                  </columns>
                               </TableView>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#setShipmentStatus" prefHeight="26.0" prefWidth="97.0" text="Shipment">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" right="20.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#setRealizedStatus" prefHeight="26.0" prefWidth="91.0" text="Realized">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" right="20.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#setDeliveryStatus" prefHeight="26.0" prefWidth="87.0" text="Delivery">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </left>
@@ -155,8 +171,8 @@
                            <children>
                               <GridPane alignment="CENTER" maxHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="210.0" GridPane.rowIndex="1">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="103.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="309.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="126.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="250.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints maxHeight="-Infinity" minHeight="7.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -186,8 +202,8 @@
                               </GridPane>
                               <GridPane prefHeight="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="109.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="291.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="123.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="242.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -217,8 +233,8 @@
                               </GridPane>
                               <GridPane maxHeight="-Infinity" prefHeight="270.0" GridPane.rowIndex="3">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="128.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="264.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="134.66668701171875" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="241.33331298828125" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -254,8 +270,8 @@
                               </GridPane>
                               <GridPane maxHeight="-Infinity" prefHeight="270.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="114.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="266.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="132.6666259765625" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="232.3333740234375" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />

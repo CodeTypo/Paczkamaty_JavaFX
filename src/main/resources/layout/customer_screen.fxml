@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="756.0" styleClass="background" stylesheets="@../css/customer_screenCSS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="756.0" styleClass="background" stylesheets="@../css/customer_screenCSS.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
    <center>
       <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1280.0" styleClass="tab_pane_background" stylesheets="@../css/customer_screenCSS.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -28,12 +28,12 @@
                      <left>
                         <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="450.0" prefWidth="216.0" styleClass="vbox">
                            <children>
-                              <ComboBox fx:id="recipientComboBox" prefWidth="150.0" promptText="Choose recipient" styleClass="combobox">
+                              <ComboBox fx:id="recipientComboBox" prefWidth="150.0" promptText="Recipient:" styleClass="combobox">
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="80.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <ComboBox fx:id="dimensionComboBox" prefWidth="150.0" promptText="Choose dimension" styleClass="combobox">
+                              <ComboBox fx:id="dimensionComboBox" prefWidth="150.0" promptText="Dimension:" styleClass="combobox">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
@@ -110,84 +110,113 @@
 
       </content>
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="tab_background">
+                  <HBox styleClass="tab_background">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Packages You sent:" textAlignment="CENTER" wrappingWidth="1280.13671875">
-                           <font>
-                              <Font name="Arial" size="24.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="20.0" />
-                           </VBox.margin>
-                        </Text>
-                        <TableView fx:id="ordersListSentTo" prefHeight="330.0" prefWidth="1281.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="id">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="id" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn prefWidth="144.0" text="status">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="orderStatus" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn minWidth="0.0" prefWidth="49.0" text="price">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="price" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn prefWidth="120.0" text="send date">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="sendDatetime" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn prefWidth="120.0" text="estimated arrival">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="receiveDatetime" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                           </columns>
-                        </TableView>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Packages sent to You:" textAlignment="CENTER" wrappingWidth="1279.78125">
-                           <font>
-                              <Font name="Arial" size="24.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="20.0" />
-                           </VBox.margin>
-                        </Text>
-                        <TableView fx:id="ordersListReceivingFrom" prefHeight="339.0" prefWidth="1281.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="id">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="id" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn prefWidth="144.0" text="status">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="orderStatus" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn minWidth="0.0" prefWidth="49.0" text="price">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="price" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn prefWidth="120.0" text="send date">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="sendDatetime" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                              <TableColumn prefWidth="120.0" text="estimated receive date">
-                                 <cellValueFactory>
-                                    <PropertyValueFactory property="receiveDatetime" />
-                                 </cellValueFactory>
-                              </TableColumn>
-                           </columns>
-                        </TableView>
+                        <VBox minWidth="600.0">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Packages You sent:" textAlignment="CENTER" wrappingWidth="640.0">
+                                 <font>
+                                    <Font size="32.0" />
+                                 </font>
+                              </Text>
+                              <TableView fx:id="ordersListSentTo" prefWidth="640.0">
+                                 <columns>
+                                    <TableColumn prefWidth="50.0" text="id">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="id" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="150.0" text="status">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="orderStatus" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn minWidth="0.0" prefWidth="50.0" text="price">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="price" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn minWidth="175.0" prefWidth="175.0" text="send date">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="sendDatetime" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="165.0" text="estimated arrival">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="receiveDatetime" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                 </columns>
+                                 <VBox.margin>
+                                    <Insets top="40.0" />
+                                 </VBox.margin>
+                              </TableView>
+                           </children>
+                           <HBox.margin>
+                              <Insets top="40.0" />
+                           </HBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox minWidth="600.0" prefHeight="650.0">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Packages sent to You:" textAlignment="CENTER" wrappingWidth="640.0">
+                                 <font>
+                                    <Font size="32.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Text>
+                              <TableView fx:id="ordersListReceivingFrom" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="640.0">
+                                 <columns>
+                                    <TableColumn prefWidth="50.0" text="id">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="id" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="150.0" text="status">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="orderStatus" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn minWidth="0.0" prefWidth="50.0" text="price">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="price" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="175.0" text="send date">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="sendDatetime" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="200.0" text="estimated receive date">
+                                       <cellValueFactory>
+                                          <PropertyValueFactory property="receiveDatetime" />
+                                       </cellValueFactory>
+                                    </TableColumn>
+                                 </columns>
+                                 <VBox.margin>
+                                    <Insets top="40.0" />
+                                 </VBox.margin>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0" top="40.0" />
+                           </HBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </HBox>
                </content>
           </Tab>
         </tabs>
