@@ -371,9 +371,14 @@
       </TabPane>
    </center>
    <top>
-      <HBox alignment="TOP_RIGHT" styleClass="label-bar" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_RIGHT" prefHeight="30.0" styleClass="label-bar" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutClicked" text="Log out" />
+            <Text fill="#ffec00" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin mode" wrappingWidth="1223.13671875">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutClicked" prefHeight="30.0" text="Log out" />
          </children>
       </HBox>
    </top>
