@@ -13,7 +13,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//An offline data source made for the purpose of debugging the app without the need of connecting to AWS
+
+/**
+ * Klasa MockService - offline'owa baza danych która pozwala na rozwijanie aplikacji bez konieczności każdorazowego
+ * łączenia się z bazą danych hostowaną na serwerze. Pozwala dzięki temu na zaoszczędzenie dużej ilości czasu. Podczas
+ * wywoływania konstruktora, baza samodzielnie zapełnia się kilkoma przygotowanymi wcześniej zestawami danych.
+ * Posiada metody typu get/insert pozwalające na zarządzanie danymi zebranymi w bazie.
+ */
 public class    MockService implements DataService {
     private List<Paczkamat> paczkamats;
     private List<Order>     orders;

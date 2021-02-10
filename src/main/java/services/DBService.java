@@ -13,6 +13,10 @@ import org.hibernate.cfg.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa DBService odpowiadająca za nawiązanie połączenia z bazą danych online przy pomocy Hibernate,
+ * Posiada metody typu get/insert pozwalające na zarządzanie danymi zebranymi w bazie.
+ */
 public class DBService implements DataService {
     private static SessionFactory factory;
     private static Session session;
@@ -204,90 +208,4 @@ public class DBService implements DataService {
             session.close();
         }
     }
-
-
-
-//    public <T> void insertEntity(T entity) {
-//        try {
-//            session = factory.openSession();
-//            tx = session.beginTransaction();
-//            session.save(entity);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) {
-//                tx.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//    }
-//
-//
-//    // UPDATE METHODS
-//
-//    public void updatePaczkamat( Paczkamat paczkamat ) {
-//        try {
-//            session = factory.openSession();
-//            tx = session.beginTransaction();
-//            session.update(paczkamat);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) {
-//                tx.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//    }
-//
-//    public void updateStash( Stash stash ) {
-//        try {
-//            session = factory.openSession();
-//            tx = session.beginTransaction();
-//            session.update(stash);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) {
-//                tx.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//    }
-//
-//    public void updateOrder( Order order ) {
-//        try {
-//            session = factory.openSession();
-//            tx = session.beginTransaction();
-//            session.update(order);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) {
-//                tx.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//    }
-//
-//    public void updateCustomer( Customer customer ) {
-//        try {
-//            session = factory.openSession();
-//            tx = session.beginTransaction();
-//            session.update(customer);
-//            tx.commit();
-//        } catch (HibernateException e) {
-//            if (tx != null) {
-//                tx.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//    }
-
 }

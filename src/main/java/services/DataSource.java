@@ -8,6 +8,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.hibernate.HibernateException;
 
+/**
+ * Klasa DataSource reprezentuje zbiór danych, na których operuje cały program. Jednym z jej najistotniejszych pól
+ * jest pole DataService - pole reprezentujące klasę reprezentującą online/offline źródło danych, z którego są one
+ * pobierane celem wykonywania na nich operacji.
+ */
 public class DataSource {
     private static ObservableList<Paczkamat> paczkamats;
     private static ObservableList<Order> orders;
@@ -22,11 +27,15 @@ public class DataSource {
 
     }
 
+    /**
+     * Metoda przygotowuje pola ObservableList przypisując im obiekty observableArrayList, a następnie za pomocą serii
+     * metod fetch(...) wypełnia je odpowiednimi obiektami.
+     */
     private static void prepareData() {
-        paczkamats = FXCollections.observableArrayList();
-        orders = FXCollections.observableArrayList();
-        stashes = FXCollections.observableArrayList();
-        customers = FXCollections.observableArrayList();
+        paczkamats  = FXCollections.observableArrayList();
+        orders      = FXCollections.observableArrayList();
+        stashes     = FXCollections.observableArrayList();
+        customers   = FXCollections.observableArrayList();
 
         fetchCustomers();
         fetchStashes();
@@ -34,12 +43,24 @@ public class DataSource {
         fetchOrders();
     }
 
+    /**
+     * @param username nazwa użytkownika bazy danych
+     * @param password hasło użytkownika bazy danych
+     *
+     *                 Metoda ta ustawia Bazę Danych online jako źródło danych, a następnie próbuje nawiązać z nią
+     *                 połączenie i przygotowuje wszystkie dane w niej zawarte do prowadzenia na nich operacji.
+     */
     public static void setDBService(String username, String password) {
         service = new DBService(username, password);
         prepareData();
         System.out.println("Hibernate database connector set");
     }
 
+    /**
+     *              Metoda ta ustawia Bazę Danych offline jako źródło danych i
+     *              przygotowuje wszystkie dane w niej zawarte do prowadzenia na nich operacji. Logowanie się użytkownika
+     *              wykonywane jest w późniejszej części aplikacji.
+     */
     public static void setMockService() {
         service = new MockService();
         prepareData();

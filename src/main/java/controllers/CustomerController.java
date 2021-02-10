@@ -251,9 +251,7 @@ public class CustomerController {
             sendPaczkamat = newPaczkamat;
             sendPaczkamatName.setText(newPaczkamat.getName());
             SendTextHint.setText("Select the receiver's paczkamat");
-//            sendStash.setItems(FXCollections.observableArrayList(sendPaczkamat.getStashes()).filtered(stash ->
-//                    stash.getDimension().equals(dimensionComboBox.getValue())
-//            ));
+
             updateStashesList(dimensionComboBox.getValue());
 
             sendStash.setCellFactory(new Callback<>() {

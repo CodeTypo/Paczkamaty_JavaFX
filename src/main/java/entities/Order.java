@@ -17,11 +17,7 @@ public class Order {
     private Integer id;
     private BigDecimal price;
     private String orderStatus;
-//    private Integer senderId;
-//    private Integer senderStashId;
     private Timestamp sendDatetime;
-//    private Integer receiverId;
-//    private Integer receiverStashId;
     private Timestamp receiveDatetime;
     private Customer sender;
     private Stash senderStash;
@@ -59,60 +55,15 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-//    @Basic
-//    @Column(name = "sender_id")
-//    public Integer getSenderId() {
-//        return senderId;
-//    }
-//
-//    public void setSenderId(Integer senderId) {
-//        this.senderId = senderId;
-//    }
-//
-//    @Basic
-//    @Column(name = "sender_stash_id")
-//    public Integer getSenderStashId() {
-//        return senderStashId;
-//    }
-//
-//    public void setSenderStashId(Integer senderStashId) {
-//        this.senderStashId = senderStashId;
-//    }
-
     @Basic
     @Column(name = "send_datetime")
     public Timestamp getSendDatetime() {
         return sendDatetime;
     }
-//    public String getSendDatetime() {
-//        String s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sendDatetime);
-//        return s;
-//    }
-
 
     public void setSendDatetime(Timestamp sendDatetime) {
         this.sendDatetime = sendDatetime;
     }
-
-//    @Basic
-//    @Column(name = "receiver_id")
-//    public Integer getReceiverId() {
-//        return receiverId;
-//    }
-//
-//    public void setReceiverId(Integer receiverId) {
-//        this.receiverId = receiverId;
-//    }
-//
-//    @Basic
-//    @Column(name = "receiver_stash_id")
-//    public Integer getReceiverStashId() {
-//        return receiverStashId;
-//    }
-//
-//    public void setReceiverStashId(Integer receiverStashId) {
-//        this.receiverStashId = receiverStashId;
-//    }
 
     @Basic
     @Column(name = "receive_datetime")
@@ -120,27 +71,9 @@ public class Order {
         return receiveDatetime;
     }
 
-//    public String getReceiveDatetime() {
-//        String s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(receiveDatetime);
-//        return s;
-//    }
-
     public void setReceiveDatetime(Timestamp receiveDatetime) {
         this.receiveDatetime = receiveDatetime;
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Order order = (Order) o;
-//        return Objects.equals(id, order.id) && Objects.equals(price, order.price) && Objects.equals(orderStatus, order.orderStatus) && Objects.equals(senderId, order.senderId) && Objects.equals(senderStashId, order.senderStashId) && Objects.equals(sendDatetime, order.sendDatetime) && Objects.equals(receiverId, order.receiverId) && Objects.equals(receiverStashId, order.receiverStashId) && Objects.equals(receiveDatetime, order.receiveDatetime);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, price, orderStatus, senderId, senderStashId, sendDatetime, receiverId, receiverStashId, receiveDatetime);
-//    }
 
     @ManyToOne
     @JoinColumn(name = "sender_id", referencedColumnName = "id")

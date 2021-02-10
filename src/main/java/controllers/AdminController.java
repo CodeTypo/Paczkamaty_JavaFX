@@ -301,7 +301,6 @@ public class AdminController {
         Paczkamat senderPaczkamat = order.getSenderStash().getPaczkamat();
         Paczkamat recipientPaczkamat = order.getReceiverStash().getPaczkamat();
 
-        //senderLabel.setText("Sender: \n" + sender.toStringCustom());
         SenderTextID.setText(String.valueOf(sender.getId()));
         SenderTextName.setText(sender.getName());
         SenderTextLastName.setText(sender.getLastName());
@@ -310,7 +309,6 @@ public class AdminController {
         SenderTextLogin.setText(sender.getLogin());
         SenderTextPassword.setText(sender.getPassword());
 
-        //recipientLabel.setText("Recipient: \n" + recipient.toStringCustom());
 
         ReceiverTextID.setText(String.valueOf(recipient.getId()));
         ReceiverTextName.setText(recipient.getName());
@@ -320,7 +318,6 @@ public class AdminController {
         ReceiverTextLogin.setText(recipient.getLogin());
         ReceiverTextPassword.setText(recipient.getPassword());
 
-        //senderPaczkamatLabel.setText("Sender paczkamat: \n" + senderPaczkamat.toString());
         PaczkamatSenderTextName.setText(senderPaczkamat.getName());
         PaczkamatSenderTextBuilding.setText(senderPaczkamat.getBuildingNumber());
         PaczkamatSenderTextCity.setText(senderPaczkamat.getCity());
@@ -331,7 +328,6 @@ public class AdminController {
         PaczkamatSenderTextLongitude.setText(senderPaczkamat.getLongitude());
         PaczkamatSenderTextOpening.setText(senderPaczkamat.getOpeningHours());
 
-        //recipientPaczkamatLabel.setText("Recipient paczkamat: \n" + recipientPaczkamat.toString());
         PaczkamatRecipientTextName.setText(recipientPaczkamat.getName());
         PaczkamatRecipientTextBuilding.setText(recipientPaczkamat.getBuildingNumber());
         PaczkamatRecipientTextCity.setText(recipientPaczkamat.getCity());

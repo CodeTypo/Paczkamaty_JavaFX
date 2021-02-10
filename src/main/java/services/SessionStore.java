@@ -2,12 +2,15 @@ package services;
 
 import entities.Customer;
 
+/**
+ * Klasa reprezentującą pojedynczą sesję podczas korzystania z aplikacji, zawiera metody pozwalające na zalogowanie
+ * użytkowika, weryfikację jego uprawnień, wylogowanie użytkownika, czy też sprawdzenie czy w sesji zalogowany jest
+ * aktualnie jakiś użytkownik.
+ */
 public class SessionStore {
     private static boolean admin = false;
     private static boolean loggedIn = false;
-
     private static Customer user;
-
     public static Customer getUser() {
         return user;
     }

@@ -87,11 +87,7 @@ public class LoginController {
                 msgText.setVisible(true);
                 registerBtn.setVisible(true);
             }
-
         }
-
-
-
     }
 
     /**

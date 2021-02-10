@@ -7,7 +7,11 @@ import entities.Stash;
 
 import java.util.List;
 
-//An interface shared by both the online and offline data sources
+/**
+ * Interfejs dzielony zarówno przez online jak i offline źródła danych, mający zapewnić integralność źródeł z programem
+ * niezależnie od tego, czy są one online'ową bazą danych, czy też offline'owym, zhardcode'owanym źródłem jakim jest mockDB.
+ */
+//An interface shard by both the online and offline data sources
 interface DataService {
     List<Paczkamat> getAllPaczkamats();
     List<Order> getAllOrders();
@@ -21,11 +25,5 @@ interface DataService {
     void insertStash     ( Stash stash );
     void insertPaczkamat ( Paczkamat paczkamat );
 
-//    void updateCustomer( Customer customer );
-//    void updateOrder( Order order );
-//    void updateStash( Stash stash );
-//    void updatePaczkamat( Paczkamat paczkamat );
-
-//    <T> void insertEntity(T entity);
     <T> void updateEntity(T entity);
 }

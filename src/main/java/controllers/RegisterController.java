@@ -123,5 +123,4 @@ public class RegisterController {
         System.out.println("New customer added, login:  " + newCustomer.getLogin() + " password: " + newCustomer.getPassword());
         showNewlayout("layout/login_screen.fxml", event);
     }
-
 }
