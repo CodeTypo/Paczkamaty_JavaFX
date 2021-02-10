@@ -11,6 +11,10 @@ import services.DataSource;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Obiekt tej klasy jest współdzielony z oknem WebView i zapewnia integrację pomiędzy Javą a Javascriptem.
+ * Zawiera podstawowe metody, które na podstawie otrzymanego obiektu JSObject generują obiekt w Javie
+ */
 public class WebViewConnector {
 
     private ObjectProperty<Paczkamat> sendPaczkamat = new SimpleObjectProperty<>();
@@ -25,6 +29,11 @@ public class WebViewConnector {
         System.out.println(text);
     }
 
+    /**
+     *
+     * @param object obiekt javscript zawierający szczegóły dotyczące paczkamatu
+     * @return obiekt reprezentujący paczkamat w javie
+     */
     private Paczkamat getPaczkamatFromJS(JSObject object) {
         JSObject location = (JSObject) object.getMember("location");
         JSObject address_details = (JSObject) object.getMember("address_details");
@@ -79,6 +88,10 @@ public class WebViewConnector {
         return paczkamat;
     }
 
+    /**
+     * Tworzy pczkamat i dodaje go do bazy danych.
+     * @param object obiekt w javascript
+     */
     public void addPaczkamat(JSObject object) {
         Paczkamat paczkamat = getPaczkamatFromJS(object);
 
@@ -90,6 +103,10 @@ public class WebViewConnector {
         }
     }
 
+    /**
+     * Metoda pozwala śledzić zaznaczony na mapie paczkamat.
+     * @param object wybrany w geowidgecie paczkamat
+     */
     public void selectPaczkamat(JSObject object) {
         String name = object.getMember("name").toString();
         Paczkamat choosedPaczkamat = null;
@@ -123,6 +140,10 @@ public class WebViewConnector {
 
     }
 
+    /**
+     * Metoda pozwalająca reagować na wybór paczkamatu w widoku admina.
+     * @param object
+     */
     public void selectAdminPaczkamat(JSObject object) {
         String name = object.getMember("name").toString();
         Paczkamat adminPaczkamat = null;
