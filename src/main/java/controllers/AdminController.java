@@ -30,8 +30,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Klasa AdminController odpowiedzialna za obsługę wszystkich interakcji pomiędzy użytkownikiem
+ * zalogowanym jako administrator, a oddzielnym GUI przygotowanym dla tego użykownika.
+ */
 public class AdminController {
 
+
+    //Szereg pól odpowiadających FXML-owym obiektom zastosowanym w GUI
     @FXML
     private TabPane tabPane;
 
@@ -151,24 +157,35 @@ public class AdminController {
 
     @FXML
     private Text PaczkamatRecipientTextOpeninig;
+    //Koniec Szeregu pól odpowiadającym FXML-owym obiektom zastosowanym w GUI
 
+    private WebViewConnector    webViewConnector;
+    private Paczkamat           adminPaczkamat = null;
+    private Order               selectedOrder = null;
+    private BigDecimal          income = BigDecimal.ZERO;
 
-
-
-    private WebViewConnector webViewConnector;
-
-    private Paczkamat adminPaczkamat = null;
-
-    private Order selectedOrder = null;
-
-    private  BigDecimal income = BigDecimal.ZERO;
-
+    /**
+     * @param event
+     * Metoda wykonująca się w momencie gdy użytkownik naciska na przycisk LogOut. Odpowiada
+     * za wylogowanie z sessji obecnego użytkownika oraz wyświetlenie nowego layoutu ukazującego
+     * ekran logowania.
+     */
     @FXML
     void onLogoutClicked(ActionEvent event) {
         SessionStore.setLoggedIn(false);
         showNewlayout("layout/login_screen.fxml", event);
     }
 
+    /**
+     * Metoda wywoływana na początku "istnienia" Controllera, jej zadaniami są:
+     *  - przygotowanie WebView poprzez utworzenie nowego obiektu WebViewConnector, któremu następnie przekazywane są
+     *    zmienna odpowiadająca FXML-owemu obiektowi klasy WebView oraz plik .html, który zawiera kod, który wykona się w WebView
+     *  - dodanie listenera do obiektu klasy TabPane reagującego na wybranie innej zakładki przez użytkownika
+     *  - zaimplementowanie możliwości sortowania zamówień przy pomocy daty, oraz metody zliczającej przychód uzyskany
+     *    wybranego dnia.
+     *  - dodanie do zamówień zestawionych w tabelach listenerów, powodujących wyświetlenie w przygotowanym do tego polu
+     *    szczegółowych danych na temat adresata, nadawcy oraz paczkamatów nadawczego i odbiorczego.
+     */
     @FXML
     void initialize() {
         webViewConnector = new WebViewConnector();
@@ -227,7 +244,6 @@ public class AdminController {
                     // display only orders for this paczkamat and given day
                     return true;
                 }
-
                 return false;
             }));
 
@@ -260,7 +276,6 @@ public class AdminController {
                 selectedOrder = newOrder;
                 printDetailedInfo(newOrder);
             }
-
         });
 
         receivedOrdersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, order, newOrder) -> {
@@ -268,13 +283,18 @@ public class AdminController {
                 System.out.println("Selected order: " + newOrder.getId());
                 printDetailedInfo(newOrder);
             }
-
         });
 
         receivedOrdersTable.setItems(DataSource.getOrders().filtered(order -> order.getOrderStatus().equals("IN_SHIPMENT") || order.getOrderStatus().equals("REALIZED") ));
 
     }
 
+    /**
+     * @param order Obiekt klasy zamówienie, którego szczegóły mają być wyświetlone w przygotowanym w tym celu polu w GUI
+     *
+     * Metoda ta powoduje wyświetlenie w przygotowanym do tego polu
+     * szczegółowych danych na temat adresata, nadawcy oraz paczkamatów nadawczego i odbiorczego powiązanych z konkretnym zamówieniem.
+     */
     private void printDetailedInfo(Order order) {
         Customer sender = order.getSender();
         Customer recipient = order.getReceiver();
@@ -325,6 +345,9 @@ public class AdminController {
     }
 
 
+    /**
+     * Metoda pozwalająca administratorowi ręcznie zmienić status wybranej przez niego przesyłki na "IN_DELIVERY"
+     */
     @FXML
     void setDeliveryStatus() {
         selectedOrder.setOrderStatus("IN_DELIVERY");
@@ -334,6 +357,9 @@ public class AdminController {
 
     }
 
+    /**
+     * Metoda pozwalająca administratorowi ręcznie zmienić status wybranej przez niego przesyłki na "IN_SHIPMENT"
+     */
     @FXML
     void setShipmentStatus() {
         selectedOrder.setOrderStatus("IN_SHIPMENT");
@@ -342,6 +368,9 @@ public class AdminController {
         receivedOrdersTable.refresh();
     }
 
+    /**
+     * Metoda pozwalająca administratorowi ręcznie zmienić status wybranej przez niego przesyłki na "REALIZED"
+     */
     @FXML
     void setRealizedStatus() {
         selectedOrder.setOrderStatus("REALIZED");
@@ -351,6 +380,13 @@ public class AdminController {
         receivedOrdersTable.refresh();
     }
 
+    /**
+     * @param webView FXML - owy obiekt klasy WebView, w którym chcemy uruchomić kod HTML
+     * @param htmlFile nazwa pliku HTML który chcemy wczytać do WebView
+     *
+     * Metoda ta wczytuje plik HTML do obiektu klasy WebView dodatkowo implementując Listener, który pozwala na
+     * zareagowanie w momencie gdy użytkownik wybierze paczkamat.
+     */
     void setupWebView(WebView webView, String htmlFile) {
         WebEngine webEngine = webView.getEngine();
         webEngine.getLoadWorker().stateProperty()
@@ -362,6 +398,11 @@ public class AdminController {
         webEngine.load(getClass().getResource("/webview/" + htmlFile).toString());
     }
 
+    /**
+     * @param path Ścieżka do pliku .fxml zawierającego layout do nowego okna, które chcemy pokazać
+     * @param event obiekt klasy ActionEvent, dzięki któremu mamy możliwość ukrycia layoutu, w którym znajdował się przycisk
+     * który wywołał tą metodę.
+     */
     private void showNewlayout(String path, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));

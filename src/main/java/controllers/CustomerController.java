@@ -33,8 +33,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Klasa CustomerController odpowiedzialna za obsługę wszystkich interakcji pomiędzy użytkownikiem
+ * zalogowanym jako zwykły użtkownik, a oddzielnym GUI przygotowanym dla tego użykownika.
+ */
 public class CustomerController {
 
+
+    //Szereg pól odpowiadających FXML-owym obiektom zastosowanym w GUI
     @FXML
     private TableView<Order> ordersListSentTo;
 
@@ -71,15 +77,19 @@ public class CustomerController {
     @FXML
     private TableView<Order> ordersListReceivingFrom;
 
+    //Koniec Szeregu pól odpowiadającym FXML-owym obiektom zastosowanym w GUI
 
-    private WebViewConnector webViewConnector;
+    private final ObservableList<String> dimensions = FXCollections.observableArrayList("SMALL", "MEDIUM", "LARGE");
+    private       WebViewConnector webViewConnector;
+    private       Paczkamat sendPaczkamat;
+    private       Paczkamat receivePaczkamat;
 
-    private final ObservableList<String> dimensions = FXCollections.observableArrayList
-            ("SMALL", "MEDIUM", "LARGE");
-
-    private Paczkamat sendPaczkamat;
-    private Paczkamat receivePaczkamat;
-
+    /**
+     * @param event
+     * Metoda wykonująca się w momencie gdy użytkownik naciska na przycisk LogOut. Odpowiada
+     * za wylogowanie z sessji obecnego użytkownika oraz wyświetlenie nowego layoutu ukazującego
+     * ekran logowania.
+     */
     @FXML
     void onLogoutClicked(ActionEvent event) {
         DataSource.setLoggedUser(null);
@@ -88,14 +98,18 @@ public class CustomerController {
         showNewlayout("layout/login_screen.fxml", event);
     }
 
+    /**
+     * Metoda wywoływana po naciśnięciu przez użytkownika przcisku "Order", jest odpowiedzialna za zweryfikowanie
+     * danych wprowadzonych przez użytkownika i ewentualne wyprowadzenie go z błędu w przypadku jego pomyłki.
+     * Po pomyślnej weryfikacji, zamówienie dodawane jest do bazy, o czym informowany jest użytkownik.
+     */
     @FXML
     void onOrderClicked() {
-        Customer customer = SessionStore.getUser();
-
-        Customer recipient = recipientComboBox.getValue();
-        String dimension = dimensionComboBox.getValue();
-        Stash senderStash = sendStash.getValue();
-        Stash receiverStash = receiveStash.getValue();
+        Customer customer       = SessionStore.getUser();
+        Customer recipient      = recipientComboBox.getValue();
+        String   dimension      = dimensionComboBox.getValue();
+        Stash    senderStash    = sendStash.getValue();
+        Stash    receiverStash  = receiveStash.getValue();
 
         if (recipient == null) {
             SendTextHint.setText("Choose recipient to send order");
@@ -131,16 +145,13 @@ public class CustomerController {
         order.setSender(customer);
         order.setOrderStatus("AWAITING_PICKUP");
         order.setReceiver(recipient);
-//        Timestamp sendTime = new Timestamp(Calendar.getInstance().getTime().getTime());
         Timestamp sendTime = Timestamp.from(Instant.now());
         order.setSendDatetime(sendTime);
         ZonedDateTime zonedDateTime = sendTime.toInstant().atZone(ZoneId.of("UTC"));
         Timestamp receiveTime = Timestamp.from(zonedDateTime.plus(3, ChronoUnit.DAYS).toInstant());
-//        Timestamp receiveTime = Timestamp.from(sendTime.plus(3, ChronoUnit.DAYS).toInstant());
         order.setReceiveDatetime(receiveTime);
-//        order.setReceiveDatetime(sendTime);
-
         BigDecimal price = BigDecimal.ONE;
+
         switch (dimension) {
             case "SMALL" -> price = BigDecimal.valueOf(9.90);
             case "MEDIUM" -> price = BigDecimal.valueOf(16.90);
@@ -149,7 +160,6 @@ public class CustomerController {
         }
 
         order.setPrice(price);
-
         order.setSenderStash(senderStash);
         order.setReceiverStash(receiverStash);
 
@@ -164,16 +174,21 @@ public class CustomerController {
         updateStashesList(dimensionComboBox.getValue());
     }
 
-
+    /**
+     * Metoda wywoływana na początku "istnienia" Controllera, jej zadaniami są:
+     *  - przygotowanie WebView poprzez utworzenie nowego obiektu WebViewConnector, któremu następnie przekazywane są
+     *    zmienna odpowiadająca FXML-owemu obiektowi klasy WebView oraz plik .html, który zawiera kod, który wykona się w WebView
+     *  - dodanie listenera do obiektu klasy TabPane reagującego na wybranie innej zakładki przez użytkownika
+     *  - zaimplementowanie możliwości sortowania zamówień przypisanych użytkownikowi przy pomocy daty
+     *  - zaimplementowanie funkcjonalności pozwalającej na reagowanie na wszystkie zmiany wprowadzane przez użytkownika
+     *    związane z parametrami opisującymi składane przez niego zamówienie.
+     */
     @FXML
     void initialize() {
         webViewConnector = new WebViewConnector();
         setupWebView(orderWebView);
-
         loggedInAs.setText("Logged in as: " + SessionStore.getUser().getName() + " " + SessionStore.getUser().getLastName());
-
         dimensionComboBox.setItems(dimensions);
-
         dimensionComboBox.valueProperty().addListener((observableValue, s, newValue) -> {
             if (newValue != null) {
                 updateStashesList(newValue);
@@ -207,10 +222,6 @@ public class CustomerController {
             receivePaczkamat = newPaczkamat;
             receivePaczkamatName.setText(newPaczkamat.getName());
             SendTextHint.setText("Fill in the details and select \"Order\" to send the package or select another paczkamat if You wish.");
-//            receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash ->
-//                    stash.getDimension().equals(dimensionComboBox.getValue())
-//            ));
-//
             updateStashesList(dimensionComboBox.getValue());
 
             receiveStash.setCellFactory(new Callback<>() {
@@ -262,7 +273,6 @@ public class CustomerController {
                         }
                     };
                 }
-
             });
         });
 
@@ -285,14 +295,27 @@ public class CustomerController {
                     }
                 }
         );
-
     }
 
+    /**
+     * @param newValue
+     * Metoda, która update'uje listę skrytek dostępnych w danym paczkamacie:
+     * W sytuacji, w której użytkownik dodał zamówienie, dana skrytka zostaje usuwana z listy dostępnych skrytek
+     */
     private void updateStashesList(String newValue) {
         addPaczkamats(newValue, sendPaczkamat, sendStash);
         addPaczkamats(newValue, receivePaczkamat, receiveStash);
     }
 
+
+    /**
+     * @param newValue
+     * @param receivePaczkamat
+     * @param receiveStash
+     *
+     * Metoda która dodaje nowy paczkamat do listy dostępnych paczkamatów, jest ona wywoływana w momencie kiedy
+     * użytkownik wybierze z mapy paczkamat, którego do tej pory nie było w bazie
+     */
     private void addPaczkamats(String newValue, Paczkamat receivePaczkamat, ComboBox<Stash> receiveStash) {
         if (receivePaczkamat != null) {
             receiveStash.setItems(FXCollections.observableArrayList(receivePaczkamat.getStashes()).filtered(stash -> {
@@ -311,15 +334,19 @@ public class CustomerController {
                             return false;
                         }
                     }
-
                     return true;
                 }
-
                 return false;
             }));
         }
     }
 
+    /**
+     * @param webView FXML - owy obiekt klasy WebView, w którym chcemy uruchomić kod HTML
+     *
+     * Metoda ta wczytuje plik HTML do obiektu klasy WebView dodatkowo implementując Listener, który pozwala na
+     * zareagowanie w momencie gdy użytkownik wybierze paczkamat.
+     */
     private void setupWebView(WebView webView) {
         WebEngine webEngine = webView.getEngine();
         webEngine.getLoadWorker().stateProperty()
@@ -327,10 +354,14 @@ public class CustomerController {
                     JSObject window = (JSObject) webEngine.executeScript("window");
                     window.setMember("app", webViewConnector);
                 });
-
         webEngine.load(getClass().getResource("/webview/" + "customer_map.html").toString());
     }
 
+    /**
+     * @param path Ścieżka do pliku .fxml zawierającego layout do nowego okna, które chcemy pokazać
+     * @param event obiekt klasy ActionEvent, dzięki któremu mamy możliwość ukrycia layoutu, w którym znajdował się przycisk
+     * który wywołał tą metodę.
+     */
     private void showNewlayout(String path, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));

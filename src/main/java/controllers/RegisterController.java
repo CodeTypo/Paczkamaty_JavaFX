@@ -16,6 +16,9 @@ import services.DataSource;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Klasa obsługująca rejestrowanie nowego użytkownika w bazie danych
+ */
 public class RegisterController {
 
     @FXML
@@ -42,6 +45,11 @@ public class RegisterController {
     @FXML
     private Text statusMsg;
 
+    /**
+     * @param path Ścieżka do pliku .fxml zawierającego layout do nowego okna, które chcemy pokazać
+     * @param event obiekt klasy ActionEvent, dzięki któremu mamy możliwość ukrycia layoutu, w którym znajdował się przycisk
+     * który wywołał tą metodę.
+     */
     private void showNewlayout(String path, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));
@@ -56,11 +64,23 @@ public class RegisterController {
         }
     }
 
+    /**
+     * @param event
+     * Obsługa przycisku Login, który pozwala na powrót do ekranu logowania w przypadku, gdy użytkownik nie planuje
+     * jednak zakładać nowego konta w bazie.
+     */
     @FXML
     void onLoginBtnClicked(ActionEvent event) {
         showNewlayout("layout/login_screen.fxml", event);
     }
 
+    /**
+     * @param event
+     * Metoda, która wywoływana jest po naciśnięciu na przycisk Register.
+     * Weryfikuje poprawność danych wprowadzonych przez użytkownika; jeżeli wykryje gdzieś błąd - wyświetla o tym komunikat.
+     * Jeżeli weryfikacja przebiegnie pomyślnie, dodaje nowy obiekt klasy Customer do bazy danych i przekierowuje
+     * użytkownika do ekranu logowania, gdzie może on już zalogować się przy użyciu nowo utworzonego konta.
+     */
     @FXML
     void onRegisterBtnClicked(ActionEvent event) {
 

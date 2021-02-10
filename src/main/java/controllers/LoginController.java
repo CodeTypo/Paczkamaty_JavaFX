@@ -18,6 +18,9 @@ import services.SessionStore;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Klasa kontroler obsługująca logowanie do zhardcode'owanej w programie bazy testowej MockDB
+ */
 public class LoginController {
 
     @FXML
@@ -37,6 +40,11 @@ public class LoginController {
         registerBtn.setVisible(false);
     }
 
+    /**
+     * @param path Ścieżka do pliku .fxml zawierającego layout do nowego okna, które chcemy pokazać
+     * @param event obiekt klasy ActionEvent, dzięki któremu mamy możliwość ukrycia layoutu, w którym znajdował się przycisk
+     * który wywołał tą metodę.
+     */
     private void showNewlayout(String path, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(path)));
@@ -51,12 +59,16 @@ public class LoginController {
         }
     }
 
+    /**
+     * @param event
+     * Metoda wywoływana w momencie naciśnięcia przez użytkownika przycisku Login, weryfikuje czy dane przez niego
+     * wprowadzone są powiązane z jakimkolwiek kontem w bazie, jeżeli tak - loguje użytkownika i zmienia layout,
+     * jeżeli nie - wyświetla stosowny komunikat i umożliwa przejście do ekranu rejestracji.
+     */
     @FXML
     void onLoginBtnClicked(ActionEvent event) {
         String login = loginField.getText();
-        System.out.println(login);
         String password = passwordField.getText();
-        System.out.println(password);
 
         if (login.equals("admin") && password.equals("admin")) {
             SessionStore.setAdmin(true);
@@ -82,6 +94,10 @@ public class LoginController {
 
     }
 
+    /**
+     * @param event
+     * Po wciśnięciu przycisku register, przechodzi do nowego ekranu, który umożliwia rejestrację nowego użytkownika,
+     */
     @FXML
     void onRegisterBtnClicked(ActionEvent event) {
         showNewlayout("layout/register_screen.fxml", event);
