@@ -6,6 +6,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * Klasa Stash, do której przy pomocy Hibernate mapowana jest tabela stashes z bazy danych.
+ * Reprezentuje pojedynczą skrytkę w paczkamacie.
+ * Zawiera podstawowe metody typu get / set / equals / toString
+ */
 @Entity
 @Table(name="stashes")
 public class Stash {

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+
+/**
+ * Klasa Paczkamat, do której przy pomocy Hibernate mapowana jest tabela paczkamats z bazy danych.
+ * Reprezentuje pojedynczy paczkamat. Zawiera podstawowe metody typu get / set / equals / toString
+ */
 @Entity
 @Table(name="paczkamats")
 public class Paczkamat {

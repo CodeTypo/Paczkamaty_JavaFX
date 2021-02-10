@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Klasa Customer, do której przy pomocy Hibernate mapowana jest tabela Customers z bazy danych.
+ * Reprezentuje klienta serwisu. Zawiera podstawowe metody typu get / set / equals / toString
+ */
 @Entity
 @Table(name="customers")
 public class Customer {

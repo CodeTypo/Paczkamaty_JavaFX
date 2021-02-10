@@ -6,6 +6,11 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
+/**
+ * Klasa Order, do której przy pomocy Hibernate mapowana jest tabela orders z bazy danych.
+ * Reprezentuje pojedyncze zamówienie - zlecenie przesyłki / odbioru.
+ * Zawiera podstawowe metody typu get / set / equals / toString
+ */
 @Entity
 @Table(name="orders")
 public class Order {
